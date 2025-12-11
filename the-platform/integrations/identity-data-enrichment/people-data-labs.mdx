@@ -1,0 +1,133 @@
+---
+title: "People Data Labs"
+description: "Manage operations in People Data Labs"
+---
+
+**Description:** Manage operations in People Data Labs.
+
+**Authentication:**
+- See integration-specific authentication requirements
+
+**Available Actions:**
+
+**Examples:**
+
+##### Action: `unknown`
+
+**Example 1: PDL - Person Enrich**
+
+Enrich a person by email/phone/profile. Docs: https://docs.peopledatalabs.com/docs/person-enrichment-api
+
+```json
+{
+  "automationType": "peopledatalabs",
+  "nodeId": "pdl-person-enrich-001"
+}
+```
+
+**Example 2: PDL - Person Search**
+
+Search persons using Elasticsearch-style DSL. Docs: https://docs.peopledatalabs.com/docs/person-search-api
+
+```json
+{
+  "automationType": "peopledatalabs",
+  "nodeId": "pdl-person-search-001"
+}
+```
+
+**Example 3: PDL - Person Bulk Enrich**
+
+Bulk person enrichment (account access required). Docs: https://docs.peopledatalabs.com/docs/bulk-person-enrichment
+
+```json
+{
+  "automationType": "peopledatalabs",
+  "nodeId": "pdl-person-bulk-enrich-001"
+}
+```
+
+**Example 4: PDL - Person Identify**
+
+Identify a person from profile URLs. Docs: https://docs.peopledatalabs.com/docs/person-enrichment-api
+
+```json
+{
+  "automationType": "peopledatalabs",
+  "nodeId": "pdl-person-identify-001"
+}
+```
+
+**Example 5: PDL - Person Preview Enrich**
+
+Preview person enrich (no credits). Docs: https://docs.peopledatalabs.com/docs/person-enrichment-api
+
+```json
+{
+  "automationType": "peopledatalabs",
+  "nodeId": "pdl-person-preview-enrich-001"
+}
+```
+
+**Example 6: PDL - Person Preview Search**
+
+Preview person search (no credits). Docs: https://docs.peopledatalabs.com/docs/search-api-overview
+
+```json
+{
+  "automationType": "peopledatalabs",
+  "nodeId": "pdl-person-preview-search-001"
+}
+```
+
+**Example 7: PDL - Company Enrich**
+
+Enrich a company by domain or name.
+
+```json
+{
+  "automationType": "peopledatalabs",
+  "nodeId": "pdl-company-enrich-001"
+}
+```
+
+**Example 8: PDL - Company Search**
+
+Search companies using ES-style query.
+
+```json
+{
+  "automationType": "peopledatalabs",
+  "nodeId": "pdl-company-search-001"
+}
+```
+
+**Example 9: PDL - IP Enrich**
+
+Enrich an IP to retrieve location/company metadata.
+
+```json
+{
+  "automationType": "peopledatalabs",
+  "nodeId": "pdl-ip-enrich-001"
+}
+```
+
+**Example 10: PDL - Raw Request**
+
+Call any PDL endpoint under /v5.
+
+```json
+{
+  "automationType": "peopledatalabs",
+  "nodeId": "pdl-raw-request-001"
+}
+```
+
+**Third-Party Documentation:**
+- [https://docs.peopledatalabs.com/](https://docs.peopledatalabs.com/)
+- [https://docs.peopledatalabs.com/docs/person-enrichment-api](https://docs.peopledatalabs.com/docs/person-enrichment-api)
+- [https://docs.peopledatalabs.com/docs/person-search-api](https://docs.peopledatalabs.com/docs/person-search-api)
+- [https://docs.peopledatalabs.com/docs/company-enrichment-api](https://docs.peopledatalabs.com/docs/company-enrichment-api)
+
+---

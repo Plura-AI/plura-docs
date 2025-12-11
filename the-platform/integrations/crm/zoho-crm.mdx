@@ -1,0 +1,340 @@
+---
+title: "Zoho CRM"
+description: "Manage operations in Zoho CRM"
+---
+
+**Description:** Manage operations in Zoho CRM.
+
+**Authentication:**
+- See integration-specific authentication requirements
+
+**Available Actions:**
+
+**Examples:**
+
+##### Action: `unknown`
+
+**Example 1: Zoho CRM - Upsert Lead by Email**
+
+Create or update a Lead by email with fields.
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-upsert-lead-001"
+}
+```
+
+**Example 2: Zoho CRM - Find Contact by Email**
+
+Search Contacts by exact email
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-find-contact-001"
+}
+```
+
+**Example 3: Zoho CRM - Create Contact**
+
+Create a new Contact record.
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-create-contact-001"
+}
+```
+
+**Example 4: Zoho CRM - Create Deal**
+
+Create a Deal (Potential) record.
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-create-deal-001"
+}
+```
+
+**Example 5: Zoho CRM - Add Note**
+
+Create a Note and associate to a parent record by Parent_Id.
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-add-note-001"
+}
+```
+
+**Example 6: Zoho CRM - List records**
+
+List records from a CRM module with basic pagination.
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-list-001"
+}
+```
+
+**Example 7: Zoho CRM - Upsert Lead by Email**
+
+Create or update a Lead by email
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-upsert-lead-001"
+}
+```
+
+**Example 8: Zoho CRM - Create Contact**
+
+Create a new Contact
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-create-contact-001"
+}
+```
+
+**Example 9: Zoho CRM - Update Contact**
+
+Update contact fields
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-update-contact-001"
+}
+```
+
+**Example 10: Zoho CRM - Get Contact**
+
+Retrieve contact by Id
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-get-contact-001"
+}
+```
+
+**Example 11: Zoho CRM - Delete Contact**
+
+Delete contact by Id
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-delete-contact-001"
+}
+```
+
+**Example 12: Zoho CRM - List Contacts**
+
+List contacts with pagination
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-list-contacts-001"
+}
+```
+
+**Example 13: Zoho CRM - Search Contact by Phone**
+
+Search Contacts by phone
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-search-contact-phone-001"
+}
+```
+
+**Example 14: Zoho CRM - Create Lead**
+
+Create a Lead
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-create-lead-001"
+}
+```
+
+**Example 15: Zoho CRM - Update Lead**
+
+Update a Lead by Id
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-update-lead-001"
+}
+```
+
+**Example 16: Zoho CRM - Search Lead by Email**
+
+Search Leads by email
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-search-lead-email-001"
+}
+```
+
+**Example 17: Zoho CRM - Create Account**
+
+Create an Account
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-create-account-001"
+}
+```
+
+**Example 18: Zoho CRM - Update Account**
+
+Update an Account
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-update-account-001"
+}
+```
+
+**Example 19: Zoho CRM - Create Deal**
+
+Create a Deal
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-create-deal-001"
+}
+```
+
+**Example 20: Zoho CRM - Update Deal**
+
+Update a Deal
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-update-deal-001"
+}
+```
+
+**Example 21: Zoho CRM - List Deals**
+
+List deals with pagination
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-list-deals-001"
+}
+```
+
+**Example 22: Zoho CRM - Get Deal**
+
+Get deal by Id
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-get-deal-001"
+}
+```
+
+**Example 23: Zoho CRM - Delete Deal**
+
+Delete deal by Id
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-delete-deal-001"
+}
+```
+
+**Example 24: Zoho CRM - Create Task**
+
+Create a Task record with Subject; add Who_Id/What_Id and other fields as needed.
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-create-task-001"
+}
+```
+
+**Example 25: Zoho CRM - Add Note**
+
+Create a Note associated to a parent record. Requires seModule with the parent module name.
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-add-note-001"
+}
+```
+
+**Example 26: Zoho CRM - List Notes**
+
+List Notes with pagination
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-list-notes-001"
+}
+```
+
+**Example 27: Zoho CRM - Delete Note**
+
+Delete a Note by Id
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-delete-note-001"
+}
+```
+
+**Example 28: Zoho CRM - Update Task**
+
+Update an existing Task by id.
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-update-task-001"
+}
+```
+
+**Example 29: Zoho CRM - COQL Query**
+
+Execute a COQL select_query
+
+```json
+{
+  "automationType": "zoho",
+  "nodeId": "zoho-coql-001"
+}
+```
+
+**Third-Party Documentation:**
+- [https://www.zoho.com/crm/developer/docs/api/v2/](https://www.zoho.com/crm/developer/docs/api/v2/)
+- [https://www.zoho.com/crm/developer/docs/api/v2/coql-query.html](https://www.zoho.com/crm/developer/docs/api/v2/coql-query.html)
+
+---

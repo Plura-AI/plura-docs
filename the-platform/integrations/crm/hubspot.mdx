@@ -1,0 +1,90 @@
+---
+title: "HubSpot"
+description: "Manage operations in HubSpot"
+---
+
+**Description:** Manage operations in HubSpot.
+
+**Authentication:**
+- See integration-specific authentication requirements
+
+**Available Actions:**
+
+**Examples:**
+
+##### Action: `unknown`
+
+**Example 1: HubSpot - Create or Update Contact**
+
+Upsert a contact by email and set properties.
+
+```json
+{
+  "automationType": "hubspot",
+  "nodeId": "hubspot-upsert-contact-001",
+  "transcript": "Caller: John Doe from Example Corp wants a demo."
+}
+```
+
+**Example 2: HubSpot - Create Note on Contact**
+
+Create a CRM note and associate to a contact by ID.
+
+```json
+{
+  "automationType": "hubspot",
+  "nodeId": "hubspot-create-note-001",
+  "transcript": "Follow-up: Send pricing deck and schedule demo next week."
+}
+```
+
+**Example 3: HubSpot - Create Deal (with associations)**
+
+Create a deal and optionally associate contact/company.
+
+```json
+{
+  "automationType": "hubspot",
+  "nodeId": "hubspot-create-deal-001"
+}
+```
+
+**Example 4: HubSpot - Add Contact to List**
+
+Add an existing contact to a static list by listId.
+
+```json
+{
+  "automationType": "hubspot",
+  "nodeId": "hubspot-add-to-list-001"
+}
+```
+
+**Example 5: HubSpot - Associate Contact with Company**
+
+Associate existing contact and company records.
+
+```json
+{
+  "automationType": "hubspot",
+  "nodeId": "hubspot-assoc-contact-company-001"
+}
+```
+
+**Example 6: HubSpot - Associate Deal with Contact**
+
+Associate an existing deal with a contact.
+
+```json
+{
+  "automationType": "hubspot",
+  "nodeId": "hubspot-assoc-deal-contact-001"
+}
+```
+
+**Third-Party Documentation:**
+- [https://developers.hubspot.com/docs/api/overview](https://developers.hubspot.com/docs/api/overview)
+- [https://developers.hubspot.com/docs/api/crm/contacts](https://developers.hubspot.com/docs/api/crm/contacts)
+- [https://developers.hubspot.com/docs/api/crm/deals](https://developers.hubspot.com/docs/api/crm/deals)
+
+---

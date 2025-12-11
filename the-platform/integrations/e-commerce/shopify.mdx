@@ -1,0 +1,262 @@
+---
+title: "Shopify"
+description: "Manage operations in Shopify"
+---
+
+**Description:** Manage operations in Shopify.
+
+**Authentication:**
+- See integration-specific authentication requirements
+
+**Available Actions:**
+
+**Examples:**
+
+##### Action: `unknown`
+
+**Example 1: Shopify - List Products (sorted, filtered)**
+
+List products using Admin GraphQL API with filters
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-products-001"
+}
+```
+
+**Example 2: Shopify - Create Order**
+
+Create a new order
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-create-order-001"
+}
+```
+
+**Example 3: Shopify - Find Order By ID**
+
+Get order by id
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-find-order-001"
+}
+```
+
+**Example 4: Shopify - Get Order Status**
+
+Get order status by id
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-order-status-001"
+}
+```
+
+**Example 5: Shopify - Get Order Fulfillments**
+
+Get fulfillments for order
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-order-fulfillments-001"
+}
+```
+
+**Example 6: Shopify - Get Fulfillment Orders**
+
+List fulfillment orders for an order
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-get-fo-001"
+}
+```
+
+**Example 7: Shopify - Create Fulfillment**
+
+Create fulfillment for a fulfillment order
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-create-fulfillment-001"
+}
+```
+
+**Example 8: Shopify - Update Fulfillment Tracking**
+
+Update tracking info for a fulfillment
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-update-fulfillment-tracking-001"
+}
+```
+
+**Example 9: Shopify - Cancel Fulfillment**
+
+Cancel a fulfillment
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-cancel-fulfillment-001"
+}
+```
+
+**Example 10: Shopify - Hold Fulfillment Order**
+
+Place fulfillment order on hold
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-hold-fo-001"
+}
+```
+
+**Example 11: Shopify - Release Fulfillment Hold**
+
+Release fulfillment order hold
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-release-hold-001"
+}
+```
+
+**Example 12: Shopify - Update Order Shipping Address**
+
+Update an order shipping address
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-update-shipping-001"
+}
+```
+
+**Example 13: Shopify - List Customers**
+
+List customers (no protected fields required)
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-list-customers-001"
+}
+```
+
+**Example 14: Shopify - Find Customer By ID**
+
+Get a customer by id
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-find-customer-001"
+}
+```
+
+**Example 15: Shopify - List Orders for Customer**
+
+List orders for a specific customer
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-customer-orders-001"
+}
+```
+
+**Example 16: Shopify - Update Order Status**
+
+Update financial and fulfillment status
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-update-order-status-001"
+}
+```
+
+**Example 17: Shopify - Draft Order Create**
+
+Create a draft order
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-draft-create-001"
+}
+```
+
+**Example 18: Shopify - Order Edit Begin**
+
+Begin an order edit session
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-edit-begin-001"
+}
+```
+
+**Example 19: Shopify - Order Edit Add Variant**
+
+Add a variant to an in-progress order edit
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-edit-add-001"
+}
+```
+
+**Example 20: Shopify - Order Edit Commit**
+
+Commit an order edit
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-edit-commit-001"
+}
+```
+
+**Example 21: Shopify - Order Cancel**
+
+Cancel an order
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-order-cancel-001"
+}
+```
+
+**Example 22: Shopify - List Price Lists (B2B)**
+
+List price lists for B2B
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-list-pricelists-001"
+}
+```
+
+**Third-Party Documentation:**
+- [https://shopify.dev/docs/api/admin-graphql](https://shopify.dev/docs/api/admin-graphql)
+
+---

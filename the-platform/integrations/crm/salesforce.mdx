@@ -1,0 +1,329 @@
+---
+title: "Salesforce"
+description: "Manage operations in Salesforce"
+---
+
+**Description:** Manage operations in Salesforce.
+
+**Authentication:**
+- See integration-specific authentication requirements
+
+**Available Actions:**
+
+**Examples:**
+
+##### Action: `unknown`
+
+**Example 1: Salesforce - SOQL Query**
+
+Run a SOQL query using OAuth token or apiKey override.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-soql-001"
+}
+```
+
+**Example 2: Salesforce - SOQL Query (Paginated)**
+
+Run a SOQL query and auto-follow nextRecordsUrl up to pageLimit.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-soql-paginated-001"
+}
+```
+
+**Example 3: Salesforce - SOQL QueryAll**
+
+Run a SOQL query using /queryAll to include archived/deleted as applicable.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-soql-all-001"
+}
+```
+
+**Example 4: Salesforce - SOSL Search**
+
+Run a SOSL FIND query across objects.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-sosl-001"
+}
+```
+
+**Example 5: Salesforce - Find Contact by Email**
+
+Helper to search Contact by exact email.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-find-contact-001"
+}
+```
+
+**Example 6: Salesforce - Find Account by Name**
+
+Helper to search Account by name (LIKE %name%).
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-find-account-001"
+}
+```
+
+**Example 7: Salesforce - Search Tasks (SOSL)**
+
+Search tasks by text using SOSL.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-search-tasks-001"
+}
+```
+
+**Example 8: Salesforce - Get Tasks**
+
+List tasks by filters (WhoId/WhatId/Status/SubjectLike).
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-get-tasks-001"
+}
+```
+
+**Example 9: Salesforce - Get Notes**
+
+List Notes for a given ParentId.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-get-notes-001"
+}
+```
+
+**Example 10: Salesforce - Find Events**
+
+Find Events by WhoId/WhatId/SubjectLike/time window.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-find-events-001"
+}
+```
+
+**Example 11: Salesforce - Find Cases**
+
+Find Cases by AccountId/ContactId/Status/SubjectLike.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-find-cases-001"
+}
+```
+
+**Example 12: Salesforce - Create Case**
+
+Create a Case record.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-create-case-001"
+}
+```
+
+**Example 13: Salesforce - Update Case**
+
+Update a Case record.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-update-case-001"
+}
+```
+
+**Example 14: Salesforce - Create Event**
+
+Create an Event (calendar activity).
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-create-event-001"
+}
+```
+
+**Example 15: Salesforce - Get sObject**
+
+Retrieve a record by sObject API name and Id.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-get-sobject-001"
+}
+```
+
+**Example 16: Salesforce - Delete sObject**
+
+Delete a record by sObject API name and Id.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-delete-sobject-001"
+}
+```
+
+**Example 17: Salesforce - Upsert sObject by External ID**
+
+PATCH via externalIdField/externalIdValue.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-upsert-sobject-001"
+}
+```
+
+**Example 18: Salesforce - Upsert Lead by Email**
+
+Create or update a Lead by email with explicit required fields.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-upsert-lead-001"
+}
+```
+
+**Example 19: Salesforce - Create Opportunity**
+
+Create an Opportunity and optionally associate a primary Contact.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-create-opp-001"
+}
+```
+
+**Example 20: Salesforce - Create Contact**
+
+Create a Contact record.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-create-contact-001"
+}
+```
+
+**Example 21: Salesforce - Update Contact**
+
+Update an existing Contact.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-update-contact-001"
+}
+```
+
+**Example 22: Salesforce - Create Account**
+
+Create an Account record.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-create-account-001"
+}
+```
+
+**Example 23: Salesforce - Update Account**
+
+Update an Account record by Id.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-update-account-001"
+}
+```
+
+**Example 24: Salesforce - Associate Opportunity with Contact**
+
+Create an OpportunityContactRole (primary by default).
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-assoc-opp-contact-001"
+}
+```
+
+**Example 25: Salesforce - Create Task**
+
+Create a Task record related to another record (e.g., Contact).
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-create-task-001"
+}
+```
+
+**Example 26: Salesforce - Create Note**
+
+Create a Note associated to a parent record.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-create-note-001"
+}
+```
+
+**Example 27: Salesforce - Create sObject**
+
+Generic sObject create for flexibility.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-create-sobject-001"
+}
+```
+
+**Example 28: Salesforce - Update sObject**
+
+Generic sObject update by API name and Id.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-update-sobject-001"
+}
+```
+
+**Third-Party Documentation:**
+- [https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/)
+- [https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/)
+
+---

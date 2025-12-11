@@ -1,0 +1,103 @@
+---
+title: "AI Chat"
+description: "Manage operations in AI Chat"
+---
+
+**Description:** Manage operations in AI Chat.
+
+**Authentication:**
+- See integration-specific authentication requirements
+
+**Available Actions:**
+
+**Examples:**
+
+##### Action: `unknown`
+
+**Example 1: AI Chat - List Providers**
+
+List available AI chat providers
+
+```json
+{
+  "automationType": "ai_chat",
+  "nodeId": "ai-node-000"
+}
+```
+
+**Example 2: AI Chat - List Models (Provider)**
+
+List models for a specific provider
+
+```json
+{
+  "automationType": "ai_chat",
+  "nodeId": "ai-node-001"
+}
+```
+
+**Example 3: AI Chat - List Models (All Providers)**
+
+List models for all providers
+
+```json
+{
+  "automationType": "ai_chat",
+  "nodeId": "ai-node-002"
+}
+```
+
+**Example 4: AI Chat - Chat (OpenAI)**
+
+Execute a chat completion using OpenAI provider
+
+```json
+{
+  "automationType": "ai_chat",
+  "nodeId": "ai-node-003"
+}
+```
+
+**Example 5: AI Chat - Chat (Anthropic)**
+
+Execute a chat completion using Anthropic provider
+
+```json
+{
+  "automationType": "ai_chat",
+  "nodeId": "ai-node-004"
+}
+```
+
+**Example 6: AI Chat - Chat (xAI)**
+
+Execute a chat completion using xAI provider
+
+```json
+{
+  "automationType": "ai_chat",
+  "nodeId": "ai-node-005"
+}
+```
+
+**Example 7: AI Chat - Chat (Gemini)**
+
+Execute a chat completion using Google Gemini provider
+
+```json
+{
+  "automationType": "ai_chat",
+  "nodeId": "ai-node-006"
+}
+```
+
+**Third-Party Documentation:**
+- [https://platform.openai.com/docs/api-reference](https://platform.openai.com/docs/api-reference)
+- [https://docs.anthropic.com/claude/reference/getting-started-with-the-api](https://docs.anthropic.com/claude/reference/getting-started-with-the-api)
+- [https://ai.google.dev/docs](https://ai.google.dev/docs)
+- [https://docs.x.ai/](https://docs.x.ai/)
+- [https://console.groq.com/docs](https://console.groq.com/docs)
+- [https://docs.mistral.ai/](https://docs.mistral.ai/)
+- [https://platform.deepseek.com/api-docs/](https://platform.deepseek.com/api-docs/)
+
+---

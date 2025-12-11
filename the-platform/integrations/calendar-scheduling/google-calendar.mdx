@@ -1,0 +1,54 @@
+---
+title: "Google Calendar"
+description: "Manage operations in Google Calendar"
+---
+
+**Description:** Manage operations in Google Calendar.
+
+**Authentication:**
+- See integration-specific authentication requirements
+
+**Available Actions:**
+
+**Examples:**
+
+##### Action: `unknown`
+
+**Example 1: Google Calendar - Check Availability**
+
+Check calendar availability for scheduling meetings
+
+```json
+{
+  "automationType": "google_calendar",
+  "nodeId": "gcal-availability-001"
+}
+```
+
+**Example 2: Google Calendar - Create Event**
+
+Create a calendar event
+
+```json
+{
+  "automationType": "google_calendar",
+  "nodeId": "gcal-create-event-001"
+}
+```
+
+**Example 3: Google Calendar - Create Event (customFields + callData)**
+
+Demonstrates resolving params from callData via customFields
+
+```json
+{
+  "automationType": "google_calendar",
+  "nodeId": "gcal-create-event-002"
+}
+```
+
+**Third-Party Documentation:**
+- [https://developers.google.com/calendar/api/guides/overview](https://developers.google.com/calendar/api/guides/overview)
+- [https://developers.google.com/calendar/api/v3/reference/events](https://developers.google.com/calendar/api/v3/reference/events)
+
+---

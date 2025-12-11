@@ -1,0 +1,273 @@
+---
+title: "Ringba"
+description: "Manage operations in Ringba"
+---
+
+**Description:** Manage operations in Ringba.
+
+**Authentication:**
+- See integration-specific authentication requirements
+
+**Available Actions:**
+
+**Examples:**
+
+##### Action: `unknown`
+
+**Example 1: Ringba - List Campaigns**
+
+List campaigns for an account.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-list-campaigns-001"
+}
+```
+
+**Example 2: Ringba - Get Call**
+
+Retrieve a call by inboundCallId.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-get-call-001"
+}
+```
+
+**Example 3: Ringba - Annotate Call**
+
+Add annotation tags to a call.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-annotate-call-001"
+}
+```
+
+**Example 4: Ringba - List Webhooks**
+
+List webhooks configured for an account.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-list-webhooks-001"
+}
+```
+
+**Example 5: Ringba - Blacklist Number**
+
+Add a phone number to compliance blacklist.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-blacklist-001"
+}
+```
+
+**Example 6: Ringba - Raw Request**
+
+Call any Ringba endpoint under /v2.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-raw-request-001"
+}
+```
+
+**Example 7: Ringba - Get Account Info**
+
+Fetch Ringba accounts available for the API token.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-get-account-info-001"
+}
+```
+
+**Example 8: Ringba - Call Logs: Columns**
+
+Get call log column names for reporting.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-calllogs-columns-001"
+}
+```
+
+**Example 9: Ringba - Call Logs: Tags (all types)**
+
+List all tag types and names available for filtering call logs.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-calllogs-tags-001"
+}
+```
+
+**Example 10: Ringba - Call Logs: Basic report (date range)**
+
+Create a call log report for a date range with defaults.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-calllogs-post-001"
+}
+```
+
+**Example 11: Ringba - Call Logs: Detail by InboundCallIds**
+
+Get detailed info for one or more InboundCallIds.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-calllogs-detail-001"
+}
+```
+
+**Example 12: Ringba - Call Logs: Export CSV (create job)**
+
+Create an export job for a date range.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-calllogs-export-001"
+}
+```
+
+**Example 13: Ringba - Call Logs: Export CSV (check status)**
+
+Check an export job status by csvJobId.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-calllogs-export-status-001"
+}
+```
+
+**Example 14: Ringba - Get Campaign**
+
+Retrieve details for a campaign by ID.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-campaigns-get-001"
+}
+```
+
+**Example 15: Ringba - Update Campaign (partial)**
+
+Update campaign fields by ID.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-campaigns-update-001"
+}
+```
+
+**Example 16: Ringba - Get Target**
+
+Retrieve details for a target by ID.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-targets-get-001"
+}
+```
+
+**Example 17: Ringba - Create Target (minimal)**
+
+Create a target with minimal required fields (example body, adjust per your account requirements).
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-targets-create-001"
+}
+```
+
+**Example 18: Ringba - Create Number**
+
+Purchase/allocate a new number (charges may apply).
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-numbers-create-001"
+}
+```
+
+**Example 19: Ringba - Get Number**
+
+Get details for a number by ID.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-numbers-get-001"
+}
+```
+
+**Example 20: Ringba - Delete Number (unlink example)**
+
+Release a number (use with caution).
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-numbers-delete-001"
+}
+```
+
+**Example 21: Ringba - List Webhooks (WebHooks)**
+
+List webhooks via WebHooks endpoint (per collection).
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-webhooks-get-v2-001"
+}
+```
+
+**Example 22: Ringba - Get Single Webhook**
+
+Retrieve a webhook by webHookId.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-webhook-get-001"
+}
+```
+
+**Example 23: Ringba - Create Conversion Webhook**
+
+Create a conversion webhook using WebHooks/CreateConversion.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-webhooks-create-conv-001"
+}
+```
+
+**Third-Party Documentation:**
+- [https://ringba.readme.io/](https://ringba.readme.io/)
+
+---

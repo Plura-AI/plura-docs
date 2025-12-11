@@ -1,0 +1,162 @@
+---
+title: "Integrations Overview"
+description: "Unified API interface for 30+ third-party integrations"
+---
+
+## Overview
+
+The Automation API provides a unified interface to execute actions across 30+ third-party integrations through a single endpoint. This document serves as a comprehensive reference for all available automation capabilities, authentication methods, integration-specific actions, and detailed parameter schemas with validations.
+
+### Endpoint
+
+```
+POST https://integrations.plura.ai/api/automation/execute
+```
+
+### Purpose
+
+The automation/execute endpoint enables:
+- **Unified Integration Access**: Single API endpoint for multiple third-party services
+- **Agent Training**: Comprehensive capability documentation for AI agent systems
+- **Workflow Automation**: Execute actions across CRM, communication, data, and other platforms
+- **Context-Aware Operations**: Support for call data, transcripts, and custom fields
+
+---
+
+## Authentication
+
+The Automation API supports two authentication methods:
+
+### 1. JWT Bearer Token (Standard)
+
+Authenticate using a JWT token obtained from the Plura platform login.
+
+**Header:**
+```
+Authorization: Bearer <JWT_TOKEN>
+```
+
+**Usage:**
+- Standard user authentication
+- User-scoped operations
+- OAuth token resolution for integrations requiring OAuth
+
+### 2. API Key (Superuser Mode)
+
+Authenticate using an API key for superuser access, bypassing user-level restrictions.
+
+**Header:**
+```
+x-key: <API_KEY>
+```
+
+**Usage:**
+- Server-to-server integrations
+- Administrative operations
+- Bypass user-level OAuth requirements
+
+**Note:** When using `x-key`, the request context is marked with `superuser: true`, allowing access to any automation node.
+
+---
+
+## Request Structure
+
+All requests follow a standard structure:
+
+```json
+{
+  "automationType": "integration_name",
+  "nodeId": "unique-node-identifier",
+  "userId": "user@example.com",
+  "nodeParams": {
+    "action": "action_name",
+    "params": {
+      // Integration-specific parameters (see DTO schemas below)
+    }
+  },
+  "transcript": "Optional transcript or conversation context",
+  "context": {
+    // Additional context data
+  },
+  "callData": {
+    // Call-specific data for field resolution
+  }
+}
+```
+
+### Request Fields
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `automationType` | string | Yes | Integration identifier (e.g., `slack`, `hubspot`) |
+| `nodeId` | string | No | Unique identifier for the automation node |
+| `userId` | string | No | User context (auto-set from JWT if not provided) |
+| `nodeParams` | object | Yes | Integration-specific parameters |
+| `nodeParams.action` | string | Yes | Action to execute (e.g., `post_message`, `create_contact`) |
+| `nodeParams.params` | object | Yes | Action-specific parameters (see DTO schemas below) |
+| `transcript` | string | No | Conversation or call transcript |
+| `context` | object | No | Additional context metadata |
+| `callData` | object | No | Call data for custom field resolution |
+
+### Response Structure
+
+```json
+{
+  "requestId": "uuid",
+  "nodeId": "unique-node-identifier",
+  "automationType": "integration_name",
+  "success": true,
+  "data": {
+    // Integration-specific response data
+  },
+  "error": "Error message if success is false",
+  "metadata": {
+    // Additional metadata
+  },
+  "timestamp": "2025-01-20T10:00:00.000Z",
+  "duration": 250
+}
+```
+
+---
+
+## Custom Fields & Call Data Resolution
+
+The Automation API supports dynamic field resolution from `callData` using custom fields. This allows you to reference call-specific data in your automation parameters.
+
+### Usage
+
+Set `customFields` in `nodeParams.params` to enable field resolution:
+
+```json
+{
+  "automationType": "google_calendar",
+  "nodeId": "gcal-create-event-002",
+  "nodeParams": {
+    "action": "appointment",
+    "params": {
+      "summary": "My Summary",
+      "startTime": "custom_field_1",
+      "endTime": "custom_field_2",
+      "customFields": [
+        {
+          "field": "startTime",
+          "customFieldEnabled": true
+        },
+        {
+          "field": "endTime",
+          "customFieldEnabled": true
+        }
+      ]
+    }
+  },
+  "callData": {
+    "fields": {
+      "custom_field_1": "2025-09-19T07:00:00.000Z",
+      "custom_field_2": "2025-09-19T07:30:00.000Z"
+    }
+  }
+}
+```
+
+The system will automatically resolve `custom_field_1` and `custom_field_2` from `callData.fields` before executing the automation.

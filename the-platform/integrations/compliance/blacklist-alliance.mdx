@@ -1,0 +1,75 @@
+---
+title: "Blacklist Alliance"
+description: "Manage operations in Blacklist Alliance"
+---
+
+**Description:** Manage operations in Blacklist Alliance.
+
+**Authentication:**
+- See integration-specific authentication requirements
+
+**Available Actions:**
+
+**Examples:**
+
+##### Action: `unknown`
+
+**Example 1: Blacklist Alliance - Lookup Single**
+
+Lookup a single phone number against Blacklist Alliance
+
+```json
+{
+  "automationType": "blacklist_alliance",
+  "nodeId": "bla-lookup-001"
+}
+```
+
+**Example 2: Blacklist Alliance - Bulk Lookup**
+
+Lookup a list of phone numbers (max ~1MB payload).
+
+```json
+{
+  "automationType": "blacklist_alliance",
+  "nodeId": "bla-bulk-lookup-001"
+}
+```
+
+**Example 3: Blacklist Alliance - NEE Single**
+
+Evaluate a number for complaints (NEE GET).
+
+```json
+{
+  "automationType": "blacklist_alliance",
+  "nodeId": "bla-nee-single-001"
+}
+```
+
+**Example 4: Blacklist Alliance - NEE Group**
+
+Evaluate a group of numbers for complaints (NEE POST).
+
+```json
+{
+  "automationType": "blacklist_alliance",
+  "nodeId": "bla-nee-group-001"
+}
+```
+
+**Example 5: Blacklist Alliance - API Stats**
+
+Get API stats for the provided API key.
+
+```json
+{
+  "automationType": "blacklist_alliance",
+  "nodeId": "bla-apistats-001"
+}
+```
+
+**Third-Party Documentation:**
+- [https://blacklistalliance.com/api-documentation/](https://blacklistalliance.com/api-documentation/)
+
+---

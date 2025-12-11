@@ -1,0 +1,42 @@
+---
+title: "Zapier"
+description: "Manage operations in Zapier"
+---
+
+**Description:** Manage operations in Zapier.
+
+**Authentication:**
+- See integration-specific authentication requirements
+
+**Available Actions:**
+
+**Examples:**
+
+##### Action: `unknown`
+
+**Example 1: Zapier Slack - Basic Message**
+
+Send a basic Slack message via Zapier webhook with minimal parameters
+
+```json
+{
+  "automationType": "zapier",
+  "nodeId": "zapier-slack-basic-001"
+}
+```
+
+**Example 2: Zapier - Trigger dedicated webhook(s) by node**
+
+Trigger Zapier webhook(s) registered for a specific automation node (and optional journey). Uses stored-webhook-first behavior, falling back to a generic catch hook if none found.
+
+```json
+{
+  "automationType": "zapier",
+  "nodeId": "zapier-trigger-001"
+}
+```
+
+**Third-Party Documentation:**
+- [https://zapier.com/apps/webhook/help](https://zapier.com/apps/webhook/help)
+
+---

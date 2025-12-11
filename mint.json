@@ -94,120 +94,120 @@
             {
               "group": "AI & Chat",
               "pages": [
-                "the-platform/integrations/ai-chat"
+                "the-platform/integrations/ai-chat/ai-chat"
               ]
             },
             {
               "group": "Automation Platforms",
               "pages": [
-                "the-platform/integrations/makecom",
-                "the-platform/integrations/zapier"
+                "the-platform/integrations/automation-platforms/make",
+                "the-platform/integrations/automation-platforms/zapier"
               ]
             },
             {
               "group": "Browser Automation",
               "pages": [
-                "the-platform/integrations/skyvern"
+                "the-platform/integrations/browser-automation/skyvern"
               ]
             },
             {
               "group": "Calendar & Scheduling",
               "pages": [
-                "the-platform/integrations/calcom",
-                "the-platform/integrations/google-calendar"
+                "the-platform/integrations/calendar-scheduling/calcom",
+                "the-platform/integrations/calendar-scheduling/google-calendar"
               ]
             },
             {
               "group": "Call Tracking",
               "pages": [
-                "the-platform/integrations/ringba"
+                "the-platform/integrations/call-tracking/ringba"
               ]
             },
             {
               "group": "Communication",
               "pages": [
-                "the-platform/integrations/microsoft-teams",
-                "the-platform/integrations/slack"
+                "the-platform/integrations/communication/microsoft-teams",
+                "the-platform/integrations/communication/slack"
               ]
             },
             {
               "group": "Compliance",
               "pages": [
-                "the-platform/integrations/blacklist-alliance",
-                "the-platform/integrations/reassigned-numbers-db-rnd"
+                "the-platform/integrations/compliance/blacklist-alliance",
+                "the-platform/integrations/compliance/reassigned-numbers-db-rnd"
               ]
             },
             {
               "group": "CRM",
               "pages": [
-                "the-platform/integrations/hubspot",
-                "the-platform/integrations/salesforce",
-                "the-platform/integrations/zoho-crm"
+                "the-platform/integrations/crm/hubspot",
+                "the-platform/integrations/crm/salesforce",
+                "the-platform/integrations/crm/zoho-crm"
               ]
             },
             {
               "group": "Data & Spreadsheets",
               "pages": [
-                "the-platform/integrations/airtable",
-                "the-platform/integrations/google-sheets"
+                "the-platform/integrations/data-spreadsheets/airtable",
+                "the-platform/integrations/data-spreadsheets/google-sheets"
               ]
             },
             {
               "group": "E-commerce",
               "pages": [
-                "the-platform/integrations/shopify"
+                "the-platform/integrations/e-commerce/shopify"
               ]
             },
             {
               "group": "HTTP Proxy",
               "pages": [
-                "the-platform/integrations/proxy"
+                "the-platform/integrations/http-proxy/proxy"
               ]
             },
             {
               "group": "Identity & Data Enrichment",
               "pages": [
-                "the-platform/integrations/fullcontact",
-                "the-platform/integrations/ipqualityscore",
-                "the-platform/integrations/people-data-labs"
+                "the-platform/integrations/identity-data-enrichment/fullcontact",
+                "the-platform/integrations/identity-data-enrichment/ipqualityscore",
+                "the-platform/integrations/identity-data-enrichment/people-data-labs"
               ]
             },
             {
               "group": "Marketing",
               "pages": [
-                "the-platform/integrations/cometly"
+                "the-platform/integrations/marketing/cometly"
               ]
             },
             {
               "group": "Project Management",
               "pages": [
-                "the-platform/integrations/jira"
+                "the-platform/integrations/project-management/jira"
               ]
             },
             {
               "group": "Property Data",
               "pages": [
-                "the-platform/integrations/attom-environmental",
-                "the-platform/integrations/attom-foreclosure",
-                "the-platform/integrations/attom-neighborhood",
-                "the-platform/integrations/attom-property-history",
-                "the-platform/integrations/attom-unified",
-                "the-platform/integrations/housecanary",
-                "the-platform/integrations/property-data-bundle",
-                "the-platform/integrations/rentcast",
-                "the-platform/integrations/simplyrets"
+                "the-platform/integrations/property-data/attom-environmental",
+                "the-platform/integrations/property-data/attom-foreclosure",
+                "the-platform/integrations/property-data/attom-neighborhood",
+                "the-platform/integrations/property-data/attom-property-history",
+                "the-platform/integrations/property-data/attom-unified",
+                "the-platform/integrations/property-data/housecanary",
+                "the-platform/integrations/property-data/property-data-bundle",
+                "the-platform/integrations/property-data/rentcast",
+                "the-platform/integrations/property-data/simplyrets"
               ]
             },
             {
               "group": "Video Generation",
               "pages": [
-                "the-platform/integrations/heygen"
+                "the-platform/integrations/video-generation/heygen"
               ]
             },
             {
               "group": "Web Scraping",
               "pages": [
-                "the-platform/integrations/firecrawl"
+                "the-platform/integrations/web-scraping/firecrawl"
               ]
             }
           ]

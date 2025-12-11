@@ -86,6 +86,131 @@
             "the-platform/workflows/decision-triggers",
             "the-platform/workflows/universal-prompts"
           ]
+        },
+        {
+          "group": "Integrations",
+          "pages": [
+            "the-platform/integrations/overview",
+            {
+              "group": "AI & Chat",
+              "pages": [
+                "the-platform/integrations/ai-chat"
+              ]
+            },
+            {
+              "group": "Automation Platforms",
+              "pages": [
+                "the-platform/integrations/makecom",
+                "the-platform/integrations/zapier"
+              ]
+            },
+            {
+              "group": "Browser Automation",
+              "pages": [
+                "the-platform/integrations/skyvern"
+              ]
+            },
+            {
+              "group": "Calendar & Scheduling",
+              "pages": [
+                "the-platform/integrations/calcom",
+                "the-platform/integrations/google-calendar"
+              ]
+            },
+            {
+              "group": "Call Tracking",
+              "pages": [
+                "the-platform/integrations/ringba"
+              ]
+            },
+            {
+              "group": "Communication",
+              "pages": [
+                "the-platform/integrations/microsoft-teams",
+                "the-platform/integrations/slack"
+              ]
+            },
+            {
+              "group": "Compliance",
+              "pages": [
+                "the-platform/integrations/blacklist-alliance",
+                "the-platform/integrations/reassigned-numbers-db-rnd"
+              ]
+            },
+            {
+              "group": "CRM",
+              "pages": [
+                "the-platform/integrations/hubspot",
+                "the-platform/integrations/salesforce",
+                "the-platform/integrations/zoho-crm"
+              ]
+            },
+            {
+              "group": "Data & Spreadsheets",
+              "pages": [
+                "the-platform/integrations/airtable",
+                "the-platform/integrations/google-sheets"
+              ]
+            },
+            {
+              "group": "E-commerce",
+              "pages": [
+                "the-platform/integrations/shopify"
+              ]
+            },
+            {
+              "group": "HTTP Proxy",
+              "pages": [
+                "the-platform/integrations/proxy"
+              ]
+            },
+            {
+              "group": "Identity & Data Enrichment",
+              "pages": [
+                "the-platform/integrations/fullcontact",
+                "the-platform/integrations/ipqualityscore",
+                "the-platform/integrations/people-data-labs"
+              ]
+            },
+            {
+              "group": "Marketing",
+              "pages": [
+                "the-platform/integrations/cometly"
+              ]
+            },
+            {
+              "group": "Project Management",
+              "pages": [
+                "the-platform/integrations/jira"
+              ]
+            },
+            {
+              "group": "Property Data",
+              "pages": [
+                "the-platform/integrations/attom-environmental",
+                "the-platform/integrations/attom-foreclosure",
+                "the-platform/integrations/attom-neighborhood",
+                "the-platform/integrations/attom-property-history",
+                "the-platform/integrations/attom-unified",
+                "the-platform/integrations/housecanary",
+                "the-platform/integrations/property-data-bundle",
+                "the-platform/integrations/rentcast",
+                "the-platform/integrations/simplyrets"
+              ]
+            },
+            {
+              "group": "Video Generation",
+              "pages": [
+                "the-platform/integrations/heygen"
+              ]
+            },
+            {
+              "group": "Web Scraping",
+              "pages": [
+                "the-platform/integrations/firecrawl"
+              ]
+            }
+          ]
         }
       ]
     }

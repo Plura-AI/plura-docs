@@ -92,49 +92,41 @@
           "pages": [
             "the-platform/integrations/overview",
             {
-              "group": "AI & Chat",
+              "group": "AI Services",
               "pages": [
-                "the-platform/integrations/ai-chat/ai-chat"
+                "the-platform/integrations/ai-services/ai-chat",
+                "the-platform/integrations/ai-services/chat-gpt",
+                "the-platform/integrations/ai-services/claude",
+                "the-platform/integrations/ai-services/gemini",
+                "the-platform/integrations/ai-services/grok"
               ]
             },
             {
-              "group": "Automation Platforms",
+              "group": "Attribution",
               "pages": [
-                "the-platform/integrations/automation-platforms/make",
-                "the-platform/integrations/automation-platforms/zapier"
+                "the-platform/integrations/attribution/cometly",
+                "the-platform/integrations/attribution/ringba"
               ]
             },
             {
-              "group": "Browser Automation",
+              "group": "Automations",
               "pages": [
-                "the-platform/integrations/browser-automation/skyvern"
+                "the-platform/integrations/automations/gohighlevel",
+                "the-platform/integrations/automations/heygen",
+                "the-platform/integrations/automations/hubspot",
+                "the-platform/integrations/automations/make",
+                "the-platform/integrations/automations/salesforce",
+                "the-platform/integrations/automations/shopify",
+                "the-platform/integrations/automations/skyvern",
+                "the-platform/integrations/automations/zapier",
+                "the-platform/integrations/automations/zoho"
               ]
             },
             {
-              "group": "Calendar & Scheduling",
+              "group": "Calendars",
               "pages": [
-                "the-platform/integrations/calendar-scheduling/calcom",
-                "the-platform/integrations/calendar-scheduling/google-calendar"
-              ]
-            },
-            {
-              "group": "Call Tracking",
-              "pages": [
-                "the-platform/integrations/call-tracking/ringba"
-              ]
-            },
-            {
-              "group": "Communication",
-              "pages": [
-                "the-platform/integrations/communication/microsoft-teams",
-                "the-platform/integrations/communication/slack"
-              ]
-            },
-            {
-              "group": "Compliance",
-              "pages": [
-                "the-platform/integrations/compliance/blacklist-alliance",
-                "the-platform/integrations/compliance/reassigned-numbers-db-rnd"
+                "the-platform/integrations/calendars/cal-com",
+                "the-platform/integrations/calendars/google-calendar"
               ]
             },
             {
@@ -146,68 +138,44 @@
               ]
             },
             {
-              "group": "Data & Spreadsheets",
+              "group": "Data",
               "pages": [
-                "the-platform/integrations/data-spreadsheets/airtable",
-                "the-platform/integrations/data-spreadsheets/google-sheets"
+                "the-platform/integrations/data/fullcontact",
+                "the-platform/integrations/data/people-data-labs"
               ]
             },
             {
-              "group": "E-commerce",
+              "group": "Documents",
               "pages": [
-                "the-platform/integrations/e-commerce/shopify"
+                "the-platform/integrations/documents/airtable",
+                "the-platform/integrations/documents/google-drive",
+                "the-platform/integrations/documents/google-sheets"
               ]
             },
             {
-              "group": "HTTP Proxy",
+              "group": "Messaging",
               "pages": [
-                "the-platform/integrations/http-proxy/proxy"
+                "the-platform/integrations/messaging/meta",
+                "the-platform/integrations/messaging/microsoft-teams",
+                "the-platform/integrations/messaging/slack"
               ]
             },
             {
-              "group": "Identity & Data Enrichment",
+              "group": "Real Estate",
               "pages": [
-                "the-platform/integrations/identity-data-enrichment/fullcontact",
-                "the-platform/integrations/identity-data-enrichment/ipqualityscore",
-                "the-platform/integrations/identity-data-enrichment/people-data-labs"
+                "the-platform/integrations/real-estate/attom",
+                "the-platform/integrations/real-estate/housecanary",
+                "the-platform/integrations/real-estate/property-data-bundle",
+                "the-platform/integrations/real-estate/rentcast",
+                "the-platform/integrations/real-estate/simplyrets"
               ]
             },
             {
-              "group": "Marketing",
+              "group": "Validation",
               "pages": [
-                "the-platform/integrations/marketing/cometly"
-              ]
-            },
-            {
-              "group": "Project Management",
-              "pages": [
-                "the-platform/integrations/project-management/jira"
-              ]
-            },
-            {
-              "group": "Property Data",
-              "pages": [
-                "the-platform/integrations/property-data/attom-environmental",
-                "the-platform/integrations/property-data/attom-foreclosure",
-                "the-platform/integrations/property-data/attom-neighborhood",
-                "the-platform/integrations/property-data/attom-property-history",
-                "the-platform/integrations/property-data/attom-unified",
-                "the-platform/integrations/property-data/housecanary",
-                "the-platform/integrations/property-data/property-data-bundle",
-                "the-platform/integrations/property-data/rentcast",
-                "the-platform/integrations/property-data/simplyrets"
-              ]
-            },
-            {
-              "group": "Video Generation",
-              "pages": [
-                "the-platform/integrations/video-generation/heygen"
-              ]
-            },
-            {
-              "group": "Web Scraping",
-              "pages": [
-                "the-platform/integrations/web-scraping/firecrawl"
+                "the-platform/integrations/validation/blacklist-allience",
+                "the-platform/integrations/validation/ipqualityscore",
+                "the-platform/integrations/validation/reassigned-numbers-db-rnd"
               ]
             }
           ]

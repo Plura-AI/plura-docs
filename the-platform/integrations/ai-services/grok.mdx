@@ -1,28 +1,161 @@
 ---
 title: "Grok"
-description: "Send a message to Grok AI and get a response."
+description: "Send a message to Grok AI and get a response"
 ---
 
 ### Description
 
-Send AI chat messages using Grok (xAI) through Plura.
-
-Use this integration when you want to power conversations with Grok’s real‑time, internet‑connected models.
+Send AI chat messages using Grok (xAI) through Plura. Use this integration when you want to power conversations with Grok's real-time, internet-connected models for up-to-date information and reasoning.
 
 ### Authentication
 
 - Configure your xAI / Grok API credentials in your Plura workspace settings.
 
-### Example: Chat with Grok
+### Available Actions
+
+- List available Grok models
+- Execute chat completions with Grok models
+- Support for multiple Grok models (Grok 3, Grok 2)
+
+### Examples
+
+**Example 1: Grok - List Models**
+
+List all available xAI Grok models.
 
 ```json
 {
   "automationType": "ai_chat",
-  "nodeId": "ai-node-005"
+  "nodeId": "ai-node-001",
+  "nodeParams": {
+    "action": "listModels",
+    "params": {
+      "provider": "xai"
+    }
+  }
 }
 ```
+
+**Example 2: Grok - Chat Completion (Grok 3)**
+
+Execute a chat completion using Grok 3 model for advanced reasoning.
+
+```json
+{
+  "automationType": "ai_chat",
+  "nodeId": "ai-node-005",
+  "nodeParams": {
+    "action": "chat",
+    "params": {
+      "provider": "xai",
+      "model": "grok-3-latest",
+      "apiKey": "YOUR_XAI_API_KEY",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Tell a short joke about databases."
+        }
+      ]
+    }
+  }
+}
+```
+
+**Example 3: Grok - Chat Completion (Grok 3 Mini)**
+
+Execute a chat completion using Grok 3 Mini model for faster, cost-effective responses.
+
+```json
+{
+  "automationType": "ai_chat",
+  "nodeId": "ai-node-grok-mini-001",
+  "nodeParams": {
+    "action": "chat",
+    "params": {
+      "provider": "xai",
+      "model": "grok-3-mini",
+      "apiKey": "YOUR_XAI_API_KEY",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a helpful assistant with access to real-time information."
+        },
+        {
+          "role": "user",
+          "content": "What are the latest trends in AI development?"
+        }
+      ],
+      "temperature": 0.7,
+      "maxTokens": 300
+    }
+  }
+}
+```
+
+**Example 4: Grok - Chat Completion (Grok 2)**
+
+Execute a chat completion using Grok 2 model.
+
+```json
+{
+  "automationType": "ai_chat",
+  "nodeId": "ai-node-grok-2-001",
+  "nodeParams": {
+    "action": "chat",
+    "params": {
+      "provider": "xai",
+      "model": "grok-2-latest",
+      "apiKey": "YOUR_XAI_API_KEY",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Explain quantum computing in simple terms."
+        }
+      ],
+      "temperature": 0.5,
+      "maxTokens": 400
+    }
+  }
+}
+```
+
+**Example 5: Grok - Chat Completion (Grok 2 Mini)**
+
+Execute a chat completion using Grok 2 Mini model.
+
+```json
+{
+  "automationType": "ai_chat",
+  "nodeId": "ai-node-grok-2-mini-001",
+  "nodeParams": {
+    "action": "chat",
+    "params": {
+      "provider": "xai",
+      "model": "grok-2-mini",
+      "apiKey": "YOUR_XAI_API_KEY",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a concise technical assistant."
+        },
+        {
+          "role": "user",
+          "content": "What is the difference between REST and GraphQL?"
+        }
+      ],
+      "temperature": 0.3,
+      "maxTokens": 200
+    }
+  }
+}
+```
+
+### Available Models
+
+- **Latest:** grok-3-latest, grok-3-mini
+- **Previous:** grok-2-latest, grok-2-mini
 
 ### Third-Party Documentation
 
 - [xAI Grok Docs](https://docs.x.ai/)
-
+- [Grok API Reference](https://docs.x.ai/api)

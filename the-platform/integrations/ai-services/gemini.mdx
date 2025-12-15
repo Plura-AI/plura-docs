@@ -1,28 +1,194 @@
 ---
 title: "Gemini"
-description: "Send a message to Google Gemini and get a response."
+description: "Send a message to Google Gemini and get a response"
 ---
 
 ### Description
 
-Send AI chat messages using Google Gemini through Plura.
-
-Use this integration to leverage Google’s Gemini models for chat, reasoning, and multimodal use cases.
+Send AI chat messages using Google Gemini through Plura. Use this integration to leverage Google's Gemini models for chat, reasoning, and multimodal use cases with advanced AI capabilities.
 
 ### Authentication
 
 - Configure your Google AI / Gemini API credentials in your Plura workspace settings.
 
-### Example: Chat with Gemini
+### Available Actions
+
+- List available Gemini models
+- Execute chat completions with Gemini models
+- Support for multiple Gemini models (Gemini 2.0 Flash, Pro, Flash 8B)
+
+### Examples
+
+**Example 1: Gemini - List Models**
+
+List all available Google Gemini models.
 
 ```json
 {
   "automationType": "ai_chat",
-  "nodeId": "ai-node-006"
+  "nodeId": "ai-node-001",
+  "nodeParams": {
+    "action": "listModels",
+    "params": {
+      "provider": "gemini"
+    }
+  }
 }
 ```
+
+**Example 2: Gemini - Chat Completion (Gemini 2.0 Flash)**
+
+Execute a chat completion using Gemini 2.0 Flash model for fast responses.
+
+```json
+{
+  "automationType": "ai_chat",
+  "nodeId": "ai-node-006",
+  "nodeParams": {
+    "action": "chat",
+    "params": {
+      "provider": "gemini",
+      "model": "gemini-2.0-flash",
+      "apiKey": "YOUR_GEMINI_API_KEY",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a helpful assistant."
+        },
+        {
+          "role": "user",
+          "content": "List 3 fun weekend activities."
+        }
+      ],
+      "temperature": 0.2,
+      "maxTokens": 64
+    }
+  }
+}
+```
+
+**Example 3: Gemini - Chat Completion (Gemini 2.0 Pro)**
+
+Execute a chat completion using Gemini 2.0 Pro model for advanced reasoning.
+
+```json
+{
+  "automationType": "ai_chat",
+  "nodeId": "ai-node-gemini-pro-001",
+  "nodeParams": {
+    "action": "chat",
+    "params": {
+      "provider": "gemini",
+      "model": "gemini-2.0-pro",
+      "apiKey": "YOUR_GEMINI_API_KEY",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert in software architecture."
+        },
+        {
+          "role": "user",
+          "content": "Explain microservices architecture and its benefits."
+        }
+      ],
+      "temperature": 0.7,
+      "maxTokens": 800
+    }
+  }
+}
+```
+
+**Example 4: Gemini - Chat Completion (Gemini 2.0 Flash 8B)**
+
+Execute a chat completion using Gemini 2.0 Flash 8B model for lightweight, efficient responses.
+
+```json
+{
+  "automationType": "ai_chat",
+  "nodeId": "ai-node-gemini-flash8b-001",
+  "nodeParams": {
+    "action": "chat",
+    "params": {
+      "provider": "gemini",
+      "model": "gemini-2.0-flash-8b",
+      "apiKey": "YOUR_GEMINI_API_KEY",
+      "messages": [
+        {
+          "role": "user",
+          "content": "What is the capital of France?"
+        }
+      ],
+      "temperature": 0.1,
+      "maxTokens": 50
+    }
+  }
+}
+```
+
+**Example 5: Gemini - Chat Completion (Gemini 1.5 Pro)**
+
+Execute a chat completion using Gemini 1.5 Pro model.
+
+```json
+{
+  "automationType": "ai_chat",
+  "nodeId": "ai-node-gemini-15-pro-001",
+  "nodeParams": {
+    "action": "chat",
+    "params": {
+      "provider": "gemini",
+      "model": "gemini-1.5-pro",
+      "apiKey": "YOUR_GEMINI_API_KEY",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Write a short story about a robot learning to paint."
+        }
+      ],
+      "temperature": 0.8,
+      "maxTokens": 500
+    }
+  }
+}
+```
+
+**Example 6: Gemini - Chat Completion (Gemini 1.5 Flash)**
+
+Execute a chat completion using Gemini 1.5 Flash model.
+
+```json
+{
+  "automationType": "ai_chat",
+  "nodeId": "ai-node-gemini-15-flash-001",
+  "nodeParams": {
+    "action": "chat",
+    "params": {
+      "provider": "gemini",
+      "model": "gemini-1.5-flash",
+      "apiKey": "YOUR_GEMINI_API_KEY",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a helpful coding assistant."
+        },
+        {
+          "role": "user",
+          "content": "Write a Python function to calculate factorial."
+        }
+      ],
+      "temperature": 0.3,
+      "maxTokens": 200
+    }
+  }
+}
+```
+
+### Available Models
+
+- **Latest:** gemini-2.0-flash, gemini-2.0-pro, gemini-2.0-flash-8b
+- **Previous:** gemini-1.5-flash, gemini-1.5-pro, gemini-1.5-flash-8b
 
 ### Third-Party Documentation
 
 - [Google Gemini Docs](https://ai.google.dev/docs)
-
+- [Gemini API Reference](https://ai.google.dev/api)

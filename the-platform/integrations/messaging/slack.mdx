@@ -1,0 +1,225 @@
+---
+title: "Slack"
+description: "Send a message to a Slack channel"
+---
+
+### Description
+
+Send a message to a Slack channel. Use this integration to post messages, list channels and users, send DMs, and reply in threads.
+
+### Authentication
+
+- OAuth 2.0 - Connect your Slack workspace via the Plura OAuth flow.
+
+### Available Actions
+
+- Post messages to channels
+- Get channels list
+- List users (single page or all pages)
+- List installed workspaces
+- Get channel ID by name
+- Find user by email
+- Get user info by ID
+- Send direct messages
+- Reply in threads
+
+### Examples
+
+**Example 1: Slack - Post to #all-integrations**
+
+Send a message to the all-integrations channel (name accepted; resolves to ID internally).
+
+```json
+{
+  "automationType": "slack",
+  "nodeId": "slack-post-message-002",
+  "nodeParams": {
+    "operation": "post_message",
+    "params": {
+      "channel": "#all-integrations",
+      "text": "Hello from Plura to #all-integrations!"
+    }
+  }
+}
+```
+
+**Example 2: Slack - Post Message**
+
+Send a message to a Slack channel using direct integration.
+
+```json
+{
+  "automationType": "slack",
+  "nodeId": "slack-post-message-001",
+  "nodeParams": {
+    "operation": "post_message",
+    "params": {
+      "channel": "#general",
+      "text": "Hello from Plura direct Slack!",
+      "botUsername": "PluraBot",
+      "botEmoji": ":robot_face:",
+      "parseMode": "full",
+      "unfurlLinks": true,
+      "linkNames": true
+    }
+  }
+}
+```
+
+**Example 3: Slack - Get Channels**
+
+List Slack channels with pagination support.
+
+```json
+{
+  "automationType": "slack",
+  "nodeId": "slack-get-channels-001",
+  "nodeParams": {
+    "operation": "get_channels",
+    "params": {}
+  }
+}
+```
+
+**Example 4: Slack - List Users (single page)**
+
+List Slack users with cursor pagination.
+
+```json
+{
+  "automationType": "slack",
+  "nodeId": "slack-list-users-001",
+  "nodeParams": {
+    "operation": "list_users",
+    "params": {
+      "limit": 200
+    }
+  }
+}
+```
+
+**Example 5: Slack - List Users (all pages)**
+
+Fetch all Slack users by auto-paginating.
+
+```json
+{
+  "automationType": "slack",
+  "nodeId": "slack-list-users-002",
+  "nodeParams": {
+    "operation": "list_users",
+    "params": {
+      "all": true
+    }
+  }
+}
+```
+
+**Example 6: Slack - List Installed Workspaces**
+
+List Slack workspaces (installations) available to the current account.
+
+```json
+{
+  "automationType": "slack",
+  "nodeId": "slack-list-workspaces-001",
+  "nodeParams": {
+    "operation": "list_workspaces",
+    "params": {}
+  }
+}
+```
+
+**Example 7: Slack - Get Channel ID by Name**
+
+Resolve a channel ID from a channel name (e.g., #general → C123...).
+
+```json
+{
+  "automationType": "slack",
+  "nodeId": "slack-get-channel-id-001",
+  "nodeParams": {
+    "operation": "get_channel_id",
+    "params": {
+      "name": "#general"
+    }
+  }
+}
+```
+
+**Example 8: Slack - Find User by Email**
+
+Retrieve Slack user profile by email.
+
+```json
+{
+  "automationType": "slack",
+  "nodeId": "slack-find-user-001",
+  "nodeParams": {
+    "operation": "find_user_by_email",
+    "params": {
+      "email": "user@example.com"
+    }
+  }
+}
+```
+
+**Example 9: Slack - Get User Info**
+
+Retrieve Slack user profile by user ID.
+
+```json
+{
+  "automationType": "slack",
+  "nodeId": "slack-user-info-001",
+  "nodeParams": {
+    "operation": "get_user_info",
+    "params": {
+      "userId": "U012ABCDEF"
+    }
+  }
+}
+```
+
+**Example 10: Slack - Send Direct Message**
+
+Send a DM by userId or email.
+
+```json
+{
+  "automationType": "slack",
+  "nodeId": "slack-send-dm-001",
+  "nodeParams": {
+    "operation": "send_dm",
+    "params": {
+      "email": "user@example.com",
+      "text": "Hello in DM!"
+    }
+  }
+}
+```
+
+**Example 11: Slack - Reply in Thread**
+
+Reply to a message thread by channel + threadTs.
+
+```json
+{
+  "automationType": "slack",
+  "nodeId": "slack-reply-message-001",
+  "nodeParams": {
+    "operation": "reply_message",
+    "params": {
+      "channel": "C0123456789",
+      "threadTs": "1733242342.000100",
+      "text": "Replying in-thread"
+    }
+  }
+}
+```
+
+### Third-Party Documentation
+
+- [https://api.slack.com/web](https://api.slack.com/web)
+- [https://api.slack.com/methods/chat.postMessage](https://api.slack.com/methods/chat.postMessage)
+- [https://api.slack.com/methods/users.list](https://api.slack.com/methods/users.list)

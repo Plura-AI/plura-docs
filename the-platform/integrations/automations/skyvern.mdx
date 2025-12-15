@@ -1,0 +1,206 @@
+---
+title: "Skyvern"
+description: "Skyvern unlocks the ability for your AI agents to perform browser actions in real time"
+---
+
+### Description
+
+Skyvern unlocks the ability for your AI agents to perform browser actions in real time. Use this integration to run browser automation workflows, check job status, and list jobs.
+
+### Authentication
+
+- Skyvern API Key.
+
+### Available Actions
+
+- List workflows
+- Run workflow (async or sync)
+- Get job status (by run ID or workflow ID)
+- Poll job status
+- List jobs (with optional filtering)
+
+### Examples
+
+**Example 1: Skyvern - List Workflows**
+
+Retrieve a list of all workflows available in your Skyvern account.
+
+```json
+{
+  "automationType": "skyvern",
+  "nodeId": "skyvern-list-workflows-001",
+  "nodeParams": {
+    "action": "list_workflows",
+    "params": {
+      "apiKey": "YOUR_SKYVERN_API_KEY"
+    }
+  }
+}
+```
+
+**Example 2: Skyvern - Run Workflow**
+
+Execute a Skyvern workflow asynchronously with parameters. The workflow will run in the background and return a run_id for tracking.
+
+```json
+{
+  "automationType": "skyvern",
+  "nodeId": "skyvern-run-workflow-001",
+  "nodeParams": {
+    "action": "run_workflow",
+    "params": {
+      "apiKey": "YOUR_SKYVERN_API_KEY",
+      "workflowId": "w_459981255332854196",
+      "parameters": {
+        "email": "user@example.com",
+        "password": "your-password"
+      },
+      "webhook_callback_url": "https://yourapp.com/api/skyvern/webhooks"
+    }
+  }
+}
+```
+
+**Example 3: Skyvern - Run Workflow (No Webhook)**
+
+Execute a Skyvern workflow without webhook notifications. Set webhook_callback_url to null to explicitly disable webhook. Omit the field to use SSM default. Use get_job_status to check progress.
+
+```json
+{
+  "automationType": "skyvern",
+  "nodeId": "skyvern-run-workflow-002",
+  "nodeParams": {
+    "action": "run_workflow",
+    "params": {
+      "apiKey": "YOUR_SKYVERN_API_KEY",
+      "workflowId": "w_459981255332854196",
+      "parameters": {
+        "email": "user@example.com",
+        "password": "your-password"
+      },
+      "webhook_callback_url": null
+    }
+  }
+}
+```
+
+**Example 4: Skyvern - Get Job Status by Run ID**
+
+Check the status and progress of a specific workflow run using only the run_id.
+
+```json
+{
+  "automationType": "skyvern",
+  "nodeId": "skyvern-get-job-status-001",
+  "nodeParams": {
+    "action": "get_job_status",
+    "params": {
+      "apiKey": "YOUR_SKYVERN_API_KEY",
+      "runId": "run_abc123xyz"
+    }
+  }
+}
+```
+
+**Example 5: Skyvern - Get All Runs for Workflow**
+
+Get all runs and their statuses for a specific workflow. Returns list of all runs.
+
+```json
+{
+  "automationType": "skyvern",
+  "nodeId": "skyvern-get-job-status-002",
+  "nodeParams": {
+    "action": "get_job_status",
+    "params": {
+      "apiKey": "YOUR_SKYVERN_API_KEY",
+      "workflowId": "w_459981255332854196"
+    }
+  }
+}
+```
+
+**Example 6: Skyvern - Poll Job Status**
+
+Poll the status of a workflow run using only the run_id. Simpler than get_job_status as it does not require workflow_id.
+
+```json
+{
+  "automationType": "skyvern",
+  "nodeId": "skyvern-poll-job-status-001",
+  "nodeParams": {
+    "action": "poll_job_status",
+    "params": {
+      "apiKey": "YOUR_SKYVERN_API_KEY",
+      "runId": "run_abc123xyz"
+    }
+  }
+}
+```
+
+**Example 7: Skyvern - List Jobs**
+
+List all workflow runs/jobs. Can optionally filter by workflow_id and paginate with limit/offset.
+
+```json
+{
+  "automationType": "skyvern",
+  "nodeId": "skyvern-list-jobs-001",
+  "nodeParams": {
+    "action": "list_jobs",
+    "params": {
+      "apiKey": "YOUR_SKYVERN_API_KEY",
+      "workflowId": "w_459981255332854196",
+      "limit": 50,
+      "offset": 0
+    }
+  }
+}
+```
+
+**Example 8: Skyvern - List All Jobs**
+
+List all jobs across all workflows without filtering.
+
+```json
+{
+  "automationType": "skyvern",
+  "nodeId": "skyvern-list-jobs-all-001",
+  "nodeParams": {
+    "action": "list_jobs",
+    "params": {
+      "apiKey": "YOUR_SKYVERN_API_KEY",
+      "limit": 100,
+      "offset": 0
+    }
+  }
+}
+```
+
+**Example 9: Skyvern - Run Workflow Synchronously**
+
+Run a workflow and wait for completion by polling.
+
+```json
+{
+  "automationType": "skyvern",
+  "nodeId": "skyvern-run-workflow-sync-001",
+  "nodeParams": {
+    "action": "run_workflow_sync",
+    "params": {
+      "apiKey": "YOUR_SKYVERN_API_KEY",
+      "workflowId": "w_459981255332854196",
+      "parameters": {
+        "email": "user@example.com",
+        "password": "your-password"
+      },
+      "pollIntervalMs": 2000,
+      "timeoutMs": 300000
+    }
+  }
+}
+```
+
+### Third-Party Documentation
+
+- [https://docs.skyvern.com/](https://docs.skyvern.com/)

@@ -1,0 +1,287 @@
+---
+title: "Cal.com"
+description: "Book and manage appointments and events with Cal.com"
+---
+
+### Description
+
+Book and manage appointments and events with Cal.com. Use this integration to fetch available slots, create bookings, manage event types, and work with routing forms.
+
+### Authentication
+
+- Cal.com API Key (v2).
+
+### Available Actions
+
+- Get available slots
+- Create bookings (minimal or with custom fields)
+- Orchestrate end-to-end bookings
+- Bootstrap booking metadata
+- List/get event types
+- Get team memberships
+- Routing form responses and slots
+
+### Examples
+
+**Example 1: Cal.com (v2) - Get Available Slots**
+
+Fetch available slots using /v2/slots.
+
+```json
+{
+  "automationType": "cal_com",
+  "nodeId": "calcom-v2-availability-001",
+  "nodeParams": {
+    "action": "availability",
+    "params": {
+      "eventTypeId": 3472613,
+      "startDate": "2025-10-10T00:00:00Z",
+      "endDate": "2025-10-11T00:00:00Z",
+      "timeZone": "Europe/London",
+      "authType": "apiKey",
+      "apiKey": "cal_live_xxx",
+      "calApiVersion": "2024-09-04"
+    }
+  }
+}
+```
+
+**Example 2: Cal.com (v2) - Action: get_slots**
+
+Fetch available slots for an event type.
+
+```json
+{
+  "automationType": "cal_com",
+  "nodeId": "calcom-v2-get-slots-001",
+  "nodeParams": {
+    "action": "get_slots",
+    "params": {
+      "eventTypeId": 3472613,
+      "startDate": "2025-10-10T00:00:00Z",
+      "endDate": "2025-10-11T00:00:00Z",
+      "timeZone": "Europe/London",
+      "authType": "apiKey",
+      "apiKey": "cal_live_xxx"
+    }
+  }
+}
+```
+
+**Example 3: Cal.com (v2) - Create Booking (Minimal)**
+
+Create a booking using /v2/bookings.
+
+```json
+{
+  "automationType": "cal_com",
+  "nodeId": "calcom-v2-booking-001",
+  "nodeParams": {
+    "action": "appointment",
+    "params": {
+      "eventTypeId": 3472613,
+      "startDate": "2025-10-10T00:00:00Z",
+      "endDate": "2025-10-10T00:00:00Z",
+      "timeZone": "UTC",
+      "name": "Jane Smith",
+      "email": "jane@example.com",
+      "authType": "apiKey",
+      "apiKey": "cal_live_xxx",
+      "calApiVersion": "2024-08-13"
+    }
+  }
+}
+```
+
+**Example 4: Cal.com (v2) - Create Booking (Custom Fields + Routing)**
+
+Include bookingFieldsResponses and routing options.
+
+```json
+{
+  "automationType": "cal_com",
+  "nodeId": "calcom-v2-booking-002",
+  "nodeParams": {
+    "action": "appointment",
+    "params": {
+      "startDate": "2025-10-10T00:00:00Z",
+      "endDate": "2025-10-10T00:00:00Z",
+      "timeZone": "UTC",
+      "name": "Jane Smith",
+      "email": "jane@example.com",
+      "eventTypeSlug": "intro-call",
+      "teamSlug": "sales-emea",
+      "organizationSlug": "acme-corp",
+      "bookingFieldsResponses": {
+        "coding-language": "TypeScript",
+        "help-with": "Debugging"
+      },
+      "guests": ["guest1@example.com"],
+      "routing": {
+        "teamMemberIds": [101, 102],
+        "responseId": 555
+      },
+      "metadata": { "crmLeadId": "LEAD-1234" },
+      "authType": "apiKey",
+      "apiKey": "cal_live_xxx",
+      "calApiVersion": "2024-08-13"
+    }
+  }
+}
+```
+
+**Example 5: Cal.com (v2) - Action: orchestrate_booking**
+
+End-to-end: fetch metadata + slots and create a booking.
+
+```json
+{
+  "automationType": "cal_com",
+  "nodeId": "calcom-v2-orchestrate-001",
+  "nodeParams": {
+    "action": "orchestrate_booking",
+    "params": {
+      "authType": "apiKey",
+      "apiKey": "cal_live_xxx",
+      "eventTypeId": 3472613,
+      "startDate": "2025-10-01",
+      "endDate": "2025-10-07",
+      "timeZone": "UTC",
+      "attendee": {
+        "name": "API Tester",
+        "email": "apitester@example.com",
+        "language": "en"
+      }
+    }
+  }
+}
+```
+
+**Example 6: Cal.com (v2) - Action: bootstrap**
+
+Bootstrap booking metadata (event type details, available slots, etc.).
+
+```json
+{
+  "automationType": "cal_com",
+  "nodeId": "calcom-v2-bootstrap-001",
+  "nodeParams": {
+    "action": "bootstrap",
+    "params": {
+      "authType": "apiKey",
+      "apiKey": "cal_live_xxx",
+      "eventTypeId": 3472613,
+      "startDate": "2025-10-01",
+      "endDate": "2025-10-07",
+      "timeZone": "UTC"
+    }
+  }
+}
+```
+
+**Example 7: Cal.com (v2) - Action: list_event_types**
+
+List event types for the authenticated account.
+
+```json
+{
+  "automationType": "cal_com",
+  "nodeId": "calcom-v2-list-event-types-001",
+  "nodeParams": {
+    "action": "list_event_types",
+    "params": {
+      "authType": "apiKey",
+      "apiKey": "cal_live_xxx"
+    }
+  }
+}
+```
+
+**Example 8: Cal.com (v2) - Action: get_event_type**
+
+Get event type details including bookingFields.
+
+```json
+{
+  "automationType": "cal_com",
+  "nodeId": "calcom-v2-get-event-type-001",
+  "nodeParams": {
+    "action": "get_event_type",
+    "params": {
+      "id": 3472613,
+      "authType": "apiKey",
+      "apiKey": "cal_live_xxx"
+    }
+  }
+}
+```
+
+**Example 9: Cal.com (v2) - Action: get_team_memberships**
+
+List memberships for a team.
+
+```json
+{
+  "automationType": "cal_com",
+  "nodeId": "calcom-v2-get-memberships-001",
+  "nodeParams": {
+    "action": "get_team_memberships",
+    "params": {
+      "teamIdOrSlug": "sales-emea",
+      "authType": "apiKey",
+      "apiKey": "cal_live_xxx"
+    }
+  }
+}
+```
+
+**Example 10: Cal.com (v2) - Action: routing_create_response_and_slots**
+
+Create a routing form response and get available slots.
+
+```json
+{
+  "automationType": "cal_com",
+  "nodeId": "calcom-v2-routing-create-001",
+  "nodeParams": {
+    "action": "routing_create_response_and_slots",
+    "params": {
+      "organizationSlug": "acme-corp",
+      "formSlug": "route-demo",
+      "answers": { "region": "emea" },
+      "timeZone": "Europe/London",
+      "startDate": "2025-10-10",
+      "endDate": "2025-10-11",
+      "authType": "apiKey",
+      "apiKey": "cal_live_xxx"
+    }
+  }
+}
+```
+
+**Example 11: Cal.com (v2) - Action: routing_list_responses**
+
+List routing form responses.
+
+```json
+{
+  "automationType": "cal_com",
+  "nodeId": "calcom-v2-routing-list-001",
+  "nodeParams": {
+    "action": "routing_list_responses",
+    "params": {
+      "organizationSlug": "acme-corp",
+      "teamSlug": "sales-emea",
+      "formSlug": "route-demo",
+      "authType": "apiKey",
+      "apiKey": "cal_live_xxx"
+    }
+  }
+}
+```
+
+### Third-Party Documentation
+
+- [https://cal.com/docs/api-reference/v2](https://cal.com/docs/api-reference/v2)
+- [https://cal.com/docs/api-reference/v2/bookings/create-a-booking](https://cal.com/docs/api-reference/v2/bookings/create-a-booking)
+- [https://cal.com/docs/api-reference/v2/slots/get-available-time-slots-for-an-event-type](https://cal.com/docs/api-reference/v2/slots/get-available-time-slots-for-an-event-type)

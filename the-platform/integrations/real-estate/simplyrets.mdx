@@ -1,0 +1,77 @@
+---
+title: "SimplyRETS"
+description: "MLS listing data and property search"
+---
+
+### Description
+
+MLS listing data and property search. Use this integration to search for active MLS listings, get listing details, and check if properties are currently listed.
+
+### Authentication
+
+- SimplyRETS API Key.
+
+### Available Actions
+
+- Listing by address
+- Listing details by ID
+- Search listings
+
+### Examples
+
+**Example 1: SimplyRETS - Listing by Address**
+
+Check if a property is currently listed on MLS.
+
+```json
+{
+  "automationType": "simplyrets",
+  "nodeParams": {
+    "action": "listing_by_address",
+    "params": {
+      "apiKey": "YOUR_SIMPLYRETS_API_KEY",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+**Example 2: SimplyRETS - Listing Details**
+
+Get detailed MLS listing information.
+
+```json
+{
+  "automationType": "simplyrets",
+  "nodeParams": {
+    "action": "listing_details",
+    "params": {
+      "apiKey": "YOUR_SIMPLYRETS_API_KEY",
+      "listingId": "LISTING_ID"
+    }
+  }
+}
+```
+
+**Example 3: SimplyRETS - Search Listings**
+
+Search for active MLS listings.
+
+```json
+{
+  "automationType": "simplyrets",
+  "nodeParams": {
+    "action": "search_listings",
+    "params": {
+      "apiKey": "YOUR_SIMPLYRETS_API_KEY",
+      "city": "San Antonio",
+      "state": "TX",
+      "type": "Residential"
+    }
+  }
+}
+```
+
+### Third-Party Documentation
+
+- [https://simplyrets.com/api-docs/](https://simplyrets.com/api-docs/)

@@ -1,0 +1,43 @@
+---
+title: "Property Data Bundle"
+description: "Unified property data from multiple sources"
+---
+
+### Description
+
+Unified property data from multiple sources. Aggregates data from all property data APIs (RentCast, HouseCanary, ATTOM Foreclosure, ATTOM Property History, SimplyRETS, ATTOM Neighborhood, ATTOM Environmental) into a single unified response. Executes API calls in parallel for optimal performance.
+
+### Authentication
+
+- Multiple API keys required: RentCast, HouseCanary (API key + secret), ATTOM, SimplyRETS.
+
+### Available Actions
+
+- Complete property profile (aggregates all property data sources)
+
+### Examples
+
+**Example 1: Property Data Bundle - Complete Profile**
+
+Aggregates data from all 7 property data APIs into a single unified response. Executes API calls in parallel for optimal performance.
+
+```json
+{
+  "automationType": "property_data_bundle",
+  "nodeParams": {
+    "action": "complete_property_profile",
+    "params": {
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "rentcastApiKey": "YOUR_RENTCAST_API_KEY",
+      "housecanaryApiKey": "YOUR_HOUSECANARY_API_KEY",
+      "housecanaryApiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "attomApiKey": "YOUR_ATTOM_API_KEY",
+      "simplyretsApiKey": "YOUR_SIMPLYRETS_API_KEY"
+    }
+  }
+}
+```
+
+### Third-Party Documentation
+
+- Combines documentation from RentCast, HouseCanary, ATTOM, and SimplyRETS

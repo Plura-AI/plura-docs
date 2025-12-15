@@ -1,0 +1,113 @@
+---
+title: "Google Calendar"
+description: "Set and manage appointments in Google Calendar"
+---
+
+### Description
+
+Set and manage appointments in Google Calendar. Use this integration to check availability and create calendar events.
+
+### Authentication
+
+- OAuth 2.0 - Connect your Google account via the Plura OAuth flow.
+
+### Available Actions
+
+- Check availability
+- Create events
+
+### Examples
+
+**Example 1: Google Calendar - Check Availability**
+
+Check calendar availability for scheduling meetings.
+
+```json
+{
+  "automationType": "google_calendar",
+  "nodeId": "gcal-availability-001",
+  "nodeParams": {
+    "action": "availability",
+    "params": {
+      "startDate": "2025-01-20T00:00:00Z",
+      "endDate": "2025-01-21T23:59:59Z",
+      "timezone": "America/New_York",
+      "bufferMinutes": 15,
+      "workingHours": [
+        { "day": "monday", "startTime": "09:00", "endTime": "17:00", "isWorkingDay": true },
+        { "day": "tuesday", "startTime": "09:00", "endTime": "17:00", "isWorkingDay": true }
+      ]
+    }
+  }
+}
+```
+
+**Example 2: Google Calendar - Create Event**
+
+Create a calendar event.
+
+```json
+{
+  "automationType": "google_calendar",
+  "nodeId": "gcal-create-event-001",
+  "nodeParams": {
+    "action": "appointment",
+    "params": {
+      "summary": "Client Meeting",
+      "description": "Meeting Description",
+      "startTime": "2025-01-21T10:00:00.000Z",
+      "endTime": "2025-01-21T11:00:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Conference Room A, Main Office",
+      "attendees": [
+        "john.smith@acme.com",
+        "sarah.wilson@acme.com",
+        "organizer@company.com"
+      ],
+      "sendUpdates": "all",
+      "reminderMinutes": [15, 60],
+      "visibility": "default",
+      "status": "confirmed",
+      "colorId": "2"
+    }
+  }
+}
+```
+
+**Example 3: Google Calendar - Create Event (customFields + callData)**
+
+Demonstrates resolving params from callData via customFields.
+
+```json
+{
+  "automationType": "google_calendar",
+  "nodeId": "gcal-create-event-002",
+  "nodeParams": {
+    "action": "appointment",
+    "params": {
+      "summary": "My Summary",
+      "description": "My Event Description",
+      "startTime": "custom_field_1",
+      "endTime": "custom_field_2",
+      "durationMinutes": 30,
+      "location": "Room Test",
+      "timezone": "America/Creston",
+      "attendees": ["user@example.com"],
+      "sendUpdates": "all",
+      "reminderMinutes": [],
+      "visibility": "public",
+      "status": "tentative",
+      "colorId": "9",
+      "customFields": [
+        { "field": "startTime", "customFieldEnabled": true },
+        { "field": "endTime", "customFieldEnabled": true }
+      ]
+    }
+  }
+}
+```
+
+### Third-Party Documentation
+
+- [https://developers.google.com/calendar/api/guides/overview](https://developers.google.com/calendar/api/guides/overview)
+- [https://developers.google.com/calendar/api/v3/reference/events](https://developers.google.com/calendar/api/v3/reference/events)

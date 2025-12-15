@@ -1,0 +1,495 @@
+---
+title: "Ringba"
+description: "AI-powered call tracking and routing through Ringba integration"
+---
+
+### Description
+
+AI-powered call tracking and routing through Ringba integration. Use this integration to manage campaigns, calls, targets, numbers, webhooks, and call logs.
+
+### Authentication
+
+- Ringba API Token.
+
+### Available Actions
+
+- List/get/update campaigns
+- Get/annotate calls
+- Get account info
+- Manage targets (get/create)
+- Manage numbers (create/get/delete)
+- Work with webhooks (list, get, create conversion)
+- Query call logs (columns, tags, detail, export)
+- Blacklist numbers
+- Raw API requests
+
+### Examples
+
+**Example 1: Ringba - Get Account Info**
+
+Fetch Ringba accounts available for the API token.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-get-account-info-001",
+  "nodeParams": {
+    "action": "get_account_info",
+    "params": {
+      "apiToken": "RINGBA_API_TOKEN"
+    }
+  }
+}
+```
+
+**Example 2: Ringba - List Campaigns**
+
+List campaigns for an account.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-list-campaigns-001",
+  "nodeParams": {
+    "action": "list_campaigns",
+    "params": {
+      "apiToken": "RINGBA_API_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "query": { "limit": 10 }
+    }
+  }
+}
+```
+
+**Example 3: Ringba - Get Campaign**
+
+Retrieve details for a campaign by ID.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-campaigns-get-001",
+  "nodeParams": {
+    "action": "campaigns_get",
+    "params": {
+      "apiToken": "RINGBA_API_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "campaignId": "CAMPAIGN_ID"
+    }
+  }
+}
+```
+
+**Example 4: Ringba - Update Campaign**
+
+Update campaign fields by ID.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-campaigns-update-001",
+  "nodeParams": {
+    "action": "campaigns_update",
+    "params": {
+      "apiToken": "RINGBA_API_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "campaignId": "CAMPAIGN_ID",
+      "body": {
+        "userCampaignId": "API Demo Campaign"
+      }
+    }
+  }
+}
+```
+
+**Example 5: Ringba - Get Call**
+
+Retrieve a call by inboundCallId.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-get-call-001",
+  "nodeParams": {
+    "action": "get_call",
+    "params": {
+      "apiToken": "RINGBA_API_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "inboundCallId": "INBOUND_CALL_ID"
+    }
+  }
+}
+```
+
+**Example 6: Ringba - Annotate Call**
+
+Add annotation tags to a call.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-annotate-call-001",
+  "nodeParams": {
+    "action": "annotate_call",
+    "params": {
+      "apiToken": "RINGBA_API_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "inboundCallId": "INBOUND_CALL_ID",
+      "tags": [
+        { "tagName": "Annotation", "tagType": "Annotations", "tagValue": "test" }
+      ]
+    }
+  }
+}
+```
+
+**Example 7: Ringba - Get Target**
+
+Retrieve details for a target by ID.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-targets-get-001",
+  "nodeParams": {
+    "action": "targets_get",
+    "params": {
+      "apiToken": "RINGBA_API_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "targetId": "TARGET_ID"
+    }
+  }
+}
+```
+
+**Example 8: Ringba - Create Target**
+
+Create a target with minimal required fields.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-targets-create-001",
+  "nodeParams": {
+    "action": "targets_create",
+    "params": {
+      "apiToken": "RINGBA_API_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "body": {
+        "userTargetId": "API Target",
+        "enabled": true
+      }
+    }
+  }
+}
+```
+
+**Example 9: Ringba - Create Number**
+
+Purchase/allocate a new number (charges may apply).
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-numbers-create-001",
+  "nodeParams": {
+    "action": "numbers_create",
+    "params": {
+      "apiToken": "RINGBA_API_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "body": {
+        "countryCode": "US",
+        "isTollFree": false,
+        "chargeAccountIfNeeded": true,
+        "areaCode": "213"
+      }
+    }
+  }
+}
+```
+
+**Example 10: Ringba - Get Number**
+
+Get details for a number by ID.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-numbers-get-001",
+  "nodeParams": {
+    "action": "numbers_get",
+    "params": {
+      "apiToken": "RINGBA_API_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "numberId": "NUMBER_ID"
+    }
+  }
+}
+```
+
+**Example 11: Ringba - Delete Number**
+
+Release a number (use with caution).
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-numbers-delete-001",
+  "nodeParams": {
+    "action": "numbers_delete",
+    "params": {
+      "apiToken": "RINGBA_API_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "numberId": "NUMBER_ID",
+      "query": { "unlink": true }
+    }
+  }
+}
+```
+
+**Example 12: Ringba - List Webhooks**
+
+List webhooks configured for an account.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-list-webhooks-001",
+  "nodeParams": {
+    "action": "list_webhooks",
+    "params": {
+      "apiToken": "RINGBA_API_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID"
+    }
+  }
+}
+```
+
+**Example 13: Ringba - List Webhooks (WebHooks)**
+
+List webhooks via WebHooks endpoint (per collection).
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-webhooks-get-v2-001",
+  "nodeParams": {
+    "action": "webhooks_get_v2",
+    "params": {
+      "apiToken": "RINGBA_API_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID"
+    }
+  }
+}
+```
+
+**Example 14: Ringba - Get Single Webhook**
+
+Retrieve a webhook by webHookId.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-webhook-get-001",
+  "nodeParams": {
+    "action": "webhook_get",
+    "params": {
+      "apiToken": "RINGBA_API_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "webHookId": "WHxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    }
+  }
+}
+```
+
+**Example 15: Ringba - Create Conversion Webhook**
+
+Create a conversion webhook using WebHooks/CreateConversion.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-webhooks-create-conv-001",
+  "nodeParams": {
+    "action": "webhooks_create_conversion",
+    "params": {
+      "apiToken": "RINGBA_API_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "body": {
+        "name": "New Webhook",
+        "incomingCallIdQueryStringParameter": "call_id",
+        "conversionAmountQueryStringParameter": "call_revenue",
+        "conversionCriteriaParameterMatch": "sale_successful=yes"
+      }
+    }
+  }
+}
+```
+
+**Example 16: Ringba - Call Logs: Columns**
+
+Get call log column names for reporting.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-calllogs-columns-001",
+  "nodeParams": {
+    "action": "calllogs_get_columns",
+    "params": {
+      "apiToken": "RINGBA_API_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID"
+    }
+  }
+}
+```
+
+**Example 17: Ringba - Call Logs: Tags**
+
+List all tag types and names available for filtering call logs.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-calllogs-tags-001",
+  "nodeParams": {
+    "action": "calllogs_tags",
+    "params": {
+      "apiToken": "RINGBA_API_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID"
+    }
+  }
+}
+```
+
+**Example 18: Ringba - Call Logs: Basic Report**
+
+Create a call log report for a date range with defaults.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-calllogs-post-001",
+  "nodeParams": {
+    "action": "calllogs_post",
+    "params": {
+      "apiToken": "RINGBA_API_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "body": {
+        "reportStart": "2025-01-01T00:00:00Z",
+        "reportEnd": "2025-01-02T00:00:00Z",
+        "size": 10,
+        "offset": 0
+      }
+    }
+  }
+}
+```
+
+**Example 19: Ringba - Call Logs: Detail by InboundCallIds**
+
+Get detailed info for one or more InboundCallIds.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-calllogs-detail-001",
+  "nodeParams": {
+    "action": "calllogs_detail",
+    "params": {
+      "apiToken": "RINGBA_API_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "body": {
+        "InboundCallIds": ["INBOUND_CALL_ID"]
+      }
+    }
+  }
+}
+```
+
+**Example 20: Ringba - Call Logs: Export CSV (Create Job)**
+
+Create an export job for a date range.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-calllogs-export-001",
+  "nodeParams": {
+    "action": "calllogs_export_csv",
+    "params": {
+      "apiToken": "RINGBA_API_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "body": {
+        "reportStart": "2025-01-01T00:00:00Z",
+        "reportEnd": "2025-01-02T00:00:00Z"
+      }
+    }
+  }
+}
+```
+
+**Example 21: Ringba - Call Logs: Export CSV (Check Status)**
+
+Check an export job status by csvJobId.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-calllogs-export-status-001",
+  "nodeParams": {
+    "action": "calllogs_export_status",
+    "params": {
+      "apiToken": "RINGBA_API_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "csvJobId": "CSV_JOB_ID"
+    }
+  }
+}
+```
+
+**Example 22: Ringba - Blacklist Number**
+
+Add a phone number to compliance blacklist.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-blacklist-001",
+  "nodeParams": {
+    "action": "blacklist_number",
+    "params": {
+      "apiToken": "RINGBA_API_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "body": {
+        "phoneNumber": "+15551234567",
+        "reason": "DNC"
+      }
+    }
+  }
+}
+```
+
+**Example 23: Ringba - Raw Request**
+
+Call any Ringba endpoint under /v2.
+
+```json
+{
+  "automationType": "ringba",
+  "nodeId": "ringba-raw-request-001",
+  "nodeParams": {
+    "action": "raw_request",
+    "params": {
+      "apiToken": "RINGBA_API_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "method": "GET",
+      "path": "/v2/YOUR_ACCOUNT_ID/campaigns"
+    }
+  }
+}
+```
+
+### Third-Party Documentation
+
+- [https://ringba.readme.io/](https://ringba.readme.io/)

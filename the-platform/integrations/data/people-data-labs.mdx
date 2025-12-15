@@ -1,0 +1,140 @@
+---
+title: "People Data Labs"
+description: "Enrich conversations with real-time professional and demographic data"
+---
+
+### Description
+
+Enrich conversations with real-time professional and demographic data. Use this integration for person and company enrichment, search, IP enrichment, and raw API requests.
+
+### Authentication
+
+- People Data Labs API Key.
+
+### Available Actions
+
+- Person enrichment
+- Person search
+- Person bulk enrichment
+- Company enrichment
+- Company search
+- IP enrichment
+- Raw API requests
+
+### Examples
+
+**Example 1: PDL - Person Enrich**
+
+Enrich a person by email/phone/profile.
+
+```json
+{
+  "automationType": "peopledatalabs",
+  "nodeId": "pdl-person-enrich-001",
+  "nodeParams": {
+    "action": "person_enrich",
+    "params": {
+      "apiKey": "pdl_key_xxx",
+      "identifiers": {
+        "email": "sean@peopledatalabs.com"
+      }
+    }
+  }
+}
+```
+
+**Example 2: PDL - Person Search**
+
+Search persons using Elasticsearch-style DSL.
+
+```json
+{
+  "automationType": "peopledatalabs",
+  "nodeId": "pdl-person-search-001",
+  "nodeParams": {
+    "action": "person_search",
+    "params": {
+      "apiKey": "pdl_key_xxx",
+      "body": {
+        "query": {
+          "bool": {
+            "must": [
+              { "term": { "job_title": "director" } }
+            ]
+          }
+        },
+        "size": 3
+      }
+    }
+  }
+}
+```
+
+**Example 3: PDL - Company Enrich**
+
+Enrich a company by domain or name.
+
+```json
+{
+  "automationType": "peopledatalabs",
+  "nodeId": "pdl-company-enrich-001",
+  "nodeParams": {
+    "action": "company_enrich",
+    "params": {
+      "apiKey": "pdl_key_xxx",
+      "identifiers": {
+        "domain": "google.com"
+      }
+    }
+  }
+}
+```
+
+**Example 4: PDL - IP Enrich**
+
+Enrich an IP to retrieve location/company metadata.
+
+```json
+{
+  "automationType": "peopledatalabs",
+  "nodeId": "pdl-ip-enrich-001",
+  "nodeParams": {
+    "action": "ip_enrich",
+    "params": {
+      "apiKey": "pdl_key_xxx",
+      "query": {
+        "ip": "8.8.8.8"
+      }
+    }
+  }
+}
+```
+
+**Example 5: PDL - Raw Request**
+
+Call any PDL endpoint under /v5.
+
+```json
+{
+  "automationType": "peopledatalabs",
+  "nodeId": "pdl-raw-request-001",
+  "nodeParams": {
+    "action": "raw_request",
+    "params": {
+      "apiKey": "pdl_key_xxx",
+      "method": "GET",
+      "path": "/v5/person/enrich",
+      "query": {
+        "email": "sean@peopledatalabs.com"
+      }
+    }
+  }
+}
+```
+
+### Third-Party Documentation
+
+- [https://docs.peopledatalabs.com/](https://docs.peopledatalabs.com/)
+- [https://docs.peopledatalabs.com/docs/person-enrichment-api](https://docs.peopledatalabs.com/docs/person-enrichment-api)
+- [https://docs.peopledatalabs.com/docs/person-search-api](https://docs.peopledatalabs.com/docs/person-search-api)
+- [https://docs.peopledatalabs.com/docs/company-enrichment-api](https://docs.peopledatalabs.com/docs/company-enrichment-api)

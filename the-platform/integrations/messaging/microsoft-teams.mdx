@@ -1,0 +1,100 @@
+---
+title: "Microsoft Teams"
+description: "Send messages and create meetings in Microsoft Teams"
+---
+
+### Description
+
+Send messages and create meetings in Microsoft Teams. Use this integration to create meetings, send channel messages, and send chat messages.
+
+### Authentication
+
+- OAuth 2.0 - Connect your Microsoft 365 account via the Plura OAuth flow.
+
+### Available Actions
+
+- Create meetings
+- Send channel messages
+- Send chat messages (1:1 or group)
+
+### Examples
+
+**Example 1: Microsoft Teams - Create Meeting**
+
+Create a comprehensive Teams meeting.
+
+```json
+{
+  "automationType": "microsoft_teams",
+  "nodeId": "teams-meeting-001",
+  "nodeParams": {
+    "action": "create_meeting",
+    "params": {
+      "subject": "URGENT: Security Incident Response Meeting",
+      "startDateTime": "2025-01-20T09:00:00.000Z",
+      "endDateTime": "2025-01-20T10:30:00.000Z",
+      "body": "Emergency meeting to address the recent security incident and coordinate response efforts.",
+      "location": "Virtual - Teams Meeting",
+      "isOnlineMeeting": true,
+      "allowMeetingChat": "enabled",
+      "attendees": [
+        "security.team@company.com",
+        "incident.response@company.com",
+        "cto@company.com",
+        "compliance@company.com"
+      ]
+    }
+  }
+}
+```
+
+**Example 2: Microsoft Teams - Send Channel Message**
+
+Send a message to a Teams channel.
+
+```json
+{
+  "automationType": "microsoft_teams",
+  "nodeId": "teams-channel-message-001",
+  "nodeParams": {
+    "action": "send_message",
+    "params": {
+      "messageType": "channel",
+      "teamId": "your-team-id",
+      "channelId": "your-channel-id",
+      "message": "Campaign Analysis Complete: {{transcript}}",
+      "contentType": "html",
+      "mentions": [
+        { "id": "user-sarah-marketing", "name": "Sarah Johnson", "type": "user" },
+        { "id": "user-mike-analytics", "name": "Mike Davis", "type": "user" }
+      ]
+    }
+  }
+}
+```
+
+**Example 3: Microsoft Teams - Send Chat Message**
+
+Send a 1:1 or group chat message.
+
+```json
+{
+  "automationType": "microsoft_teams",
+  "nodeId": "teams-chat-message-001",
+  "nodeParams": {
+    "action": "send_message",
+    "params": {
+      "messageType": "chat",
+      "chatId": "your-chat-id",
+      "message": "Hello from E2E chat variant",
+      "contentType": "text"
+    }
+  }
+}
+```
+
+### Third-Party Documentation
+
+- [https://learn.microsoft.com/en-us/graph/overview](https://learn.microsoft.com/en-us/graph/overview)
+- [https://learn.microsoft.com/en-us/graph/api/resources/calendar](https://learn.microsoft.com/en-us/graph/api/resources/calendar)
+- [https://learn.microsoft.com/en-us/graph/api/resources/chat](https://learn.microsoft.com/en-us/graph/api/resources/chat)

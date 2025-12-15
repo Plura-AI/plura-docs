@@ -1,0 +1,318 @@
+---
+title: "RentCast"
+description: "Property data and rental market intelligence"
+---
+
+### Description
+
+Property data and rental market intelligence. Use this integration to search properties, retrieve listings, get value and rent estimates, and access market statistics.
+
+### Authentication
+
+- RentCast API Key.
+
+### Available Actions
+
+- Property by address or ID
+- Properties search (city/state/zip/radius)
+- Sale listings search
+- Rental listings search
+- Value and rent estimates
+- Market statistics
+
+### Examples
+
+**Example 1: RentCast - Property by Address**
+
+Retrieve property data for a specific address.
+
+```json
+{
+  "automationType": "rentcast",
+  "nodeParams": {
+    "action": "property_by_address",
+    "params": {
+      "apiKey": "YOUR_RENTCAST_API_KEY",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+**Example 2: RentCast - Properties Search (City/State)**
+
+Search properties in a city/state with filters.
+
+```json
+{
+  "automationType": "rentcast",
+  "nodeParams": {
+    "action": "properties_search",
+    "params": {
+      "apiKey": "YOUR_RENTCAST_API_KEY",
+      "city": "Austin",
+      "state": "TX",
+      "bedrooms": "3",
+      "bathrooms": "2",
+      "limit": 10,
+      "offset": 0
+    }
+  }
+}
+```
+
+**Example 3: RentCast - Sale Listings (Multi Values)**
+
+Find sale listings with multi-value filters.
+
+```json
+{
+  "automationType": "rentcast",
+  "nodeParams": {
+    "action": "listings_sale",
+    "params": {
+      "apiKey": "YOUR_RENTCAST_API_KEY",
+      "city": "Austin",
+      "state": "TX",
+      "propertyType": "Condo|Townhouse",
+      "bedrooms": "2|3",
+      "limit": 10,
+      "offset": 0
+    }
+  }
+}
+```
+
+**Example 4: RentCast - Rental Listings (Ranges)**
+
+Find rental listings using ranges for price and daysOld.
+
+```json
+{
+  "automationType": "rentcast",
+  "nodeParams": {
+    "action": "listings_rental_long_term",
+    "params": {
+      "apiKey": "YOUR_RENTCAST_API_KEY",
+      "city": "Austin",
+      "state": "TX",
+      "bedrooms": "2:4",
+      "price": "1200:*",
+      "daysOld": "*:30",
+      "limit": 10,
+      "offset": 0
+    }
+  }
+}
+```
+
+**Example 5: RentCast - Sale Listings (Radius Search)**
+
+Search listings within a radius using lat/long.
+
+```json
+{
+  "automationType": "rentcast",
+  "nodeParams": {
+    "action": "listings_sale",
+    "params": {
+      "apiKey": "YOUR_RENTCAST_API_KEY",
+      "latitude": 33.45141,
+      "longitude": -112.073827,
+      "radius": 5,
+      "bedrooms": "3",
+      "bathrooms": "2",
+      "limit": 10,
+      "offset": 0
+    }
+  }
+}
+```
+
+**Example 6: RentCast - Properties Search (Zip Only)**
+
+Search properties using zip code only.
+
+```json
+{
+  "automationType": "rentcast",
+  "nodeParams": {
+    "action": "properties_search",
+    "params": {
+      "apiKey": "YOUR_RENTCAST_API_KEY",
+      "zipCode": "78701",
+      "bedrooms": "1:3",
+      "yearBuilt": "2000:*",
+      "limit": 10,
+      "offset": 0
+    }
+  }
+}
+```
+
+**Example 7: RentCast - Rental Listings (Radius Search)**
+
+Search rental listings within a radius using lat/long.
+
+```json
+{
+  "automationType": "rentcast",
+  "nodeParams": {
+    "action": "listings_rental_long_term",
+    "params": {
+      "apiKey": "YOUR_RENTCAST_API_KEY",
+      "latitude": 33.45141,
+      "longitude": -112.073827,
+      "radius": 5,
+      "price": "*:2500",
+      "daysOld": "*:30",
+      "limit": 10,
+      "offset": 0
+    }
+  }
+}
+```
+
+**Example 8: RentCast - Property by ID**
+
+Retrieve property data by ID.
+
+```json
+{
+  "automationType": "rentcast",
+  "nodeParams": {
+    "action": "property_by_id",
+    "params": {
+      "apiKey": "YOUR_RENTCAST_API_KEY",
+      "id": "PROPERTY_ID"
+    }
+  }
+}
+```
+
+**Example 9: RentCast - Random Properties**
+
+Retrieve random property records.
+
+```json
+{
+  "automationType": "rentcast",
+  "nodeParams": {
+    "action": "properties_random",
+    "params": {
+      "apiKey": "YOUR_RENTCAST_API_KEY",
+      "limit": 3
+    }
+  }
+}
+```
+
+**Example 10: RentCast - Sale Listing by ID**
+
+Retrieve specific sale listing by ID.
+
+```json
+{
+  "automationType": "rentcast",
+  "nodeParams": {
+    "action": "listing_sale_by_id",
+    "params": {
+      "apiKey": "YOUR_RENTCAST_API_KEY",
+      "id": "SALE_LISTING_ID"
+    }
+  }
+}
+```
+
+**Example 11: RentCast - Rental Listing by ID**
+
+Retrieve specific rental listing by ID.
+
+```json
+{
+  "automationType": "rentcast",
+  "nodeParams": {
+    "action": "listing_rental_by_id",
+    "params": {
+      "apiKey": "YOUR_RENTCAST_API_KEY",
+      "id": "RENTAL_LISTING_ID"
+    }
+  }
+}
+```
+
+**Example 12: RentCast - Value Estimate**
+
+Get property value estimate by address.
+
+```json
+{
+  "automationType": "rentcast",
+  "nodeParams": {
+    "action": "value_estimate",
+    "params": {
+      "apiKey": "YOUR_RENTCAST_API_KEY",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+**Example 13: RentCast - Rent Estimate**
+
+Get property rent estimate by address.
+
+```json
+{
+  "automationType": "rentcast",
+  "nodeParams": {
+    "action": "rent_estimate",
+    "params": {
+      "apiKey": "YOUR_RENTCAST_API_KEY",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+**Example 14: RentCast - Market Statistics (Zip Code)**
+
+Get market statistics for a zip code. Returns sale and rental market data, trends, and statistics.
+
+```json
+{
+  "automationType": "rentcast",
+  "nodeParams": {
+    "action": "market_statistics",
+    "params": {
+      "apiKey": "YOUR_RENTCAST_API_KEY",
+      "zipCode": "78701"
+    }
+  }
+}
+```
+
+**Example 15: RentCast - Market Statistics (City/State)**
+
+Get market statistics for a city and state. Returns sale and rental market data, trends, and statistics.
+
+```json
+{
+  "automationType": "rentcast",
+  "nodeParams": {
+    "action": "market_statistics",
+    "params": {
+      "apiKey": "YOUR_RENTCAST_API_KEY",
+      "city": "Austin",
+      "state": "TX"
+    }
+  }
+}
+```
+
+### Third-Party Documentation
+
+- [https://developers.rentcast.io/reference/search-queries](https://developers.rentcast.io/reference/search-queries)
+- [https://developers.rentcast.io/reference/property-record-by-id](https://developers.rentcast.io/reference/property-record-by-id)
+- [https://developers.rentcast.io/reference/value-estimate](https://developers.rentcast.io/reference/value-estimate)
+- [https://developers.rentcast.io/reference/market-statistics](https://developers.rentcast.io/reference/market-statistics)

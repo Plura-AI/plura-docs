@@ -1,0 +1,63 @@
+---
+title: "Zapier"
+description: "Custom automations with Zapier"
+---
+
+### Description
+
+Custom automations with Zapier. Use this integration to trigger Zapier webhooks and send Slack messages via Zapier.
+
+### Authentication
+
+- Zapier webhook URL registered for your node.
+
+### Available Actions
+
+- Trigger Zapier webhook
+- Send Slack message via Zapier
+
+### Examples
+
+**Example 1: Zapier Slack - Basic Message**
+
+Send a basic Slack message via Zapier webhook with minimal parameters.
+
+```json
+{
+  "automationType": "zapier",
+  "nodeId": "zapier-slack-basic-001",
+  "nodeParams": {
+    "action": "send_slack_message",
+    "params": {
+      "channel": "#development",
+      "message_template": "Update: {{transcript}}",
+      "bot_username": "PluraBot",
+      "parse_mode": "full"
+    }
+  }
+}
+```
+
+**Example 2: Zapier - Trigger dedicated webhook(s) by node**
+
+Trigger Zapier webhook(s) registered for a specific automation node.
+
+```json
+{
+  "automationType": "zapier",
+  "nodeId": "zapier-trigger-001",
+  "nodeParams": {
+    "action": "trigger_zapier_webhook",
+    "params": {
+      "node_id": "064febb3-c40f-4ce3-96c1-96283211d3bc",
+      "payload": {
+        "example": "data"
+      }
+    }
+  }
+}
+```
+
+### Third-Party Documentation
+
+- [https://zapier.com/apps/webhook/integrations](https://zapier.com/apps/webhook/integrations)

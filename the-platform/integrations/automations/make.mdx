@@ -1,0 +1,42 @@
+---
+title: "Make"
+description: "Make Integration for Streamlined Workflows"
+---
+
+### Description
+
+Make Integration for Streamlined Workflows. Use this integration to trigger Make.com webhooks from Plura automations.
+
+### Authentication
+
+- Make.com webhook URL registered for your node.
+
+### Available Actions
+
+- Trigger Make webhook
+
+### Examples
+
+**Example 1: Make.com - Trigger dedicated webhook by node**
+
+Trigger Make.com webhook(s) registered for a specific node (and optional journey).
+
+```json
+{
+  "automationType": "make_com",
+  "nodeId": "makecom-trigger-001",
+  "nodeParams": {
+    "action": "trigger_make_webhook",
+    "params": {
+      "node_id": "064febb3-c40f-4ce3-96c1-96283211d3bc",
+      "payload": {
+        "example": "data"
+      }
+    }
+  }
+}
+```
+
+### Third-Party Documentation
+
+- [https://www.make.com/en/help/tools/webhooks](https://www.make.com/en/help/tools/webhooks)

@@ -1,0 +1,490 @@
+---
+title: "Shopify"
+description: "AI-powered order, customer, and product syncing for Shopify"
+---
+
+### Description
+
+AI-powered order, customer, and product syncing for Shopify. Use this integration to manage orders, customers, products, fulfillments, and draft orders.
+
+### Authentication
+
+- Shopify Admin API Access Token.
+
+### Available Actions
+
+- List products
+- Create/find/update/cancel orders
+- Get order status
+- Manage fulfillments (create, update tracking, cancel, hold, release)
+- Get fulfillment orders
+- List/find customers
+- List customer orders
+- Update order shipping address and status
+- Draft order operations
+- Order edit operations (begin, add variant, commit)
+- List price lists (B2B)
+
+### Examples
+
+**Example 1: Shopify - List Products**
+
+List products using Admin GraphQL API with filters.
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-products-001",
+  "nodeParams": {
+    "action": "list_products",
+    "params": {
+      "shop": "plura-integrations.myshopify.com",
+      "limit": 50,
+      "sortBy": "updated_at",
+      "order": "desc",
+      "vendor": "Acme",
+      "title": "Widget"
+    }
+  }
+}
+```
+
+**Example 2: Shopify - Create Order**
+
+Create a new order.
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-create-order-001",
+  "nodeParams": {
+    "action": "create_order",
+    "params": {
+      "shop": "plura-integrations.myshopify.com",
+      "body": {
+        "email": "customer@example.com",
+        "line_items": [
+          { "variant_id": 447654529, "quantity": 1 },
+          { "variant_id": 447654530, "quantity": 2 }
+        ],
+        "billing_address": {
+          "first_name": "John",
+          "last_name": "Doe",
+          "address1": "123 Elm St",
+          "city": "NYC",
+          "province": "NY",
+          "country": "US",
+          "zip": "10001"
+        },
+        "shipping_address": {
+          "first_name": "John",
+          "last_name": "Doe",
+          "address1": "123 Elm St",
+          "city": "NYC",
+          "province": "NY",
+          "country": "US",
+          "zip": "10001"
+        }
+      }
+    }
+  }
+}
+```
+
+**Example 3: Shopify - Find Order By ID**
+
+Get order by id.
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-find-order-001",
+  "nodeParams": {
+    "action": "find_order",
+    "params": {
+      "shop": "plura-integrations.myshopify.com",
+      "orderId": "6343986868334"
+    }
+  }
+}
+```
+
+**Example 4: Shopify - Get Order Status**
+
+Get order status by id.
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-order-status-001",
+  "nodeParams": {
+    "action": "get_order_status",
+    "params": {
+      "shop": "plura-integrations.myshopify.com",
+      "orderId": "6343986868334"
+    }
+  }
+}
+```
+
+**Example 5: Shopify - Get Order Fulfillments**
+
+Get fulfillments for order.
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-order-fulfillments-001",
+  "nodeParams": {
+    "action": "get_fulfillments",
+    "params": {
+      "shop": "plura-integrations.myshopify.com",
+      "orderId": "6343986868334"
+    }
+  }
+}
+```
+
+**Example 6: Shopify - Get Fulfillment Orders**
+
+List fulfillment orders for an order.
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-get-fo-001",
+  "nodeParams": {
+    "action": "get_fulfillment_orders",
+    "params": {
+      "shop": "plura-integrations.myshopify.com",
+      "orderId": "6343986868334",
+      "limit": 50
+    }
+  }
+}
+```
+
+**Example 7: Shopify - Create Fulfillment**
+
+Create fulfillment for a fulfillment order.
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-create-fulfillment-001",
+  "nodeParams": {
+    "action": "create_fulfillment",
+    "params": {
+      "shop": "plura-integrations.myshopify.com",
+      "fulfillmentOrderId": "gid://shopify/FulfillmentOrder/111111111",
+      "lineItems": [
+        { "fulfillmentOrderLineItemId": "gid://shopify/FulfillmentOrderLineItem/22222222", "quantity": 1 }
+      ],
+      "trackingNumber": "1Z999AA10123456784",
+      "trackingUrl": "https://carrier/track/1Z999AA10123456784",
+      "trackingCompany": "UPS",
+      "notifyCustomer": true
+    }
+  }
+}
+```
+
+**Example 8: Shopify - Update Fulfillment Tracking**
+
+Update tracking info for a fulfillment.
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-update-fulfillment-tracking-001",
+  "nodeParams": {
+    "action": "update_fulfillment_tracking",
+    "params": {
+      "shop": "plura-integrations.myshopify.com",
+      "fulfillmentId": "gid://shopify/Fulfillment/33333333",
+      "trackingNumber": "9400111899223947189878",
+      "trackingCompany": "USPS"
+    }
+  }
+}
+```
+
+**Example 9: Shopify - Cancel Fulfillment**
+
+Cancel a fulfillment.
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-cancel-fulfillment-001",
+  "nodeParams": {
+    "action": "cancel_fulfillment",
+    "params": {
+      "shop": "plura-integrations.myshopify.com",
+      "fulfillmentId": "gid://shopify/Fulfillment/33333333"
+    }
+  }
+}
+```
+
+**Example 10: Shopify - Hold Fulfillment Order**
+
+Place fulfillment order on hold.
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-hold-fo-001",
+  "nodeParams": {
+    "action": "hold_fulfillment",
+    "params": {
+      "shop": "plura-integrations.myshopify.com",
+      "fulfillmentOrderId": "gid://shopify/FulfillmentOrder/111111111",
+      "holdReason": "OTHER"
+    }
+  }
+}
+```
+
+**Example 11: Shopify - Release Fulfillment Hold**
+
+Release fulfillment order hold.
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-release-hold-001",
+  "nodeParams": {
+    "action": "release_fulfillment_hold",
+    "params": {
+      "shop": "plura-integrations.myshopify.com",
+      "fulfillmentOrderId": "gid://shopify/FulfillmentOrder/111111111"
+    }
+  }
+}
+```
+
+**Example 12: Shopify - Update Order Shipping Address**
+
+Update an order shipping address.
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-update-shipping-001",
+  "nodeParams": {
+    "action": "update_order_shipping_address",
+    "params": {
+      "shop": "plura-integrations.myshopify.com",
+      "orderId": "6343986868334",
+      "shippingAddress": {
+        "firstName": "Jane",
+        "lastName": "Doe",
+        "address1": "123 New St",
+        "city": "NYC",
+        "province": "NY",
+        "country": "US",
+        "zip": "10001"
+      }
+    }
+  }
+}
+```
+
+**Example 13: Shopify - List Customers**
+
+List customers (no protected fields required).
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-list-customers-001",
+  "nodeParams": {
+    "action": "list_customers",
+    "params": {
+      "shop": "plura-integrations.myshopify.com",
+      "limit": 50
+    }
+  }
+}
+```
+
+**Example 14: Shopify - Find Customer By ID**
+
+Get a customer by id.
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-find-customer-001",
+  "nodeParams": {
+    "action": "find_customer",
+    "params": {
+      "shop": "plura-integrations.myshopify.com",
+      "customerId": "6812345678901"
+    }
+  }
+}
+```
+
+**Example 15: Shopify - List Orders for Customer**
+
+List orders for a specific customer.
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-customer-orders-001",
+  "nodeParams": {
+    "action": "list_customer_orders",
+    "params": {
+      "shop": "plura-integrations.myshopify.com",
+      "customerId": "6812345678901",
+      "limit": 50
+    }
+  }
+}
+```
+
+**Example 16: Shopify - Update Order Status**
+
+Update financial and fulfillment status.
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-update-order-status-001",
+  "nodeParams": {
+    "action": "update_order_status",
+    "params": {
+      "shop": "plura-integrations.myshopify.com",
+      "orderId": "6343986868334",
+      "financialStatus": "paid",
+      "fulfillmentStatus": "fulfilled"
+    }
+  }
+}
+```
+
+**Example 17: Shopify - Draft Order Create**
+
+Create a draft order.
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-draft-create-001",
+  "nodeParams": {
+    "action": "draft_order_create",
+    "params": {
+      "shop": "plura-integrations.myshopify.com",
+      "body": {
+        "email": "buyer@example.com",
+        "lineItems": [
+          { "quantity": 1, "variantId": "gid://shopify/ProductVariant/447654529" }
+        ]
+      }
+    }
+  }
+}
+```
+
+**Example 18: Shopify - Order Edit Begin**
+
+Begin an order edit session.
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-edit-begin-001",
+  "nodeParams": {
+    "action": "order_edit_begin",
+    "params": {
+      "shop": "plura-integrations.myshopify.com",
+      "orderId": "6343986868334"
+    }
+  }
+}
+```
+
+**Example 19: Shopify - Order Edit Add Variant**
+
+Add a variant to an in-progress order edit.
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-edit-add-001",
+  "nodeParams": {
+    "action": "order_edit_add_variant",
+    "params": {
+      "shop": "plura-integrations.myshopify.com",
+      "editId": "gid://shopify/CalculatedOrder/123",
+      "variantId": "gid://shopify/ProductVariant/447654529",
+      "quantity": 1
+    }
+  }
+}
+```
+
+**Example 20: Shopify - Order Edit Commit**
+
+Commit an order edit.
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-edit-commit-001",
+  "nodeParams": {
+    "action": "order_edit_commit",
+    "params": {
+      "shop": "plura-integrations.myshopify.com",
+      "editId": "gid://shopify/CalculatedOrder/123",
+      "notifyCustomer": true,
+      "staffNote": "Adjust line items"
+    }
+  }
+}
+```
+
+**Example 21: Shopify - Order Cancel**
+
+Cancel an order.
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-order-cancel-001",
+  "nodeParams": {
+    "action": "order_cancel",
+    "params": {
+      "shop": "plura-integrations.myshopify.com",
+      "orderId": "6343986868334",
+      "cancelReason": "CUSTOMER"
+    }
+  }
+}
+```
+
+**Example 22: Shopify - List Price Lists (B2B)**
+
+List price lists for B2B.
+
+```json
+{
+  "automationType": "shopify",
+  "nodeId": "shopify-list-pricelists-001",
+  "nodeParams": {
+    "action": "list_price_lists",
+    "params": {
+      "shop": "plura-integrations.myshopify.com",
+      "limit": 50
+    }
+  }
+}
+```
+
+### Third-Party Documentation
+
+- [https://shopify.dev/docs/api/admin-graphql](https://shopify.dev/docs/api/admin-graphql)
+- [https://shopify.dev/docs/api/admin-rest](https://shopify.dev/docs/api/admin-rest)

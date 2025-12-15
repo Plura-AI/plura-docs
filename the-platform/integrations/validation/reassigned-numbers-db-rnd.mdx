@@ -1,0 +1,41 @@
+---
+title: "Reassigned Numbers Database (RND)"
+description: "Check if phone numbers have been reassigned since consent date"
+---
+
+### Description
+
+Check if phone numbers have been reassigned since consent date. Use this integration to verify TCPA compliance by checking if a number has changed ownership.
+
+### Authentication
+
+- Reassigned Numbers Database API Key.
+
+### Available Actions
+
+- Lookup reassignment status
+
+### Examples
+
+**Example 1: Reassigned Numbers DB - Lookup**
+
+Check if a number has been reassigned since consent date.
+
+```json
+{
+  "automationType": "reassigned_numbers_db",
+  "nodeId": "rnd-lookup-001",
+  "nodeParams": {
+    "action": "lookup_reassignment",
+    "params": {
+      "phone": "+14155551234",
+      "consentDate": "2022-01-01",
+      "apiKey": "YOUR_RND_API_KEY"
+    }
+  }
+}
+```
+
+### Third-Party Documentation
+
+- [https://www.reassignednumbers.com/](https://www.reassignednumbers.com/)

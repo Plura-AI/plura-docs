@@ -1,0 +1,98 @@
+---
+title: "IPQualityScore"
+description: "IP, email, phone and URL validation scoring"
+---
+
+### Description
+
+IP, email, phone and URL validation scoring. Use this integration to check IP reputation, validate emails and phone numbers, and scan URLs for risk.
+
+### Authentication
+
+- IPQualityScore API Key.
+
+### Available Actions
+
+- IP lookup (reputation check)
+- Email validation
+- Phone validation
+- URL scan
+
+### Examples
+
+**Example 1: IPQualityScore - IP Lookup**
+
+Check IP reputation.
+
+```json
+{
+  "automationType": "ipqualityscore",
+  "nodeId": "ipqs-ip-lookup-001",
+  "nodeParams": {
+    "action": "ip_lookup",
+    "params": {
+      "ip": "8.8.8.8",
+      "apiKey": "YOUR_IPQS_API_KEY"
+    }
+  }
+}
+```
+
+**Example 2: IPQualityScore - Email Validate**
+
+Validate an email address.
+
+```json
+{
+  "automationType": "ipqualityscore",
+  "nodeId": "ipqs-email-validate-001",
+  "nodeParams": {
+    "action": "email_validate",
+    "params": {
+      "email": "test@example.com",
+      "apiKey": "YOUR_IPQS_API_KEY"
+    }
+  }
+}
+```
+
+**Example 3: IPQualityScore - Phone Validate**
+
+Validate a phone number.
+
+```json
+{
+  "automationType": "ipqualityscore",
+  "nodeId": "ipqs-phone-validate-001",
+  "nodeParams": {
+    "action": "phone_validate",
+    "params": {
+      "phone": "+14155552671",
+      "apiKey": "YOUR_IPQS_API_KEY"
+    }
+  }
+}
+```
+
+**Example 4: IPQualityScore - URL Scan**
+
+Scan a URL for risk.
+
+```json
+{
+  "automationType": "ipqualityscore",
+  "nodeId": "ipqs-url-scan-001",
+  "nodeParams": {
+    "action": "url_scan",
+    "params": {
+      "url": "https://example.com",
+      "apiKey": "YOUR_IPQS_API_KEY"
+    }
+  }
+}
+```
+
+### Third-Party Documentation
+
+- [https://www.ipqualityscore.com/documentation/proxy-detection/overview](https://www.ipqualityscore.com/documentation/proxy-detection/overview)
+

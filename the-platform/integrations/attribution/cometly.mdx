@@ -1,0 +1,75 @@
+---
+title: "Cometly"
+description: "Close the loop between marketing spend and real conversations"
+---
+
+### Description
+
+Close the loop between marketing spend and real conversations. Use this integration to send conversion events to Cometly for attribution tracking.
+
+### Authentication
+
+- Cometly API Key.
+
+### Available Actions
+
+- Send events (minimal or full payload)
+
+### Examples
+
+**Example 1: Cometly - Send Event (Minimal)**
+
+Send minimal event payload (event_name + email).
+
+```json
+{
+  "automationType": "cometly",
+  "nodeId": "cometly-node-001",
+  "nodeParams": {
+    "action": "send_event",
+    "params": {
+      "eventName": "lead_generated",
+      "email": "developers@cometly.com",
+      "apiKey": "YOUR_COMETLY_API_KEY"
+    }
+  }
+}
+```
+
+**Example 2: Cometly - Send Event (Full Payload)**
+
+Send full payload with identity, ecommerce, and idempotency key.
+
+```json
+{
+  "automationType": "cometly",
+  "nodeId": "cometly-node-002",
+  "nodeParams": {
+    "action": "send_event",
+    "params": {
+      "eventName": "purchase_completed",
+      "email": "developers@cometly.com",
+      "fingerprint": "abcdef1234567890",
+      "firstName": "John",
+      "lastName": "Smith",
+      "userAgent": "Mozilla/5.0",
+      "ip": "123.123.123.123",
+      "amount": 34,
+      "eventTime": 1677093110,
+      "orderId": "100045",
+      "orderName": "Order #100045",
+      "checkoutToken": "tok_abcdef",
+      "idempotencyKey": "evt_meta_abc123",
+      "attributes": {
+        "source": "landing_page",
+        "campaign": "spring-2025"
+      },
+      "apiKey": "YOUR_COMETLY_API_KEY"
+    }
+  }
+}
+```
+
+### Third-Party Documentation
+
+- [https://docs.cometly.com/](https://docs.cometly.com/)

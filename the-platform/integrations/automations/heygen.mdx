@@ -1,0 +1,396 @@
+---
+title: "HeyGen"
+description: "Automate custom AI avatar videos to send through RCS"
+---
+
+### Description
+
+Automate custom AI avatar videos to send through RCS. Use this integration to generate AI avatar videos, list avatars and voices, and manage video templates.
+
+### Authentication
+
+- HeyGen API Key.
+
+### Available Actions
+
+- Generate videos (sync, async, or with callback)
+- Generate videos from templates
+- List avatars and get avatar details
+- List voices and voice locales
+- Get/poll video status
+- List videos
+- Delete videos
+- List templates and get template details
+
+### Examples
+
+**Example 1: HeyGen - Generate Video (Basic)**
+
+Generate an AI video with basic script. Videos are automatically stored in CDN. If avatar_id or voice_id are not provided, the first available avatar and voice will be used automatically.
+
+```json
+{
+  "automationType": "heygen",
+  "nodeId": "heygen-generate-video-001",
+  "nodeParams": {
+    "action": "generate_video",
+    "params": {
+      "apiKey": "YOUR_HEYGEN_API_KEY",
+      "avatar_id": "Abigail_expressive_2024112501",
+      "script": {
+        "input": "Hello, this is a test video generated from the HeyGen integration.",
+        "type": "text"
+      }
+    }
+  }
+}
+```
+
+**Example 2: HeyGen - Generate Video (Full Options)**
+
+Generate an AI video with all optional parameters including voice, background, captions, and custom dimensions.
+
+```json
+{
+  "automationType": "heygen",
+  "nodeId": "heygen-generate-video-002",
+  "nodeParams": {
+    "action": "generate_video",
+    "params": {
+      "apiKey": "YOUR_HEYGEN_API_KEY",
+      "avatar_id": "avatar_id_here",
+      "script": {
+        "input": "This is a test video with custom settings including voice, background, and captions.",
+        "type": "text",
+        "subtitles": true
+      },
+      "voice": {
+        "voice_id": "voice_id_here",
+        "speed": 1.0,
+        "stability": 0.5,
+        "similarity": 0.75
+      },
+      "background": {
+        "type": "image",
+        "url": "https://example.com/background.jpg"
+      },
+      "caption": {
+        "enabled": true,
+        "font_size": 24,
+        "font_color": "#FFFFFF",
+        "background_color": "#000000"
+      },
+      "dimension": {
+        "width": 1280,
+        "height": 720
+      }
+    }
+  }
+}
+```
+
+**Example 3: HeyGen - Generate Video (With Variables)**
+
+Generate an AI video using variables from callData for dynamic content.
+
+```json
+{
+  "automationType": "heygen",
+  "nodeId": "heygen-generate-video-003",
+  "callData": {
+    "fields": {
+      "customer_name": "John Doe",
+      "property_address": "123 Main St, San Francisco, CA"
+    }
+  },
+  "nodeParams": {
+    "action": "generate_video",
+    "params": {
+      "apiKey": "YOUR_HEYGEN_API_KEY",
+      "avatar_id": "Abigail_expressive_2024112501",
+      "script": {
+        "input": "Hello {{customer_name}}, thank you for your interest in {{property_address}}.",
+        "type": "text"
+      }
+    }
+  }
+}
+```
+
+**Example 4: HeyGen - Generate Video (Async)**
+
+Start video generation asynchronously. Returns immediately with video_id. Use get_video_status to check completion.
+
+```json
+{
+  "automationType": "heygen",
+  "nodeId": "heygen-generate-video-async-001",
+  "nodeParams": {
+    "action": "generate_video_async",
+    "params": {
+      "apiKey": "YOUR_HEYGEN_API_KEY",
+      "avatar_id": "Abigail_expressive_2024112501",
+      "script": {
+        "input": "Hello, this video is being generated asynchronously.",
+        "type": "text"
+      }
+    }
+  }
+}
+```
+
+**Example 5: HeyGen - Generate Video (Sync with Polling)**
+
+Generate video synchronously with polling until completion. Configurable poll interval and timeout.
+
+```json
+{
+  "automationType": "heygen",
+  "nodeId": "heygen-generate-video-sync-001",
+  "nodeParams": {
+    "action": "generate_video_sync",
+    "params": {
+      "apiKey": "YOUR_HEYGEN_API_KEY",
+      "avatar_id": "Abigail_expressive_2024112501",
+      "script": {
+        "input": "Hello, this video will be generated synchronously.",
+        "type": "text"
+      },
+      "pollIntervalMs": 2000,
+      "timeoutMs": 300000
+    }
+  }
+}
+```
+
+**Example 6: HeyGen - Generate Video (With Callback URL)**
+
+Generate video asynchronously with callback URL support. When callback_url is provided, the request returns immediately with video_id and status "processing". The system polls HeyGen in the background and POSTs the final result to the callback URL when ready.
+
+```json
+{
+  "automationType": "heygen",
+  "nodeId": "heygen-generate-video-callback-001",
+  "nodeParams": {
+    "action": "generate_video",
+    "params": {
+      "apiKey": "YOUR_HEYGEN_API_KEY",
+      "avatar_id": "Abigail_expressive_2024112501",
+      "callback_url": "https://your-app.com/api/webhooks/heygen-callback",
+      "script": {
+        "input": "Hello, this video will be processed asynchronously and callback will be sent when ready.",
+        "type": "text"
+      }
+    }
+  }
+}
+```
+
+**Example 7: HeyGen - List Available Avatars**
+
+Retrieve a list of available avatars and talking photos for your HeyGen API key.
+
+```json
+{
+  "automationType": "heygen",
+  "nodeId": "heygen-list-avatars-001",
+  "nodeParams": {
+    "action": "list_avatars",
+    "params": {
+      "apiKey": "YOUR_HEYGEN_API_KEY"
+    }
+  }
+}
+```
+
+**Example 8: HeyGen - Get Avatar Details**
+
+Get detailed information about a specific avatar, including default_voice_id.
+
+```json
+{
+  "automationType": "heygen",
+  "nodeId": "heygen-get-avatar-details-001",
+  "nodeParams": {
+    "action": "get_avatar_details",
+    "params": {
+      "apiKey": "YOUR_HEYGEN_API_KEY",
+      "avatar_id": "Abigail_expressive_2024112501"
+    }
+  }
+}
+```
+
+**Example 9: HeyGen - List Available Voices**
+
+Retrieve a list of available voices for your HeyGen API key.
+
+```json
+{
+  "automationType": "heygen",
+  "nodeId": "heygen-list-voices-001",
+  "nodeParams": {
+    "action": "list_voices",
+    "params": {
+      "apiKey": "YOUR_HEYGEN_API_KEY"
+    }
+  }
+}
+```
+
+**Example 10: HeyGen - List Voice Locales**
+
+Retrieve a list of available voice locales/languages.
+
+```json
+{
+  "automationType": "heygen",
+  "nodeId": "heygen-list-voice-locales-001",
+  "nodeParams": {
+    "action": "list_voice_locales",
+    "params": {
+      "apiKey": "YOUR_HEYGEN_API_KEY"
+    }
+  }
+}
+```
+
+**Example 11: HeyGen - Get Video Status**
+
+Check the status of a video generation job by video_id.
+
+```json
+{
+  "automationType": "heygen",
+  "nodeId": "heygen-get-video-status-001",
+  "nodeParams": {
+    "action": "get_video_status",
+    "params": {
+      "apiKey": "YOUR_HEYGEN_API_KEY",
+      "video_id": "video_123456"
+    }
+  }
+}
+```
+
+**Example 12: HeyGen - Poll Video Status**
+
+Poll for video status updates. Similar to get_video_status but with explicit polling intent.
+
+```json
+{
+  "automationType": "heygen",
+  "nodeId": "heygen-poll-video-status-001",
+  "nodeParams": {
+    "action": "poll_video_status",
+    "params": {
+      "apiKey": "YOUR_HEYGEN_API_KEY",
+      "video_id": "video_123456"
+    }
+  }
+}
+```
+
+**Example 13: HeyGen - List Videos**
+
+List all videos with optional pagination. Returns videos with their statuses.
+
+```json
+{
+  "automationType": "heygen",
+  "nodeId": "heygen-list-videos-001",
+  "nodeParams": {
+    "action": "list_videos",
+    "params": {
+      "apiKey": "YOUR_HEYGEN_API_KEY",
+      "limit": 50,
+      "offset": 0
+    }
+  }
+}
+```
+
+**Example 14: HeyGen - Delete Video**
+
+Delete a video by video_id.
+
+```json
+{
+  "automationType": "heygen",
+  "nodeId": "heygen-delete-video-001",
+  "nodeParams": {
+    "action": "delete_video",
+    "params": {
+      "apiKey": "YOUR_HEYGEN_API_KEY",
+      "video_id": "video_123456"
+    }
+  }
+}
+```
+
+**Example 15: HeyGen - List Templates**
+
+Retrieve a list of available video templates.
+
+```json
+{
+  "automationType": "heygen",
+  "nodeId": "heygen-list-templates-001",
+  "nodeParams": {
+    "action": "list_templates",
+    "params": {
+      "apiKey": "YOUR_HEYGEN_API_KEY"
+    }
+  }
+}
+```
+
+**Example 16: HeyGen - Get Template Details**
+
+Get detailed information about a specific template.
+
+```json
+{
+  "automationType": "heygen",
+  "nodeId": "heygen-get-template-details-001",
+  "nodeParams": {
+    "action": "get_template_details",
+    "params": {
+      "apiKey": "YOUR_HEYGEN_API_KEY",
+      "template_id": "template_123456"
+    }
+  }
+}
+```
+
+**Example 17: HeyGen - Generate Video from Template**
+
+Generate a video using a template with custom variables.
+
+```json
+{
+  "automationType": "heygen",
+  "nodeId": "heygen-generate-video-from-template-001",
+  "nodeParams": {
+    "action": "generate_video_from_template",
+    "params": {
+      "apiKey": "YOUR_HEYGEN_API_KEY",
+      "template_id": "template_123456",
+      "variables": {
+        "name": "John Doe",
+        "company": "Acme Corp"
+      },
+      "dimension": {
+        "width": 1920,
+        "height": 1080
+      },
+      "caption": true,
+      "title": "My Template Video"
+    }
+  }
+}
+```
+
+### Third-Party Documentation
+
+- [https://docs.heygen.com/](https://docs.heygen.com/)

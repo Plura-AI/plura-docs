@@ -1,0 +1,500 @@
+---
+title: "Attom"
+description: "Real-time property data powering AI-driven conversations"
+---
+
+### Description
+
+Real-time property data powering AI-driven conversations. Use this integration to get comprehensive property data including property details, AVM estimates, sales history, foreclosure information, neighborhood statistics, environmental risks, school information, and assessment data.
+
+### Authentication
+
+- ATTOM Data Solutions API Key.
+
+### Available Actions
+
+**Property Data:**
+- Property details (basic, expanded, with schools, mortgage, owner)
+- Property profiles (basic and expanded)
+- AVM details and Attomized AVM
+- Sale details and sales history
+- Assessment history
+- All events detail
+
+**Foreclosure:**
+- Check foreclosure by address
+- Get detailed foreclosure information
+
+**Property History:**
+- Get property ownership and sales history
+- Get mortgage and loan details
+
+**Neighborhood:**
+- Get neighborhood market data
+- Get market statistics by zip code
+
+**Environmental:**
+- Get environmental risk data
+- Get natural hazard information (flood, earthquake, etc.)
+
+**Schools:**
+- School details
+- School district details
+
+### Examples
+
+**Example 1: ATTOM - Property Detail**
+
+Get property details based on ID or address. Returns basic property information including identifier, lot details, area, address, location, summary, utilities, and building characteristics.
+
+```json
+{
+  "automationType": "attom",
+  "nodeId": "test-node-id",
+  "nodeParams": {
+    "action": "property_detail",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+**Example 2: ATTOM - Property Basic Profile**
+
+Get basic property information and most recent transaction and taxes. Requires a valid ATTOM ID (attomid) from a previous property lookup.
+
+```json
+{
+  "automationType": "attom",
+  "nodeId": "test-node-id",
+  "nodeParams": {
+    "action": "property_basicprofile",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "attomid": "2509607"
+    }
+  }
+}
+```
+
+**Example 3: ATTOM - Property Expanded Profile**
+
+Get detailed property information and most recent transaction and taxes. Includes sale information, assessment data, mortgage details, and owner information.
+
+```json
+{
+  "automationType": "attom",
+  "nodeId": "test-node-id",
+  "nodeParams": {
+    "action": "property_expandedprofile",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address1": "5500 Grand Lake Dr",
+      "address2": "San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+**Example 4: ATTOM - Property Detail with Schools**
+
+Get property details with schools within attendance boundary. Requires a valid property ID from a previous property lookup.
+
+```json
+{
+  "automationType": "attom",
+  "nodeId": "test-node-id",
+  "nodeParams": {
+    "action": "property_detailwithschools",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "id": "2509607"
+    }
+  }
+}
+```
+
+**Example 5: ATTOM - Property Detail Mortgage**
+
+Get property details with mortgage information including lender name, loan amount, loan type, term, and due date.
+
+```json
+{
+  "automationType": "attom",
+  "nodeId": "test-node-id",
+  "nodeParams": {
+    "action": "property_detailmortgage",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address1": "5500 Grand Lake Dr",
+      "address2": "San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+**Example 6: ATTOM - Property Detail Owner**
+
+Get property details with owner information including owner names, mailing address, and absentee owner status.
+
+```json
+{
+  "automationType": "attom",
+  "nodeId": "test-node-id",
+  "nodeParams": {
+    "action": "property_detailowner",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address1": "5500 Grand Lake Dr",
+      "address2": "San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+**Example 7: ATTOM - Property Detail Mortgage Owner**
+
+Get property details with both mortgage and owner information in a single response.
+
+```json
+{
+  "automationType": "attom",
+  "nodeId": "test-node-id",
+  "nodeParams": {
+    "action": "property_detailmortgageowner",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address1": "5500 Grand Lake Dr",
+      "address2": "San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+**Example 8: ATTOM - School Detail**
+
+Get details about a particular school. Requires a valid school ID from a previous property lookup.
+
+```json
+{
+  "automationType": "attom",
+  "nodeId": "test-node-id",
+  "nodeParams": {
+    "action": "school_detail",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "id": "12345678"
+    }
+  }
+}
+```
+
+**Example 9: ATTOM - School District Detail**
+
+Get details about a particular school district. Requires a valid school district ID from a previous property lookup.
+
+```json
+{
+  "automationType": "attom",
+  "nodeId": "test-node-id",
+  "nodeParams": {
+    "action": "school_districtdetail",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "id": "12345678"
+    }
+  }
+}
+```
+
+**Example 10: ATTOM - AVM Detail**
+
+Get AVM (Automated Valuation Model) details for a property including value estimates, high/low ranges, condition-based values, and AVM change history.
+
+```json
+{
+  "automationType": "attom",
+  "nodeId": "test-node-id",
+  "nodeParams": {
+    "action": "avm_detail",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address1": "5500 Grand Lake Dr",
+      "address2": "San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+**Example 11: ATTOM - Attomized AVM Detail**
+
+Get the Attomized AVM and other property details. Requires a valid ATTOM ID (attomid) from a previous property lookup.
+
+```json
+{
+  "automationType": "attom",
+  "nodeId": "test-node-id",
+  "nodeParams": {
+    "action": "attomavm_detail",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "attomid": "2509607"
+    }
+  }
+}
+```
+
+**Example 12: ATTOM - Sale Detail**
+
+Get sale information for a property including sale amount, sale date, sale type, buyer/seller information, and price calculations.
+
+```json
+{
+  "automationType": "attom",
+  "nodeId": "test-node-id",
+  "nodeParams": {
+    "action": "sale_detail",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address1": "5500 Grand Lake Dr",
+      "address2": "San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+**Example 13: ATTOM - Sales History Basic**
+
+Get basic transaction and loan history on a property. Returns a chronological list of sales, mortgages, and transfers with buyer/seller names and mortgage details.
+
+```json
+{
+  "automationType": "attom",
+  "nodeId": "test-node-id",
+  "nodeParams": {
+    "action": "saleshistory_basichistory",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address1": "5500 Grand Lake Dr",
+      "address2": "San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+**Example 14: ATTOM - Sales History Expanded**
+
+Get detailed transaction, pre-foreclosure and loan history on a property. Includes foreclosure information, detailed sale history with title company and deed types, and comprehensive mortgage details.
+
+```json
+{
+  "automationType": "attom",
+  "nodeId": "test-node-id",
+  "nodeParams": {
+    "action": "saleshistory_expandedhistory",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address1": "5500 Grand Lake Dr",
+      "address2": "San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+**Example 15: ATTOM - Sales History Detail**
+
+Get sales history for a property. Returns a simplified list of sales transactions with amounts and dates.
+
+```json
+{
+  "automationType": "attom",
+  "nodeId": "test-node-id",
+  "nodeParams": {
+    "action": "saleshistory_detail",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address1": "5500 Grand Lake Dr",
+      "address2": "San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+**Example 16: ATTOM - All Events Detail**
+
+Get all events that have occurred on a specific address. Returns comprehensive data including AVM, sale, and assessment information in a single response.
+
+```json
+{
+  "automationType": "attom",
+  "nodeId": "test-node-id",
+  "nodeParams": {
+    "action": "allevents_detail",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address1": "5500 Grand Lake Dr",
+      "address2": "San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+**Example 17: ATTOM - Assessment History Detail**
+
+Get assessment history and property details. Requires a valid property ID from a previous property lookup.
+
+```json
+{
+  "automationType": "attom",
+  "nodeId": "test-node-id",
+  "nodeParams": {
+    "action": "assessmenthistory_detail",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "id": "2509607"
+    }
+  }
+}
+```
+
+**Example 18: ATTOM - Foreclosure by Address**
+
+Check if a property is in foreclosure.
+
+```json
+{
+  "automationType": "attom_foreclosure",
+  "nodeParams": {
+    "action": "foreclosure_by_address",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+**Example 19: ATTOM - Foreclosure Details**
+
+Get detailed foreclosure information for a property.
+
+```json
+{
+  "automationType": "attom_foreclosure",
+  "nodeParams": {
+    "action": "foreclosure_details",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+**Example 20: ATTOM - Property History**
+
+Get property ownership and sales history.
+
+```json
+{
+  "automationType": "attom_property_history",
+  "nodeParams": {
+    "action": "property_history",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+**Example 21: ATTOM - Mortgage Details**
+
+Get mortgage and loan information for a property.
+
+```json
+{
+  "automationType": "attom_property_history",
+  "nodeParams": {
+    "action": "mortgage_details",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+**Example 22: ATTOM - Neighborhood Market Data**
+
+Get neighborhood market trends and statistics.
+
+```json
+{
+  "automationType": "attom_neighborhood",
+  "nodeParams": {
+    "action": "neighborhood_market_data",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+**Example 23: ATTOM - Market Statistics**
+
+Get market statistics by zip code.
+
+```json
+{
+  "automationType": "attom_neighborhood",
+  "nodeParams": {
+    "action": "market_statistics",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "zipCode": "78244"
+    }
+  }
+}
+```
+
+**Example 24: ATTOM - Environmental Data**
+
+Get environmental risk factors for a property.
+
+```json
+{
+  "automationType": "attom_environmental",
+  "nodeParams": {
+    "action": "environmental_data",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+**Example 25: ATTOM - Hazard Data**
+
+Get natural hazard information (flood, earthquake, etc.).
+
+```json
+{
+  "automationType": "attom_environmental",
+  "nodeParams": {
+    "action": "hazard_data",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+### Third-Party Documentation
+
+- [https://api.developer.attomdata.com/](https://api.developer.attomdata.com/)

@@ -1,0 +1,2581 @@
+---
+title: "HouseCanary"
+description: "Comprehensive property data and analytics from HouseCanary"
+---
+
+### Description
+
+Comprehensive property data and analytics from HouseCanary. Use this integration to access property valuations, details, market data, hazard information, rental values, comparables, and more.
+
+### Authentication
+
+- HouseCanary API Key and API Secret.
+
+### Available Actions
+
+**Property Valuation & Details:**
+- Property valuation and details
+- Property details (basic and advanced)
+- Value analysis and estimates
+- Historical values
+- Value by condition, adjustments, HPI, FSD threshold
+- Value by lat/long and within block
+
+**Block-Level Data:**
+- Block component batch requests
+- Block crime information
+- Block hazard data (earthquake, hail, hurricane, tornado, wind)
+- Block HCRI (Gross Rental Yield)
+- Block rental value distribution
+- Block superfund sites
+- Block value distribution
+- Block value time series (forecast and historical)
+
+**Block Group Data:**
+- Block group component batch requests
+- Block group HCRI
+- Block group rental value distribution
+- Block group value distribution
+- Block group value time series (forecast and historical)
+
+**Metro Division Data:**
+- Metro division affordability time series (forecast and historical)
+- Metro division component batch requests
+- Metro division HPI time series (forecast and historical)
+
+**MSA (Metropolitan Statistical Area) Data:**
+- MSA affordability time series (forecast and historical)
+- MSA component batch requests
+- MSA details (returns and risk information)
+- MSA HCRI
+- MSA HPI time series (forecast and historical)
+- MSA RPI time series (forecast and historical)
+
+**State-Level Data:**
+- State affordability time series (forecast and historical)
+- State component batch requests
+- State HCRI
+- State HPI time series (forecast and historical)
+- State RPI time series (forecast and historical)
+
+**Zip Code Data:**
+- Zip affordability time series (forecast and historical)
+- Zip component batch requests
+- Zip details (market details)
+- Zip HCRI
+- Zip HPI (forecast, historical, and time series)
+- Zip market grade
+- Zip RPI (forecast, historical, and time series)
+- Zip volatility
+
+**Hazard & Risk Data:**
+- FEMA disaster area information
+- Flood risk information
+- Geo features
+- Geocoding
+
+**Rental Data:**
+- Rental value
+- Rental value forecast
+- Rental value by lat/long
+- Rental value within block
+
+**Mortgage & Lien Data:**
+- Mortgage lien (most recent and all)
+- LTV details and origination
+- Notice of Default (NOD)
+- Owner occupied status
+
+**Comparables:**
+- Rental comparables
+- Sales comparables
+
+**Other Property Data:**
+- Census information
+- Component batch requests
+- Land value
+- Sales history
+- School information
+- Tax history
+- HOA fees estimate
+
+**Property Explorer:**
+- Property Explorer dynamic link
+- Property Explorer static link
+
+**Value by Image:**
+- Value by image job status
+
+**Data Export:**
+- AEXP download
+- AEXP list
+
+**Utility:**
+- Test addresses
+
+### Examples
+
+**Example 1: HouseCanary - Property Valuation**
+
+Property Valuation
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "property_valuation",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+**Example 2: HouseCanary - Property Details**
+
+Property Details
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "property_details",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+**Example 3: HouseCanary - Property Details Advanced**
+
+Property Details Advanced
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "details_advanced",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "type": "example_type"
+    }
+  }
+}
+```
+
+**Example 4: HouseCanary - Details**
+
+Property Details
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "details",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 5: HouseCanary - Value**
+
+Value
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "value",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244"
+    }
+  }
+}
+```
+
+**Example 6: HouseCanary - Value Analysis**
+
+Value Analysis
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "value_analysis",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "estimated_value": "example_estimated_value",
+      "gla_sqft": "example_gla_sqft",
+      "include_comp_based_analysis": "example_include_comp_based_analysis",
+      "street_address": "example_street_address"
+    }
+  }
+}
+```
+
+**Example 7: HouseCanary - Value Forecast**
+
+Value Forecast
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "value_forecast",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 8: HouseCanary - Historical Value**
+
+Historical Value
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "historical_value",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "date": "example_date"
+    }
+  }
+}
+```
+
+**Example 9: HouseCanary - Estimate**
+
+Estimated property value
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "estimate",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 10: HouseCanary - Value by Condition**
+
+Value by Condition
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "value_by_six_conditions",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 11: HouseCanary - Value with Adjustments**
+
+Value with Adjustments
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "value_details_adjusted",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "add_baths": "example_add_baths",
+      "add_beds": "example_add_beds",
+      "add_pools": "example_add_pools",
+      "add_sqft": "example_add_sqft"
+    }
+  }
+}
+```
+
+**Example 12: HouseCanary - Value HPI Adjusted**
+
+Value HPI Adjusted
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "value_hpi_adjusted",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "adjust_to_date": "example_adjust_to_date",
+      "client_date": "example_client_date",
+      "client_value": "example_client_value"
+    }
+  }
+}
+```
+
+**Example 13: HouseCanary - Value with FSD Threshold**
+
+Value with FSD threshold filter
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "value_fsd_threshold",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "fsd_threshold": "example_fsd_threshold"
+    }
+  }
+}
+```
+
+**Example 14: HouseCanary - Value by Lat/Long**
+
+Value by lat/long
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "value_lat_long",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "bath": "example_bath",
+      "bed": "example_bed",
+      "garage": "example_garage",
+      "lat": "example_lat",
+      "limit": "example_limit",
+      "lon": "example_lon",
+      "lot_sqft": "example_lot_sqft",
+      "min_comp_similarity_score": "example_min_comp_similarity_score",
+      "min_list_date": "example_min_list_date",
+      "min_num_comps": "example_min_num_comps",
+      "min_year_built": "example_min_year_built",
+      "property_type": "example_property_type",
+      "sqft": "example_sqft",
+      "year_built": "example_year_built"
+    }
+  }
+}
+```
+
+**Example 15: HouseCanary - Value within Block**
+
+Value within Census Block
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "value_within_block",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "client_value": "example_client_value",
+      "client_value_sqft": "example_client_value_sqft"
+    }
+  }
+}
+```
+
+**Example 16: HouseCanary - Value by Image Job Status**
+
+Value by Image Job Status
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "value_by_image_job",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "slug": "example_slug",
+      "job_id": "example_job_id",
+      "block_group_id": "example_block_group_id"
+    }
+  }
+}
+```
+
+**Example 17: HouseCanary - Block Component Batch**
+
+Batch Multiple Endpoints From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "block_component_mget",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "components": "example_components"
+    }
+  }
+}
+```
+
+**Example 18: HouseCanary - Block Crime**
+
+Crime Information From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "block_crime",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 19: HouseCanary - Block Hazard Earthquake**
+
+Earthquake Risk From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "block_hazard_earthquake",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 20: HouseCanary - Block Hazard Hail**
+
+Hail Activity From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "block_hazard_hail",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 21: HouseCanary - Block Hazard Hurricane**
+
+Hurricane Activity From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "block_hazard_hurricane",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 22: HouseCanary - Block Hazard Tornado**
+
+Tornado Activity From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "block_hazard_tornado",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 23: HouseCanary - Block Hazard Wind**
+
+Windstorm Activity From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "block_hazard_wind",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 24: HouseCanary - Block HCRI**
+
+Gross Rental Yield From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "block_hcri",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "property_type": "example_property_type"
+    }
+  }
+}
+```
+
+**Example 25: HouseCanary - Block Rental Value Distribution**
+
+Rental Value Distribution From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "block_rental_value_distribution",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "property_type": "example_property_type"
+    }
+  }
+}
+```
+
+**Example 26: HouseCanary - Block Superfund**
+
+Superfund Sites From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "block_superfund",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 27: HouseCanary - Block Value Distribution**
+
+Value Distribution From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "block_value_distribution",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "property_type": "example_property_type"
+    }
+  }
+}
+```
+
+**Example 28: HouseCanary - Block Value Forecast**
+
+Value Forecast From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "block_value_ts_forecast",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "property_type": "example_property_type",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 29: HouseCanary - Block Value Historical**
+
+Value Historical From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "block_value_ts_historical",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "property_type": "example_property_type",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 30: HouseCanary - Block Group Component Batch**
+
+Batch Multiple Endpoints From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "blockgroup_component_mget",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "components": "example_components"
+    }
+  }
+}
+```
+
+**Example 31: HouseCanary - Block Group HCRI**
+
+Gross Rental Yield From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "blockgroup_hcri",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "property_type": "example_property_type"
+    }
+  }
+}
+```
+
+**Example 32: HouseCanary - Block Group Rental Value Distribution**
+
+Rental Value Distribution From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "blockgroup_rental_value_distribution",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "property_type": "example_property_type"
+    }
+  }
+}
+```
+
+**Example 33: HouseCanary - Block Group Value Distribution**
+
+Value Distribution From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "blockgroup_value_distribution",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "property_type": "example_property_type"
+    }
+  }
+}
+```
+
+**Example 34: HouseCanary - Block Group Value Forecast**
+
+Value Forecast From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "blockgroup_value_ts_forecast",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "property_type": "example_property_type",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 35: HouseCanary - Block Group Value Historical**
+
+Value Historical From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "blockgroup_value_ts_historical",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "property_type": "example_property_type",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 36: HouseCanary - Metro Division Affordability Forecast**
+
+Affordability Forecast From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "metrodiv_affordability_ts_forecast",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 37: HouseCanary - Metro Division Affordability Historical**
+
+Affordability Historical From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "metrodiv_affordability_ts_historical",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 38: HouseCanary - Metro Division Component Batch**
+
+Batch Multiple Endpoints From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "metrodiv_component_mget",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "components": "example_components"
+    }
+  }
+}
+```
+
+**Example 39: HouseCanary - Metro Division HPI Forecast**
+
+Home Price Index Forecast (Time Series) From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "metrodiv_hpi_ts_forecast",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 40: HouseCanary - Metro Division HPI Historical**
+
+Home Price Index Historical (Time Series) From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "metrodiv_hpi_ts_historical",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 41: HouseCanary - MSA Affordability Forecast**
+
+Affordability forecast for MSA From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "msa_affordability_ts_forecast",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 42: HouseCanary - MSA Affordability Historical**
+
+Affordability Historical From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "msa_affordability_ts_historical",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 43: HouseCanary - MSA Component Batch**
+
+Batch Multiple Endpoints From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "msa_component_mget",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "components": "example_components"
+    }
+  }
+}
+```
+
+**Example 44: HouseCanary - MSA Details**
+
+Returns and Risk Information From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "msa_details",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 45: HouseCanary - MSA HCRI**
+
+Gross Rental Yield From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "msa_hcri",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 46: HouseCanary - MSA HPI Forecast**
+
+Home Price Index Forecast (Time Series) From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "msa_hpi_ts_forecast",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 47: HouseCanary - MSA HPI Historical**
+
+Home Price Index Historical (Time Series) From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "msa_hpi_ts_historical",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 48: HouseCanary - MSA RPI Forecast**
+
+Rental Price Index Forecast (Time Series) From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "msa_rpi_ts_forecast",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 49: HouseCanary - MSA RPI Historical**
+
+Rental Price Index Historical (Time Series) From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "msa_rpi_ts_historical",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 50: HouseCanary - State Affordability Forecast**
+
+Affordability Forecast From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "state_affordability_ts_forecast",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 51: HouseCanary - State Affordability Historical**
+
+Affordability Historical From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "state_affordability_ts_historical",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 52: HouseCanary - State Component Batch**
+
+Batch Multiple Endpoints From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "state_component_mget",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "components": "example_components"
+    }
+  }
+}
+```
+
+**Example 53: HouseCanary - State HCRI**
+
+Gross Rental Yield From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "state_hcri",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 54: HouseCanary - State HPI Forecast**
+
+Home Price Index Forecast (Time Series) From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "state_hpi_ts_forecast",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 55: HouseCanary - State HPI Historical**
+
+Home Price Index Historical From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "state_hpi_ts_historical",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 56: HouseCanary - State RPI Forecast**
+
+Rent Price Index Forecast From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "state_rpi_ts_forecast",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 57: HouseCanary - State RPI Historical**
+
+Rent Price Index Historical From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "state_rpi_ts_historical",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 58: HouseCanary - Zip Affordability Forecast**
+
+Affordability Forecast From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "zip_affordability_ts_forecast",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 59: HouseCanary - Zip Affordability Historical**
+
+Affordability Historical From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "zip_affordability_ts_historical",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 60: HouseCanary - Zip Component Batch**
+
+Batch Multiple Endpoints From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "zip_component_mget",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "components": "example_components"
+    }
+  }
+}
+```
+
+**Example 61: HouseCanary - Zip Details**
+
+Market Details From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "zip_details",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 62: HouseCanary - Zip HCRI**
+
+Gross Rental Yield From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "zip_hcri",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 63: HouseCanary - Zip HPI Forecast**
+
+Home Price Index Forecast From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "zip_hpi_forecast",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 64: HouseCanary - Zip HPI Historical**
+
+Home Price Index Historical From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "zip_hpi_historical",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 65: HouseCanary - Zip HPI Forecast (Time Series)**
+
+Home Price Index Forecast (Time Series) From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "zip_hpi_ts_forecast",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 66: HouseCanary - Zip HPI Historical (Time Series)**
+
+Home Price Index Historical (Time Series) From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "zip_hpi_ts_historical",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 67: HouseCanary - Zip Market Grade**
+
+Market Quality From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "zip_market_grade",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 68: HouseCanary - Zip RPI Forecast**
+
+Rental Price Index Forecast From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "zip_rpi_forecast",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 69: HouseCanary - Zip RPI Historical**
+
+Rental Price Index Historical From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "zip_rpi_historical",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 70: HouseCanary - Zip RPI Forecast (Time Series)**
+
+Rental Price Index Forecast (Time Series) From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "zip_rpi_ts_forecast",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 71: HouseCanary - Zip RPI Historical (Time Series)**
+
+Rental Price Index Historical (Time Series) From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "zip_rpi_ts_historical",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 72: HouseCanary - Zip Volatility**
+
+Market Volatility From Address
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "zip_volatility",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 73: HouseCanary - FEMA Disaster Area**
+
+Disaster Area Details
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "fema_disaster_area",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 74: HouseCanary - Flood**
+
+Flood Risk Information
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "flood",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 75: HouseCanary - Geo Features**
+
+Geographic attributes of property
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "geo_features",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 76: HouseCanary - Geocode**
+
+Geocoder
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "geocode",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244"
+    }
+  }
+}
+```
+
+**Example 77: HouseCanary - Rental Value**
+
+Rental Value
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "rental_value",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244"
+    }
+  }
+}
+```
+
+**Example 78: HouseCanary - Rental Value Forecast**
+
+Rental Value Forecast
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "rental_value_forecast",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 79: HouseCanary - Rental Value by Lat/Long**
+
+Rental value by lat/long
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "rental_value_lat_long",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "bath": "example_bath",
+      "bed": "example_bed",
+      "garage": "example_garage",
+      "lat": "example_lat",
+      "lon": "example_lon",
+      "lot_sqft": "example_lot_sqft",
+      "min_comp_similarity_score": "example_min_comp_similarity_score",
+      "property_type": "example_property_type",
+      "sqft": "example_sqft",
+      "year_built": "example_year_built"
+    }
+  }
+}
+```
+
+**Example 80: HouseCanary - Rental Value within Block**
+
+Rental Value Distribution
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "rental_value_within_block",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "client_value": "example_client_value",
+      "client_value_sqft": "example_client_value_sqft"
+    }
+  }
+}
+```
+
+**Example 81: HouseCanary - Mortgage Lien**
+
+Mortgage Lien - Most Recent
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "mortgage_lien",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 82: HouseCanary - Mortgage Lien All**
+
+Mortgage Liens - All
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "mortgage_lien_all",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 83: HouseCanary - LTV Details**
+
+Estimated LTV Details
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "ltv_details",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 84: HouseCanary - LTV Origination**
+
+Estimated LTV at Origination
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "ltv_origination",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 85: HouseCanary - Notice of Default**
+
+Notice of Default
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "nod",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 86: HouseCanary - Owner Occupied**
+
+Owner Occupied
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "owner_occupied",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 87: HouseCanary - Rental Comparables**
+
+Rental Comparables
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "comps_rental",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "additional_data": "example_additional_data",
+      "distance": "example_distance",
+      "min_date": "example_min_date",
+      "min_sim_score": "example_min_sim_score",
+      "num_comps": "example_num_comps",
+      "status": "example_status"
+    }
+  }
+}
+```
+
+**Example 88: HouseCanary - Sales Comparables**
+
+Sales Comparables
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "comps_sale",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "additional_data": "example_additional_data",
+      "distance": "example_distance",
+      "min_date": "example_min_date",
+      "min_sim_score": "example_min_sim_score",
+      "num_comps": "example_num_comps",
+      "status": "example_status"
+    }
+  }
+}
+```
+
+**Example 89: HouseCanary - Census**
+
+Census Information
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "census",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 90: HouseCanary - Component Batch**
+
+Batch Multiple Endpoints
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "component_mget",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "components": "example_components"
+    }
+  }
+}
+```
+
+**Example 91: HouseCanary - Land Value**
+
+Land Value
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "land_value",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 92: HouseCanary - Sales History**
+
+Sales History
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "sales_history",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 93: HouseCanary - School Information**
+
+School Information
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "school",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 94: HouseCanary - Tax History**
+
+Tax History
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "tax_history",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "end": "example_end",
+      "limit": "example_limit",
+      "order": "example_order",
+      "start": "example_start"
+    }
+  }
+}
+```
+
+**Example 95: HouseCanary - HOA Fees**
+
+HOA Fees
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "hoa_est",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "city": "San Antonio",
+      "state": "TX",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit"
+    }
+  }
+}
+```
+
+**Example 96: HouseCanary - Property Explorer Dynamic Link**
+
+Property Explorer Dynamic Link
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "pexp_dynamic_link",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "cobranding": "example_cobranding",
+      "unit_designator": "example_unit_designator"
+    }
+  }
+}
+```
+
+**Example 97: HouseCanary - Property Explorer Static Link**
+
+Property Explorer Static Link
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "pexp_static_link",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "zipcode": "78244",
+      "slug": "example_slug",
+      "unit": "example_unit",
+      "allowLimitedReports": "example_allowLimitedReports",
+      "enforceStrictGeoPrecision": "example_enforceStrictGeoPrecision",
+      "unit_designator": "example_unit_designator"
+    }
+  }
+}
+```
+
+**Example 98: HouseCanary - AEXP Download**
+
+Download a delivery file
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "aexp_download",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET",
+      "object": "example_object"
+    }
+  }
+}
+```
+
+**Example 99: HouseCanary - AEXP List**
+
+List all delivery files
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "aexp_list",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET"
+    }
+  }
+}
+```
+
+**Example 100: HouseCanary - Test Addresses**
+
+Addresses
+
+```json
+{
+  "automationType": "housecanary",
+  "nodeParams": {
+    "action": "test_addresses",
+    "params": {
+      "apiKey": "YOUR_HOUSECANARY_API_KEY",
+      "apiSecret": "YOUR_HOUSECANARY_API_SECRET"
+    }
+  }
+}
+```
+
+### Third-Party Documentation
+
+- [https://www.housecanary.com/](https://www.housecanary.com/)
+- [https://docs.housecanary.com/](https://docs.housecanary.com/)

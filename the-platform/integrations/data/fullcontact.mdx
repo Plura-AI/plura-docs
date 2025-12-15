@@ -1,0 +1,175 @@
+---
+title: "FullContact"
+description: "Enrich identities with real-time FullContact demographic data"
+---
+
+### Description
+
+Enrich identities with real-time FullContact demographic data. Use this integration for person and company enrichment, identity resolution, email verification, and usage stats.
+
+### Authentication
+
+- FullContact API Key.
+
+### Available Actions
+
+- Person enrichment
+- Company enrichment
+- Identity resolution
+- Email verification (single and batch)
+- Usage stats
+- Person subscribe (v3)
+
+### Examples
+
+**Example 1: FullContact - Person Enrich**
+
+Enrich a person by email/phone/profile.
+
+```json
+{
+  "automationType": "fullcontact",
+  "nodeId": "fullcontact-person-enrich-001",
+  "nodeParams": {
+    "action": "person_enrich",
+    "params": {
+      "apiKey": "FC_API_KEY",
+      "email": "jane.doe@example.com"
+    }
+  }
+}
+```
+
+**Example 2: FullContact - Company Enrich**
+
+Enrich a company by domain or name.
+
+```json
+{
+  "automationType": "fullcontact",
+  "nodeId": "fullcontact-company-enrich-001",
+  "nodeParams": {
+    "action": "company_enrich",
+    "params": {
+      "apiKey": "FC_API_KEY",
+      "domain": "example.com"
+    }
+  }
+}
+```
+
+**Example 3: FullContact - Identity Resolve**
+
+Resolve identity using multiple fields (email, phone, name, address).
+
+```json
+{
+  "automationType": "fullcontact",
+  "nodeId": "fullcontact-identity-resolve-001",
+  "nodeParams": {
+    "action": "identity_resolve",
+    "params": {
+      "apiKey": "FC_API_KEY",
+      "email": "jane.doe@example.com",
+      "phone": "+14155552671"
+    }
+  }
+}
+```
+
+**Example 4: FullContact - Stats Get**
+
+Retrieve usage stats for person/company.
+
+```json
+{
+  "automationType": "fullcontact",
+  "nodeId": "fullcontact-stats-get-001",
+  "nodeParams": {
+    "action": "stats_get",
+    "params": {
+      "apiKey": "FC_API_KEY",
+      "stats": ["person", "company"]
+    }
+  }
+}
+```
+
+**Example 5: FullContact - Verification Email**
+
+Verify a single email address.
+
+```json
+{
+  "automationType": "fullcontact",
+  "nodeId": "fullcontact-verification-email-001",
+  "nodeParams": {
+    "action": "verification_email",
+    "params": {
+      "apiKey": "FC_API_KEY",
+      "email": "jane.doe@example.com"
+    }
+  }
+}
+```
+
+**Example 6: FullContact - Verification Emails Submit**
+
+Submit a batch of emails for verification; response returns batchId.
+
+```json
+{
+  "automationType": "fullcontact",
+  "nodeId": "fullcontact-verification-emails-submit-001",
+  "nodeParams": {
+    "action": "verification_emails_submit",
+    "params": {
+      "apiKey": "FC_API_KEY",
+      "emails": ["jane.doe@example.com", "john.doe@example.com"]
+    }
+  }
+}
+```
+
+**Example 7: FullContact - Verification Emails Batch**
+
+Fetch verification batch status/results by batchId.
+
+```json
+{
+  "automationType": "fullcontact",
+  "nodeId": "fullcontact-verification-emails-batch-001",
+  "nodeParams": {
+    "action": "verification_emails_batch",
+    "params": {
+      "apiKey": "FC_API_KEY",
+      "batchId": "BATCH_ID"
+    }
+  }
+}
+```
+
+**Example 8: FullContact - Person Subscribe**
+
+Subscribe to person updates with optional webhook.
+
+```json
+{
+  "automationType": "fullcontact",
+  "nodeId": "fullcontact-person-subscribe-001",
+  "nodeParams": {
+    "action": "person_subscribe",
+    "params": {
+      "apiKey": "FC_API_KEY",
+      "email": "jane.doe@example.com",
+      "webhookUrl": "https://example.org/hook"
+    }
+  }
+}
+```
+
+### Third-Party Documentation
+
+- [https://docs.fullcontact.com/docs/getting-started](https://docs.fullcontact.com/docs/getting-started)
+- [https://docs.fullcontact.com/docs/person-enrichment-api](https://docs.fullcontact.com/docs/person-enrichment-api)
+- [https://docs.fullcontact.com/docs/company-enrichment-api](https://docs.fullcontact.com/docs/company-enrichment-api)

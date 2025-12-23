@@ -184,6 +184,12 @@
                 "the-platform/integrations/validation/ipqualityscore",
                 "the-platform/integrations/validation/reassigned-numbers-db-rnd"
               ]
+            },
+            {
+              "group": "Team Management",
+              "pages": [
+                "the-platform/integrations/team-management/jira"
+              ]
             }
           ]
         }

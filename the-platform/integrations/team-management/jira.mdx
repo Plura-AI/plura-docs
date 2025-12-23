@@ -1,0 +1,574 @@
+---
+title: "Jira"
+description: "Integrate with Jira for comprehensive issue tracking and project management workflows"
+---
+
+# Jira Integration
+
+Connect Plura AI with Jira to automate issue creation, status updates, work logging, and team collaboration.
+
+## Overview
+
+The Jira integration enables your AI agents to interact with Jira's issue tracking and project management capabilities. Create issues from conversations, update statuses, assign tasks, log work time, search for issues, and add comments—all without leaving your workflow.
+
+<Info>
+Supports both **API Token (Basic Auth)** and **OAuth 2.0** authentication methods for maximum flexibility.
+</Info>
+
+---
+
+## Authentication
+
+The Jira integration supports two authentication methods:
+
+### API Token (Basic Auth)
+
+Recommended for server-to-server integrations and internal workflows.
+
+**Required Parameters:**
+- `apiKey` — Your Jira API token ([Generate here](https://id.atlassian.com/manage-profile/security/api-tokens))
+- `email` — Your Jira account email address
+- `instanceUrl` — Your Jira instance URL (e.g., `https://your-domain.atlassian.net`)
+
+### OAuth 2.0
+
+Recommended for user-facing integrations where users authenticate with their own Jira accounts.
+
+**Required Parameters:**
+- `userId` — User identifier (instanceUrl retrieved automatically from token metadata)
+
+<Tip>
+For most automation use cases, **API Token authentication** is simpler to set up and maintain.
+</Tip>
+
+---
+
+## Available Actions
+
+The Jira integration supports six core automation actions:
+
+| Action | Description | Use Case |
+|--------|-------------|----------|
+| `create_issue` | Create new Jira issues | Log bugs, create tasks from conversations |
+| `update_status` | Transition issues between statuses | Move issues through workflow stages |
+| `assign_issue` | Assign issues to team members | Distribute work based on conversation context |
+| `log_work` | Log time spent on issues | Track work automatically from conversations |
+| `search_issues` | Search and filter issues | Find relevant issues based on criteria |
+| `add_comment` | Add comments to issues | Update issues with conversation context |
+
+---
+
+## Action 1: Create Issue
+
+Create new Jira issues with full field support including custom fields.
+
+### Supported Issue Types
+
+- **Task** — General work items
+- **Bug** — Software defects and issues
+- **Feature** — New feature requests
+- **Story** — User stories (Agile)
+
+### Basic Example
+
+```json
+{
+  "automationType": "jira",
+  "nodeId": "jira-create-issue-001",
+  "nodeParams": {
+    "action": "create_issue",
+    "params": {
+      "apiKey": "YOUR_JIRA_API_TOKEN",
+      "email": "user@example.com",
+      "instanceUrl": "https://your-domain.atlassian.net",
+      "project": {
+        "key": "PROJ"
+      },
+      "issuetype": {
+        "name": "Task"
+      },
+      "summary": "Fix login bug",
+      "description": "Users cannot log in with their email addresses"
+    }
+  }
+}
+```
+
+### With Priority and Assignment
+
+```json
+{
+  "automationType": "jira",
+  "nodeId": "jira-create-bug-001",
+  "nodeParams": {
+    "action": "create_issue",
+    "params": {
+      "apiKey": "YOUR_JIRA_API_TOKEN",
+      "email": "user@example.com",
+      "instanceUrl": "https://your-domain.atlassian.net",
+      "project": {
+        "key": "PROJ"
+      },
+      "issuetype": {
+        "name": "Bug"
+      },
+      "summary": "Login button not responding",
+      "description": "The login button does not respond when clicked on mobile devices running iOS 15.",
+      "priority": {
+        "name": "High"
+      },
+      "assignee": {
+        "emailAddress": "developer@example.com"
+      }
+    }
+  }
+}
+```
+
+### OAuth Example
+
+```json
+{
+  "automationType": "jira",
+  "nodeId": "jira-create-issue-oauth-001",
+  "userId": "user@example.com",
+  "nodeParams": {
+    "action": "create_issue",
+    "params": {
+      "project": {
+        "key": "PROJ"
+      },
+      "issuetype": {
+        "name": "Bug"
+      },
+      "summary": "Application crashes on startup",
+      "description": "The application crashes immediately after launching",
+      "priority": {
+        "name": "Highest"
+      }
+    }
+  }
+}
+```
+
+### Required Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `project.key` or `project.id` | string | Project identifier |
+| `issuetype.name` | string | Task, Bug, Feature, or Story |
+| `summary` | string | Issue title |
+
+### Optional Fields
+
+| Field | Type | Options | Description |
+|-------|------|---------|-------------|
+| `description` | string | — | Detailed description |
+| `priority.name` | string | Highest, High, Medium, Low, Lowest | Priority level |
+| `assignee.emailAddress` | string | — | Assignee email |
+| `assignee.accountId` | string | — | Jira account ID |
+| `assignee.displayName` | string | — | Display name |
+| `customFields` | object | — | Custom field key-value pairs |
+
+---
+
+## Action 2: Update Status
+
+Transition issues through your Jira workflow by specifying transition IDs.
+
+### Example
+
+```json
+{
+  "automationType": "jira",
+  "nodeId": "jira-update-status-001",
+  "nodeParams": {
+    "action": "update_status",
+    "params": {
+      "apiKey": "YOUR_JIRA_API_TOKEN",
+      "email": "user@example.com",
+      "instanceUrl": "https://your-domain.atlassian.net",
+      "issueId": "PROJ-123",
+      "transitionId": "21"
+    }
+  }
+}
+```
+
+### Required Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `issueId` | string | Issue key (e.g., PROJ-123) |
+| `transitionId` | string | Numeric transition ID |
+
+<Info>
+**Finding Transition IDs**: Use the Jira API `/rest/api/3/issue/{issueKey}/transitions` to retrieve available transitions for an issue.
+</Info>
+
+---
+
+## Action 3: Assign Issue
+
+Assign issues to team members by email address or account ID.
+
+### Assign by Email
+
+```json
+{
+  "automationType": "jira",
+  "nodeId": "jira-assign-issue-001",
+  "nodeParams": {
+    "action": "assign_issue",
+    "params": {
+      "apiKey": "YOUR_JIRA_API_TOKEN",
+      "email": "user@example.com",
+      "instanceUrl": "https://your-domain.atlassian.net",
+      "issueId": "PROJ-123",
+      "assignee": {
+        "emailAddress": "developer@example.com"
+      }
+    }
+  }
+}
+```
+
+### Assign by Account ID
+
+```json
+{
+  "automationType": "jira",
+  "nodeId": "jira-assign-by-account-id-001",
+  "nodeParams": {
+    "action": "assign_issue",
+    "params": {
+      "apiKey": "YOUR_JIRA_API_TOKEN",
+      "email": "user@example.com",
+      "instanceUrl": "https://your-domain.atlassian.net",
+      "issueId": "PROJ-123",
+      "assignee": {
+        "accountId": "5d5f8a8b8c8d8e8f8a8b8c8d"
+      }
+    }
+  }
+}
+```
+
+### Required Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `issueId` | string | Issue key |
+| `assignee.emailAddress` or `assignee.accountId` | string | User identifier |
+
+---
+
+## Action 4: Log Work
+
+Track time spent on issues with optional comments and start timestamps.
+
+### With Comment and Start Time
+
+```json
+{
+  "automationType": "jira",
+  "nodeId": "jira-log-work-001",
+  "nodeParams": {
+    "action": "log_work",
+    "params": {
+      "apiKey": "YOUR_JIRA_API_TOKEN",
+      "email": "user@example.com",
+      "instanceUrl": "https://your-domain.atlassian.net",
+      "issueId": "PROJ-123",
+      "timeSpent": "2h 30m",
+      "comment": "Fixed the bug and added unit tests",
+      "started": "2024-01-15T10:00:00.000Z"
+    }
+  }
+}
+```
+
+### Minimal Example
+
+```json
+{
+  "automationType": "jira",
+  "nodeId": "jira-log-work-minimal-001",
+  "nodeParams": {
+    "action": "log_work",
+    "params": {
+      "apiKey": "YOUR_JIRA_API_TOKEN",
+      "email": "user@example.com",
+      "instanceUrl": "https://your-domain.atlassian.net",
+      "issueId": "PROJ-123",
+      "timeSpent": "1d"
+    }
+  }
+}
+```
+
+### Time Format
+
+Jira supports flexible time formats:
+
+- **Minutes**: `30m`, `45m`
+- **Hours**: `2h`, `3h 30m`
+- **Days**: `1d`, `2d`
+- **Weeks**: `1w`, `2w`
+- **Combined**: `2h 30m`, `1d 4h`
+
+### Required Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `issueId` | string | Issue key |
+| `timeSpent` | string | Time in Jira format |
+
+### Optional Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `comment` | string | Work log description |
+| `started` | string | ISO 8601 timestamp |
+
+---
+
+## Action 5: Search Issues
+
+Search and filter issues using multiple criteria with pagination support.
+
+### Multiple Filters
+
+```json
+{
+  "automationType": "jira",
+  "nodeId": "jira-search-issues-001",
+  "nodeParams": {
+    "action": "search_issues",
+    "params": {
+      "apiKey": "YOUR_JIRA_API_TOKEN",
+      "email": "user@example.com",
+      "instanceUrl": "https://your-domain.atlassian.net",
+      "status": "In Progress",
+      "priority": "High",
+      "project": "PROJ",
+      "maxResults": 50,
+      "startAt": 0
+    }
+  }
+}
+```
+
+### Search by Status
+
+```json
+{
+  "automationType": "jira",
+  "nodeId": "jira-search-by-status-001",
+  "nodeParams": {
+    "action": "search_issues",
+    "params": {
+      "apiKey": "YOUR_JIRA_API_TOKEN",
+      "email": "user@example.com",
+      "instanceUrl": "https://your-domain.atlassian.net",
+      "status": "To Do",
+      "maxResults": 25
+    }
+  }
+}
+```
+
+### Search by Assignee
+
+```json
+{
+  "automationType": "jira",
+  "nodeId": "jira-search-by-assignee-001",
+  "nodeParams": {
+    "action": "search_issues",
+    "params": {
+      "apiKey": "YOUR_JIRA_API_TOKEN",
+      "email": "user@example.com",
+      "instanceUrl": "https://your-domain.atlassian.net",
+      "assignee": "user@example.com",
+      "status": "In Progress",
+      "maxResults": 50,
+      "startAt": 0
+    }
+  }
+}
+```
+
+### Filter Options
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `status` | string | Filter by status name |
+| `priority` | string | Highest, High, Medium, Low, Lowest |
+| `project` | string | Project key |
+| `assignee` | string | Email or account ID |
+| `reporter` | string | Email or account ID |
+| `maxResults` | integer | Results per page (1-100, default: 50) |
+| `startAt` | integer | Pagination offset (default: 0) |
+
+---
+
+## Action 6: Add Comment
+
+Add comments to issues with optional visibility restrictions.
+
+### Basic Comment
+
+```json
+{
+  "automationType": "jira",
+  "nodeId": "jira-add-comment-001",
+  "nodeParams": {
+    "action": "add_comment",
+    "params": {
+      "apiKey": "YOUR_JIRA_API_TOKEN",
+      "email": "user@example.com",
+      "instanceUrl": "https://your-domain.atlassian.net",
+      "issueId": "PROJ-123",
+      "body": "This issue has been resolved in the latest release."
+    }
+  }
+}
+```
+
+### Comment with Visibility
+
+```json
+{
+  "automationType": "jira",
+  "nodeId": "jira-add-comment-visibility-001",
+  "nodeParams": {
+    "action": "add_comment",
+    "params": {
+      "apiKey": "YOUR_JIRA_API_TOKEN",
+      "email": "user@example.com",
+      "instanceUrl": "https://your-domain.atlassian.net",
+      "issueId": "PROJ-123",
+      "body": "Internal note: This requires additional review.",
+      "visibility": {
+        "type": "role",
+        "value": "Administrators"
+      }
+    }
+  }
+}
+```
+
+### Required Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `issueId` | string | Issue key |
+| `body` | string | Comment text |
+
+### Optional Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `visibility.type` | string | `role` or `group` |
+| `visibility.value` | string | Role or group name |
+
+---
+
+## Response Format
+
+All Jira actions return a consistent response structure:
+
+### Success Response
+
+```json
+{
+  "success": true,
+  "data": {
+    "id": "10001",
+    "key": "PROJ-123",
+    "self": "https://your-domain.atlassian.net/rest/api/3/issue/10001"
+  }
+}
+```
+
+### Error Response
+
+```json
+{
+  "success": false,
+  "error": "Invalid parameters provided"
+}
+```
+
+---
+
+## Common Use Cases
+
+<CardGroup cols={2}>
+  <Card title="Bug Tracking from Conversations" icon="bug">
+    Automatically create bug issues when users report problems during conversations, with full context captured.
+  </Card>
+  <Card title="Task Assignment" icon="user-check">
+    Route issues to appropriate team members based on conversation analysis and expertise mapping.
+  </Card>
+  <Card title="Status Updates" icon="arrows-rotate">
+    Progress issues through workflows automatically based on conversation milestones and confirmations.
+  </Card>
+  <Card title="Work Time Tracking" icon="clock">
+    Log time spent on issues directly from conversation interactions and agent activities.
+  </Card>
+</CardGroup>
+
+---
+
+## Error Handling
+
+| Status Code | Description | Common Causes |
+|-------------|-------------|---------------|
+| `400` | Bad Request | Invalid parameters, missing required fields |
+| `401` | Unauthorized | Invalid API token or expired OAuth token |
+| `403` | Forbidden | Insufficient permissions for the action |
+| `404` | Not Found | Issue, project, or user not found |
+
+<Warning>
+Ensure your API token or OAuth scope has the necessary permissions for the actions you want to perform. Check your Jira project permissions and user roles.
+</Warning>
+
+---
+
+## Setup Guide
+
+<Steps>
+  <Step title="Generate API Token">
+    Navigate to [Atlassian Account Security](https://id.atlassian.com/manage-profile/security/api-tokens) and create a new API token.
+  </Step>
+  <Step title="Configure Integration">
+    In Plura, add the Jira integration with your API token, email, and instance URL.
+  </Step>
+  <Step title="Test Connection">
+    Create a test issue to verify authentication and permissions are configured correctly.
+  </Step>
+  <Step title="Add to Workflow">
+    Use the API Call Node to integrate Jira actions into your AI agent workflows.
+  </Step>
+</Steps>
+
+---
+
+## Best Practices
+
+1. **Use Issue Keys**: Always reference issues by their key (e.g., `PROJ-123`) for consistency
+2. **Validate Before Creation**: Check for duplicate issues before creating new ones using search
+3. **Add Context**: Include relevant conversation context in issue descriptions and comments
+4. **Set Priorities**: Automatically set priorities based on conversation sentiment and urgency
+5. **Track Updates**: Use comments to maintain an audit trail of AI-driven updates
+
+---
+
+## Next Steps
+
+- [API Call Node](/the-platform/workflows/nodes/api-call-node) — Learn how to integrate Jira into workflows
+- [Decision Triggers](/the-platform/workflows/decision-triggers) — Route based on issue data
+- [Building Workflows](/the-platform/workflows/building-flows) — Create end-to-end integrations
+

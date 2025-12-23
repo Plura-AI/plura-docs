@@ -1,0 +1,423 @@
+---
+title: "Media Processing Node"
+description: "Process inbound images, video, and files with built-in quality validation, shot coverage tracking, and dynamic data extraction"
+---
+
+# Media Processing Node
+
+Handle media in RCS workflows with AI-powered analysis
+
+## What Is the Media Processing Node?
+
+The **Media Processing Node** is a specialized node type designed to handle inbound images, video, and files in RCS conversations. Unlike the AI Conversation Node which handles text-based dialogue, the Media Processing Node focuses on validating, analyzing, and extracting data from visual media.
+
+<Info>
+The Media Processing Node separates media processing logic from conversation flow. This means you can build reusable media handling patterns that work across multiple workflows and clients.
+</Info>
+
+### Key Capabilities
+
+- **Quality Gate**: Automatically detect blur, poor lighting, bad framing, and obstructions using Claude Sonnet
+- **Coverage Scoring**: Track which required photos have been submitted against a predefined shot taxonomy
+- **Dynamic Data Extraction**: Extract structured data (VIN, license plates, text) using Google Vision OCR + Claude
+- **Video Processing**: Extract keyframes from video uploads and score them against your taxonomy
+- **Decision Triggers**: Route conversations based on media quality, coverage completion, and extraction results
+
+### Common Use Cases
+
+| Industry | Use Case | What It Does |
+|----------|----------|--------------|
+| Auto Insurance | FNOL Claims | Collect damage photos, verify VIN, ensure complete documentation |
+| Homeowners | Property Damage | Guide users through required shots of water/fire/roof damage |
+| Healthcare | Member Onboarding | Capture and extract data from insurance cards and IDs |
+| Automotive | Vehicle Inspection | Standardize dealer condition reports with required angles |
+| Logistics | Package Intake | Document shipment condition with damage detection |
+
+---
+
+## How It Works
+
+The Media Processing Node contains **7 configurable sections** that process media in sequence:
+
+| # | Section | Engine | Purpose |
+|---|---------|--------|---------|
+| 1 | Input Type Handling | Router | Route by media type, handle unsupported formats |
+| 2 | Quality Gate | Claude Sonnet | Validate blur, lighting, framing, obstructions |
+| 3 | Coverage Scoring | Claude Sonnet | Score photos against shot taxonomy, track gaps |
+| 4 | Dynamic Data Extraction | Google Vision + Claude | Extract structured data with custom fields |
+| 5 | Video Processing | FFmpeg | Keyframe extraction, frame scoring |
+| 6 | Output Variables | — | Expose all data for downstream use |
+| 7 | Decision Triggers | — | IF/THEN routing rules |
+
+### Processing Flow
+
+```
+RCS Input → Input Router → [Video? Extract Keyframes] → Quality Gate
+    ↓ FAIL: Retry with guidance
+    ↓ PASS: Coverage Scoring
+    ↓ INCOMPLETE: Request missing shots
+    ↓ COMPLETE: Data Extraction → Output Variables → Decision Triggers
+```
+
+When a user sends media, the node:
+
+1. **Routes** the input based on type (image, video, file, or text)
+2. **Validates** quality and rejects unusable submissions with specific retry guidance
+3. **Scores** the photo against your taxonomy to track coverage progress
+4. **Extracts** any configured data fields (VIN, plate numbers, etc.)
+5. **Evaluates** decision triggers to determine next steps
+
+---
+
+## Section 1: Input Type Handling
+
+The entry point that routes incoming RCS messages to the appropriate processing pipeline based on media type.
+
+### How It Works
+
+When a message arrives, the node inspects the content type and routes accordingly:
+
+- **Images** (JPG, PNG, HEIC, WebP) → Quality Gate
+- **Videos** (MP4, MOV) → Keyframe Extraction → Quality Gate
+- **Files** (PDF, documents) → Document Parsing
+- **Text** → AI Conversation Node (pass-through)
+
+Unsupported types (audio, contacts, etc.) trigger a guidance message explaining accepted formats.
+
+### Configuration Options
+
+| Setting | Options | Description |
+|---------|---------|-------------|
+| Image Processing | On/Off | Enable JPG, PNG, HEIC, WebP |
+| Video Processing | On/Off | Enable MP4, MOV (triggers keyframe extraction) |
+| File Processing | On/Off | Enable PDF and document parsing |
+| Unsupported Handling | Send guidance / Skip / Escalate | What happens when user sends unsupported type |
+| Text Pass-through | Node selection | Where to route text messages |
+
+### Unsupported Type Message
+
+Configure the message sent when users submit unsupported media types:
+
+```
+I can process photos and videos. Please send an image of {current_request}.
+```
+
+<Tip>
+For workflows that only need photos, disable Video and File processing to simplify the user experience and reduce confusion.
+</Tip>
+
+---
+
+## Section 2: Quality Gate
+
+Validates incoming media for blur, lighting, framing, and obstructions before proceeding. Rejects unusable submissions with specific guidance on how to improve.
+
+### How It Works
+
+Each image is sent to **Claude Sonnet** with a quality assessment prompt. Claude returns:
+
+- **Quality Score** (0.0 - 1.0)
+- **Detected Issues**: blur, low light, too far away, obstructed view, glare, wrong subject
+
+If the score falls below your threshold, the node sends a retry message with specific guidance based on detected issues. After max retries, it escalates or proceeds (configurable).
+
+### Configuration Options
+
+| Setting | Range/Options | Description |
+|---------|---------------|-------------|
+| Minimum Quality Score | 0.0 - 1.0 (default: 0.6) | Threshold for passing quality check |
+| Quality Checks | Blur, Low Light, Too Far, Obstructed, Glare, Wrong Subject | Which issues to detect |
+| Max Retries | 1 - 5 (default: 3) | How many retry attempts before escalation |
+| On Max Retries | Escalate / Proceed / End | Action when retries exhausted |
+
+### Retry Message Template
+
+```
+That photo is a bit {quality_issues}. Could you please retake it with {guidance}?
+```
+
+The `{quality_issues}` and `{guidance}` variables are automatically populated based on detected issues.
+
+### Output Variables
+
+| Variable | Type | Description |
+|----------|------|-------------|
+| `quality_score` | float | 0.0-1.0 overall quality assessment |
+| `quality_passed` | boolean | Whether the image met minimum threshold |
+| `quality_issues[]` | array | List of detected issues (blur, dark, etc.) |
+| `retry_count` | integer | Number of retry attempts made |
+
+<Info>
+**Expected Impact**: With proper threshold tuning, expect 85%+ first-submission pass rate. Start with 0.6 threshold and adjust based on your use case.
+</Info>
+
+---
+
+## Section 3: Coverage Scoring
+
+Scores incoming photos against a predefined **shot taxonomy**. Tracks which shots have been captured, identifies gaps, and requests specific missing angles.
+
+### How It Works
+
+Each photo is sent to **Claude Sonnet** with your taxonomy definition. Claude determines which shot type(s) the photo satisfies based on the AI descriptions you've configured.
+
+The node maintains a running tally of captured vs. required shots and responds with:
+
+- Confirmation of what was captured
+- List of remaining required shots
+- Specific request for the next missing shot
+
+### Configuration Options
+
+| Setting | Options | Description |
+|---------|---------|-------------|
+| Taxonomy | Dropdown from Taxonomy Manager | Which shot checklist to use |
+| Completion Threshold | 80% - 100% (default: 100%) | When to consider coverage complete |
+| On Missing Shots | Request specific / Proceed at threshold / Escalate | Action when shots are missing |
+
+### Missing Shot Message Template
+
+```
+Great progress! I still need: {missing_shots}. Please send those photos to complete your submission.
+```
+
+### Output Variables
+
+| Variable | Type | Description |
+|----------|------|-------------|
+| `coverage_complete` | boolean | All required shots received |
+| `coverage_percentage` | float | Percentage of required shots captured |
+| `missing_shots[]` | array | Shots required but not yet captured |
+| `captured_shots[]` | array | Shots successfully captured |
+
+### Example Interaction
+
+**User sends**: [front of car photo]
+
+**Bot**: "Got the front view! I still need: rear, left side, right side, corners, VIN, plate, odometer, and close-ups of the damage. Let's get the rear of the vehicle next."
+
+<Tip>
+Coverage scoring ensures **complete documentation at first contact** — while the user is engaged and at the vehicle/property. This eliminates costly follow-up requests.
+</Tip>
+
+---
+
+## Section 4: Dynamic Data Extraction
+
+Extracts structured data from photos using OCR and AI. Fully dynamic — add any field with custom validation rules.
+
+### How It Works
+
+When extraction is enabled, each photo is processed through:
+
+1. **Google Cloud Vision** for raw OCR text extraction
+2. **Claude** for structured extraction based on your field definitions
+
+Each field you configure has:
+
+- **Variable Name**: Output variable (e.g., `extracted_vin`)
+- **Data Type**: String, number, date, or boolean
+- **AI Description**: Natural language description of what to look for
+- **Validation Rule**: VIN checksum, regex pattern, range, or format
+
+### Quick Presets
+
+One-click add common extraction fields:
+
+- VIN Number
+- License Plate
+- Odometer Reading
+- Date of Birth
+- Address
+- Phone Number
+- Dollar Amount
+- Serial Number
+
+### Field Templates
+
+Load preconfigured field sets for common documents:
+
+| Template | Fields Included |
+|----------|-----------------|
+| Driver's License | Name, DOB, Address, License #, Expiration, Class |
+| Insurance Card | Member ID, Group #, Plan Name, Effective Date, Copay |
+| Shipping Label | Tracking #, Sender, Recipient, Weight, Dimensions |
+| Invoice | Vendor, Date, Line Items, Subtotal, Tax, Total |
+
+### Output Variables (Per Field)
+
+For each extraction field (e.g., "vin"):
+
+| Variable | Type | Description |
+|----------|------|-------------|
+| `extracted_vin` | varies | The extracted value |
+| `vin_valid` | boolean | Whether validation passed |
+| `vin_confidence` | float | OCR confidence score (0.0-1.0) |
+
+Plus global variables:
+
+| Variable | Type | Description |
+|----------|------|-------------|
+| `extraction_complete` | boolean | All required fields extracted |
+| `extraction_results{}` | object | Full object of all extractions |
+
+### Freeform AI Instructions
+
+Add custom extraction guidance for edge cases:
+
+```
+If the license is from Texas, the number format is 8 digits. 
+For California, it's 1 letter + 7 digits. 
+Extract the class (A, B, C, M) if visible.
+```
+
+---
+
+## Section 5: Video Processing
+
+Automatically extracts keyframes from video uploads and scores them against the shot taxonomy.
+
+### How It Works
+
+When a video is uploaded:
+
+1. **FFmpeg** extracts keyframes at configured intervals
+2. Each frame passes through the **Quality Gate**
+3. Usable frames are scored against your **Taxonomy**
+4. Gaps are identified
+5. User is prompted for specific missing shots as still photos
+
+This allows users to submit a quick walkthrough video instead of individual photos, while still ensuring complete coverage.
+
+### Configuration Options
+
+| Setting | Options | Description |
+|---------|---------|-------------|
+| Extraction Method | Interval / Scene-change / Hybrid | How frames are selected |
+| Interval | 0.5 - 5 seconds (default: 1s) | Time between extracted frames |
+| Max Frames | 10 - 100 (default: 30) | Maximum frames to extract per video |
+| Frame Selection | Best quality / All extracted | Whether to filter by quality |
+| Score Against Taxonomy | On/Off | Enable taxonomy matching |
+| Request Stills for Gaps | On/Off | Prompt user for missing shots |
+
+### Output Variables
+
+| Variable | Type | Description |
+|----------|------|-------------|
+| `frame_count` | integer | Number of frames extracted |
+| `video_duration` | float | Video length in seconds |
+| `media_urls[]` | array | URLs of all processed media |
+
+### Example Flow
+
+**User sends**: 60-second walkthrough video
+
+**Processing**:
+- 45 frames extracted at 1-second intervals
+- 38 frames passed quality gate
+- Matched: front, rear, left side, right side, 3 corners, 2 damage areas
+- Missing: rear-left corner, VIN, license plate, odometer
+
+**Bot**: "Thanks for the video walkthrough! I captured 9 of the required shots. Could you please send individual photos of: rear-left corner, VIN plate, license plate, and odometer?"
+
+<Tip>
+Users prefer video — it's faster and feels more natural. Video processing bridges the gap: accept the video, extract what's usable, request stills only for gaps.
+</Tip>
+
+---
+
+## Section 6: Output Variables
+
+All data generated by the Media Processing Node is exposed as variables for use in Decision Triggers, downstream nodes, API calls, and integrations.
+
+### Complete Variable Reference
+
+**Quality Gate**:
+- `quality_score` (float) — 0.0-1.0 overall quality
+- `quality_passed` (boolean) — Met threshold
+- `quality_issues[]` (array) — Detected issues
+- `retry_count` (integer) — Retry attempts
+
+**Coverage**:
+- `coverage_complete` (boolean) — All required shots received
+- `coverage_percentage` (float) — % of shots captured
+- `missing_shots[]` (array) — Shots still needed
+- `captured_shots[]` (array) — Shots received
+
+**Extraction** (per field):
+- `extracted_{field}` (varies) — Extracted value
+- `{field}_valid` (boolean) — Validation passed
+- `{field}_confidence` (float) — OCR confidence
+
+**Video**:
+- `frame_count` (integer) — Frames extracted
+- `video_duration` (float) — Length in seconds
+- `media_urls[]` (array) — All media URLs
+
+### Using Variables in Downstream Nodes
+
+Reference variables in prompts, API calls, and messages:
+
+```
+Thank you! I've captured your VIN: {extracted_vin}
+Your claim now has {coverage_percentage}% of required photos.
+```
+
+---
+
+## Section 7: Decision Triggers
+
+IF/THEN routing rules that determine what happens after media is processed. Evaluated top-to-bottom — first matching condition fires.
+
+### How It Works
+
+After processing completes, the node evaluates each trigger rule in order. The first rule whose condition evaluates to TRUE determines the action:
+
+- **Stay**: Remain in node, send a message, wait for more input
+- **Proceed**: Move to a specific next node
+- **Escalate**: Route to human agent
+
+### Standard Trigger Pattern
+
+Most Media Processing Nodes should include these triggers (in order):
+
+| # | Condition | Action |
+|---|-----------|--------|
+| 1 | `quality_passed == false AND retry_count < 3` | Stay (send quality guidance) |
+| 2 | `quality_passed == true AND coverage_complete == false` | Stay (request missing shots) |
+| 3 | `coverage_complete == true AND extraction_complete == true` | Proceed to next step |
+| 4 | `extraction_required == true AND extraction_complete == false` | Stay (request clearer photo) |
+| 5 | `retry_count >= 3` | Escalate to human |
+
+### Advanced Trigger Examples
+
+**Proceed with partial coverage for low-value claims:**
+```
+IF coverage_percentage >= 0.8 AND claim_value < 5000
+   → Proceed (good enough for small claims)
+```
+
+**VIN mismatch escalation:**
+```
+IF extracted_vin != policy_vin AND vin_confidence > 0.9
+   → Escalate (possible fraud or wrong vehicle)
+```
+
+**Fast-track perfect submissions:**
+```
+IF quality_score > 0.9 AND coverage_complete == true
+   → Proceed immediately (skip confirmation)
+```
+
+<Info>
+Decision triggers replace complex prompt engineering with **explicit, testable logic**. When something routes wrong, you can see exactly which trigger fired and why.
+</Info>
+
+---
+
+## Next Steps
+
+- [Taxonomy Manager](/the-platform/workflows/nodes/taxonomy-manager) — Create and manage shot taxonomies
+- [Building Workflows](/the-platform/workflows/building-flows) — Learn how nodes connect
+- [Decision Triggers](/the-platform/workflows/decision-triggers) — Advanced routing logic
+

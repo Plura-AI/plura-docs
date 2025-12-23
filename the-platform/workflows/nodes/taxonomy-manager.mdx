@@ -1,0 +1,303 @@
+---
+title: "Taxonomy Manager"
+description: "Create and manage shot taxonomies for the Media Processing Node"
+---
+
+# Taxonomy Manager
+
+Define required photo checklists for media workflows
+
+## What Is a Taxonomy?
+
+A **taxonomy** is a predefined checklist of required shots for a specific use case. It tells the Media Processing Node's Coverage Scoring section what photos to expect and how to recognize them.
+
+Each taxonomy includes:
+
+- **Required Shots**: Must be captured before proceeding
+- **Conditional Shots**: Required only when a specific condition is met
+- **AI Descriptions**: How Claude identifies each shot type
+- **Extraction Links**: Which shots should trigger OCR data extraction
+
+<Info>
+Taxonomies are managed separately from workflows, allowing you to reuse the same shot requirements across multiple workflows and clients.
+</Info>
+
+---
+
+## Accessing the Taxonomy Manager
+
+Navigate to **Settings → Taxonomy Manager** to view, create, and edit taxonomies.
+
+The **List View** displays all available taxonomies with:
+
+- Taxonomy name and icon
+- Industry category
+- Shot count (required vs. conditional)
+- Type badge (Plura Template or Custom)
+
+Use the filters to narrow by industry or type, or search by name.
+
+---
+
+## Creating a Taxonomy
+
+<Steps>
+  <Step title="Click Create Taxonomy">
+    Or clone an existing template to start with a base configuration.
+  </Step>
+  <Step title="Set Basic Info">
+    - **Name**: Descriptive name (e.g., "Auto Damage - Standard")
+    - **Industry**: Category for filtering (Auto, Homeowners, Healthcare, Logistics)
+    - **Icon**: Visual identifier for the list view
+    - **Description**: Optional context for your team
+  </Step>
+  <Step title="Add Shot Requirements">
+    Define each photo you need. See Shot Configuration below.
+  </Step>
+  <Step title="Configure Conditions">
+    For conditional shots, specify when they're required.
+  </Step>
+  <Step title="Link Extraction Fields">
+    Connect shots to extraction fields for OCR (e.g., VIN plate → VIN extraction).
+  </Step>
+  <Step title="Save">
+    Your taxonomy is now available in the Media Processing Node dropdown.
+  </Step>
+</Steps>
+
+---
+
+## Shot Configuration
+
+Each shot in a taxonomy has the following fields:
+
+| Field | Purpose | Example |
+|-------|---------|---------|
+| **Shot ID** | Variable name for code/triggers | `front_full` |
+| **Display Name** | Human-readable label shown to users | "Front of Vehicle" |
+| **AI Description** | How Claude recognizes this shot type | "Full front view showing hood, grille, headlights, and front bumper" |
+| **Distance** | Expected framing | Wide / Mid / Close-up |
+| **Requirement** | When this shot is needed | Required / Conditional / Optional |
+| **Condition** | Logic for conditional shots | `airbags_deployed == true` |
+| **Extract Field** | Link to extraction field | VIN, License Plate, etc. |
+
+### Writing Good AI Descriptions
+
+The AI Description is critical — it's what Claude uses to determine if a photo matches a shot type.
+
+**Good descriptions include:**
+- What should be visible in the frame
+- Relative positioning and framing
+- Key identifying features
+
+**Example — Front of Vehicle:**
+```
+Full front view showing hood, grille, headlights, and front bumper. 
+Vehicle should fill most of the frame. 
+Shot from directly in front, not at an angle.
+```
+
+**Example — VIN Plate:**
+```
+Close-up of the VIN plate on the dashboard (visible through windshield) 
+or on the door jamb sticker. All 17 characters must be clearly readable.
+```
+
+<Tip>
+Be specific about what makes this shot different from similar shots. For corners, specify which corner and the expected angle (e.g., "45-degree angle showing both front and driver side").
+</Tip>
+
+---
+
+## Conditional Shots
+
+Conditional shots are only required when a specific condition is true. This keeps the shot list manageable while ensuring you capture situational documentation.
+
+### Condition Syntax
+
+Conditions use the same variable syntax as Decision Triggers:
+
+```
+{variable} == {value}
+{variable} != {value}
+{variable} > {value}
+```
+
+### Common Conditions
+
+| Shot | Condition | When Required |
+|------|-----------|---------------|
+| Interior / Airbags | `airbags_deployed == true` | When airbags deployed |
+| Glass Close-up | `glass_damaged == true` | When glass is damaged |
+| Undercarriage | `flood_damage == true` | For flood claims |
+| Roof Damage | `hail_reported == true` | For hail claims |
+
+### Setting Condition Variables
+
+Condition variables can be set by:
+
+1. **Data Extraction** in an earlier node
+2. **API Call** that returns claim details
+3. **User Input** captured in the conversation
+4. **Workflow Variables** passed from the trigger
+
+---
+
+## Plura Template Library
+
+Plura ships with pre-built taxonomies for common use cases. These can be used as-is or cloned and customized.
+
+### Auto Insurance
+
+| Taxonomy | Shots | Description |
+|----------|-------|-------------|
+| Auto Damage - Standard | 12 (9 req, 3 cond) | Standard FNOL documentation |
+| Auto Damage - Total Loss | 15 (12 req, 3 cond) | Extended for total loss evaluation |
+| VIN Verification - Quick | 4 (4 req) | Quick VIN + plate capture |
+
+### Homeowners Insurance
+
+| Taxonomy | Shots | Description |
+|----------|-------|-------------|
+| Water Damage - Standard | 14 (10 req, 4 cond) | Water intrusion documentation |
+| Fire Damage - Standard | 16 (12 req, 4 cond) | Fire and smoke damage |
+| Roof Damage - Standard | 10 (8 req, 2 cond) | Roof condition assessment |
+
+### Healthcare
+
+| Taxonomy | Shots | Description |
+|----------|-------|-------------|
+| Insurance Card | 2 (2 req) | Front and back of insurance card |
+| Driver's License | 2 (2 req) | Front and back of ID |
+
+### Logistics
+
+| Taxonomy | Shots | Description |
+|----------|-------|-------------|
+| Package Intake | 6 (4 req, 2 cond) | Shipment receiving |
+| Damage Documentation | 8 (6 req, 2 cond) | Damage claims |
+
+---
+
+## Example: Auto Damage - Standard
+
+Here's the complete breakdown of the Auto Damage - Standard taxonomy:
+
+### Required Shots (9)
+
+| Shot ID | Display Name | AI Description | Distance |
+|---------|--------------|----------------|----------|
+| `front_full` | Front of Vehicle | Full front view showing hood, grille, headlights, bumper | Wide |
+| `rear_full` | Rear of Vehicle | Full rear view showing trunk/tailgate, taillights, bumper | Wide |
+| `left_side` | Left Side | Full driver side from front wheel to rear wheel | Wide |
+| `right_side` | Right Side | Full passenger side from front wheel to rear wheel | Wide |
+| `corner_fl` | Front-Left Corner | 45° angle showing front and driver side | Wide |
+| `corner_fr` | Front-Right Corner | 45° angle showing front and passenger side | Wide |
+| `corner_rl` | Rear-Left Corner | 45° angle showing rear and driver side | Wide |
+| `corner_rr` | Rear-Right Corner | 45° angle showing rear and passenger side | Wide |
+| `damage_closeup` | Damage Close-up | Close-up of primary damage area, minimum 2 photos | Close-up |
+
+### Required with Extraction (3)
+
+| Shot ID | Display Name | Extract Field | Validation |
+|---------|--------------|---------------|------------|
+| `vin_plate` | VIN Plate | VIN Number | VIN Checksum |
+| `license_plate` | License Plate | Plate Number | US Plate Format |
+| `odometer` | Odometer | Mileage | Number (0-500000) |
+
+### Conditional Shots (3)
+
+| Shot ID | Display Name | Condition |
+|---------|--------------|-----------|
+| `interior_airbags` | Interior / Airbags | `airbags_deployed == true` |
+| `glass_damage` | Glass Close-up | `glass_damaged == true` |
+| `undercarriage` | Undercarriage | `flood_damage == true` |
+
+---
+
+## Taxonomy Versioning
+
+When you update a taxonomy, existing in-flight conversations continue using the version they started with. New conversations use the updated taxonomy.
+
+<Warning>
+Significant taxonomy changes should be tested before deployment. Consider cloning the taxonomy and testing the new version in a staging workflow before updating the production taxonomy.
+</Warning>
+
+---
+
+## JSON Import/Export
+
+For power users, taxonomies can be exported and imported as JSON.
+
+### Export
+
+Click **Export JSON** on any taxonomy detail view to download the configuration.
+
+### Import
+
+Use **Create Taxonomy → Import JSON** to create a new taxonomy from a JSON file.
+
+### JSON Structure
+
+```json
+{
+  "name": "Auto Damage - Standard",
+  "industry": "auto_insurance",
+  "icon": "🚗",
+  "shots": [
+    {
+      "id": "front_full",
+      "display_name": "Front of Vehicle",
+      "ai_description": "Full front view showing hood, grille...",
+      "distance": "wide",
+      "requirement": "required",
+      "extract_field": null
+    },
+    {
+      "id": "vin_plate",
+      "display_name": "VIN Plate",
+      "ai_description": "Close-up of VIN plate...",
+      "distance": "closeup",
+      "requirement": "required",
+      "extract_field": "vin"
+    },
+    {
+      "id": "interior_airbags",
+      "display_name": "Interior / Airbags",
+      "ai_description": "Interior shot showing deployed airbags...",
+      "distance": "wide",
+      "requirement": "conditional",
+      "condition": "airbags_deployed == true",
+      "extract_field": null
+    }
+  ]
+}
+```
+
+---
+
+## Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Start with Templates" icon="copy">
+    Clone a Plura template and customize rather than building from scratch.
+  </Card>
+  <Card title="Be Specific in Descriptions" icon="message">
+    Detailed AI descriptions reduce misclassification and improve coverage accuracy.
+  </Card>
+  <Card title="Use Conditional Shots" icon="code-branch">
+    Don't overload required shots — use conditions to keep the flow manageable.
+  </Card>
+  <Card title="Link Extraction Fields" icon="link">
+    Connect shots to extraction when you need OCR data from that specific photo.
+  </Card>
+</CardGroup>
+
+---
+
+## Next Steps
+
+- [Media Processing Node](/the-platform/workflows/nodes/media-processing-node) — Use taxonomies in workflows
+- [Dynamic Data Extraction](/the-platform/workflows/nodes/media-processing-node#section-4-dynamic-data-extraction) — Configure extraction fields
+- [Decision Triggers](/the-platform/workflows/decision-triggers) — Route based on coverage
+

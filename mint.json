@@ -80,7 +80,14 @@
                 "the-platform/workflows/nodes/knowledge-base-node",
                 "the-platform/workflows/nodes/end-call-node",
                 "the-platform/workflows/nodes/transfer-call-node",
-                "the-platform/workflows/nodes/api-call-node"
+                "the-platform/workflows/nodes/api-call-node",
+                {
+                  "group": "Media Processing Node",
+                  "pages": [
+                    "the-platform/workflows/nodes/media-processing-node",
+                    "the-platform/workflows/nodes/taxonomy-manager"
+                  ]
+                }
               ]
             },
             "the-platform/workflows/decision-triggers",

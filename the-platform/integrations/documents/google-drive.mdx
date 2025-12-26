@@ -1,0 +1,105 @@
+---
+title: "Google Drive"
+description: "Manage documents and folders using Google Drive"
+---
+
+## **Description**
+
+Google Drive integration allows you to manage folders and files in your Google Drive account. This integration provides essential folder management capabilities, enabling you to organize your documents, create folder structures, and maintain your Drive workspace programmatically.
+
+The Google Drive integration is part of the unified Google Sheets provider, which means it uses the same OAuth authentication and shares the same automation type (`google_sheets`). This unified approach simplifies authentication while providing access to both Google Sheets and Google Drive functionality.
+
+## **Authentication**
+
+- **OAuth 2.0** - Connect your Google account via the Plura OAuth flow. The same Google OAuth connection used for Google Sheets also provides access to Google Drive operations.
+
+## **Available Actions**
+
+The Google Drive integration supports the following actions:
+
+- **List Folders** - Retrieve a list of folders in your Google Drive, with optional filtering by parent folder
+- **Create Folder** - Create new folders in your Google Drive, with optional parent folder specification
+- **Delete Folder** - Remove folders or files from your Google Drive by their file ID
+
+### **Action Details**
+
+#### **List Folders**
+
+Lists all folders in your Google Drive. You can optionally filter results to show only folders within a specific parent folder. Results include folder IDs, names, and web view links for easy access.
+
+**Parameters:**
+- `parentFolderId` (optional) - Filter folders to only those within the specified parent folder
+- `pageSize` (optional) - Maximum number of results to return (default: 50)
+- `pageToken` (optional) - Token for pagination to retrieve additional results
+
+#### **Create Folder**
+
+Creates a new folder in your Google Drive. You can specify a parent folder to organize your folder structure hierarchically.
+
+**Parameters:**
+- `folderName` (required) - The name of the folder to create
+- `parentFolderId` (optional) - The ID of the parent folder where the new folder should be created
+
+#### **Delete Folder**
+
+Permanently deletes a folder or file from your Google Drive. This action cannot be undone, so use with caution.
+
+**Parameters:**
+- `fileId` (required) - The ID of the folder or file to delete
+- `folderId` (optional) - Alternative parameter name for fileId (both are accepted)
+
+## **Examples**
+
+**Example 1: Google Drive - List Folders**
+
+List all folders in your Google Drive. This example retrieves folders at the root level of your Drive.
+
+```json
+{
+  "automationType": "google_sheets",
+  "nodeId": "sheets-list-folders-001",
+  "nodeParams": {
+    "action": "list_folders",
+    "params": {}
+  }
+}
+```
+
+**Example 2: Google Drive - Create Folder**
+
+Create a new folder in Google Drive. This example creates a folder named "Plura Sheets" at the root level.
+
+```json
+{
+  "automationType": "google_sheets",
+  "nodeId": "sheets-create-folder-001",
+  "nodeParams": {
+    "action": "create_folder",
+    "params": {
+      "folderName": "Plura Sheets"
+    }
+  }
+}
+```
+
+**Example 3: Google Drive - Delete Folder**
+
+Delete a folder or file from Google Drive using its file ID. This action permanently removes the item from your Drive.
+
+```json
+{
+  "automationType": "google_sheets",
+  "nodeId": "sheets-delete-folder-001",
+  "nodeParams": {
+    "action": "delete_folder",
+    "params": {
+      "fileId": "1a2b3cFolderId"
+    }
+  }
+}
+```
+
+### Third-Party Documentation
+
+- [https://developers.google.com/drive/api/guides/about-sdk](https://developers.google.com/drive/api/guides/about-sdk)
+

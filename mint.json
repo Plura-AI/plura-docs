@@ -154,7 +154,6 @@
             {
               "group": "Documents",
               "pages": [
-                "the-platform/integrations/documents/airtable",
                 "the-platform/integrations/documents/google-drive",
                 "the-platform/integrations/documents/google-sheets"
               ]
@@ -162,7 +161,6 @@
             {
               "group": "Messaging",
               "pages": [
-                "the-platform/integrations/messaging/meta",
                 "the-platform/integrations/messaging/microsoft-teams",
                 "the-platform/integrations/messaging/slack"
               ]

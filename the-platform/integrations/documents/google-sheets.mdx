@@ -1,104 +1,282 @@
 ---
-title: "Google Drive"
-description: "Manage documents and folders using Google Drive"
+title: "Google Sheets"
+description: "Read, write, and manage Google Sheets spreadsheets and their tabs"
 ---
 
-## **Description**
+## Overview
 
-Google Drive integration allows you to manage folders and files in your Google Drive account. This integration provides essential folder management capabilities, enabling you to organize your documents, create folder structures, and maintain your Drive workspace programmatically.
+Read, write, and manage Google Sheets spreadsheets and their tabs. Call actions with `automationType`, `action`, and `params` from any workflow node that supports automations.
 
-The Google Drive integration is part of the unified Google Sheets provider, which means it uses the same OAuth authentication and shares the same automation type (`google_sheets`). This unified approach simplifies authentication while providing access to both Google Sheets and Google Drive functionality.
+## Authentication
 
-## **Authentication**
+- OAuth 2.0 — connect your Google account via the Plura OAuth flow. The same connection covers both Google Sheets and Google Drive operations (unified under `automationType: "google_sheets"`).
 
-- **OAuth 2.0** - Connect your Google account via the Plura OAuth flow. The same Google OAuth connection used for Google Sheets also provides access to Google Drive operations.
+## Available Actions
 
-## **Available Actions**
+Click any action to jump to its example payload.
 
-The Google Drive integration supports the following actions:
+- [Append Row](#google-sheets-append-row)
+- [Read Range](#google-sheets-read-range)
+- [Update Range](#google-sheets-update-range)
+- [Clear Range](#google-sheets-clear-range)
+- [Get Spreadsheet](#google-sheets-get-spreadsheet)
+- [Create Spreadsheet](#google-sheets-create-spreadsheet)
+- [Add Sheet](#google-sheets-add-sheet)
+- [Rename Sheet](#google-sheets-rename-sheet)
+- [Delete Sheet](#google-sheets-delete-sheet)
+- [Delete Spreadsheet](#google-sheets-delete-spreadsheet)
+- [List Spreadsheets](#google-sheets-list-spreadsheets)
 
-- **List Folders** - Retrieve a list of folders in your Google Drive, with optional filtering by parent folder
-- **Create Folder** - Create new folders in your Google Drive, with optional parent folder specification
-- **Delete Folder** - Remove folders or files from your Google Drive by their file ID
+## Examples
 
-### **Action Details**
+<a id="google-sheets-append-row"></a>
+#### Example 1: Google Sheets - Append Row
 
-#### **List Folders**
-
-Lists all folders in your Google Drive. You can optionally filter results to show only folders within a specific parent folder. Results include folder IDs, names, and web view links for easy access.
-
-**Parameters:**
-- `parentFolderId` (optional) - Filter folders to only those within the specified parent folder
-- `pageSize` (optional) - Maximum number of results to return (default: 50)
-- `pageToken` (optional) - Token for pagination to retrieve additional results
-
-#### **Create Folder**
-
-Creates a new folder in your Google Drive. You can specify a parent folder to organize your folder structure hierarchically.
-
-**Parameters:**
-- `folderName` (required) - The name of the folder to create
-- `parentFolderId` (optional) - The ID of the parent folder where the new folder should be created
-
-#### **Delete Folder**
-
-Permanently deletes a folder or file from your Google Drive. This action cannot be undone, so use with caution.
-
-**Parameters:**
-- `fileId` (required) - The ID of the folder or file to delete
-- `folderId` (optional) - Alternative parameter name for fileId (both are accepted)
-
-## **Examples**
-
-**Example 1: Google Drive - List Folders**
-
-List all folders in your Google Drive. This example retrieves folders at the root level of your Drive.
+Append a row to a sheet
 
 ```json
 {
   "automationType": "google_sheets",
-  "nodeId": "sheets-list-folders-001",
+  "nodeId": "sheets-append-001",
   "nodeParams": {
-    "action": "list_folders",
-    "params": {}
-  }
-}
-```
-
-**Example 2: Google Drive - Create Folder**
-
-Create a new folder in Google Drive. This example creates a folder named "Plura Sheets" at the root level.
-
-```json
-{
-  "automationType": "google_sheets",
-  "nodeId": "sheets-create-folder-001",
-  "nodeParams": {
-    "action": "create_folder",
+    "action": "append_row",
     "params": {
-      "folderName": "Plura Sheets"
+      "spreadsheetId": "1AbCDefGhIJkLmNoPqRstUvWxYz",
+      "range": "Sheet1!A1",
+      "values": [
+        "Alice",
+        "Completed",
+        "2025-01-20"
+      ]
     }
   }
 }
 ```
 
-**Example 3: Google Drive - Delete Folder**
+---
 
-Delete a folder or file from Google Drive using its file ID. This action permanently removes the item from your Drive.
+<a id="google-sheets-read-range"></a>
+#### Example 2: Google Sheets - Read Range
+
+Read a range from a sheet
 
 ```json
 {
   "automationType": "google_sheets",
-  "nodeId": "sheets-delete-folder-001",
+  "nodeId": "sheets-read-001",
   "nodeParams": {
-    "action": "delete_folder",
+    "action": "read_range",
     "params": {
-      "fileId": "1a2b3cFolderId"
+      "spreadsheetId": "1AbCDefGhIJkLmNoPqRstUvWxYz",
+      "range": "Sheet1!A1:C10"
     }
   }
 }
 ```
 
-### Third-Party Documentation
+---
 
-- [https://developers.google.com/drive/api/guides/about-sdk](https://developers.google.com/drive/api/guides/about-sdk)
+<a id="google-sheets-update-range"></a>
+#### Example 3: Google Sheets - Update Range
+
+Update a range with a 2D matrix
+
+```json
+{
+  "automationType": "google_sheets",
+  "nodeId": "sheets-update-001",
+  "nodeParams": {
+    "action": "update_range",
+    "params": {
+      "spreadsheetId": "1AbCDefGhIJkLmNoPqRstUvWxYz",
+      "range": "Sheet1!A2:C2",
+      "valueInputOption": "USER_ENTERED",
+      "matrix": [
+        [
+          "Bob",
+          "In Progress",
+          "2025-01-22"
+        ]
+      ]
+    }
+  }
+}
+```
+
+---
+
+<a id="google-sheets-clear-range"></a>
+#### Example 4: Google Sheets - Clear Range
+
+Clear values in a range
+
+```json
+{
+  "automationType": "google_sheets",
+  "nodeId": "sheets-clear-001",
+  "nodeParams": {
+    "action": "clear_range",
+    "params": {
+      "spreadsheetId": "1AbCDefGhIJkLmNoPqRstUvWxYz",
+      "range": "Sheet1!A2:C10"
+    }
+  }
+}
+```
+
+---
+
+<a id="google-sheets-get-spreadsheet"></a>
+#### Example 5: Google Sheets - Get Spreadsheet
+
+Get spreadsheet metadata and optionally grid data
+
+```json
+{
+  "automationType": "google_sheets",
+  "nodeId": "sheets-get-001",
+  "nodeParams": {
+    "action": "get_spreadsheet",
+    "params": {
+      "spreadsheetId": "1AbCDefGhIJkLmNoPqRstUvWxYz",
+      "includeGridData": false
+    }
+  }
+}
+```
+
+---
+
+<a id="google-sheets-create-spreadsheet"></a>
+#### Example 6: Google Sheets - Create Spreadsheet
+
+Create a new spreadsheet with optional initial sheets
+
+```json
+{
+  "automationType": "google_sheets",
+  "nodeId": "sheets-create-001",
+  "nodeParams": {
+    "action": "create_spreadsheet",
+    "params": {
+      "title": "Plura Automation Sheet",
+      "sheets": [
+        {
+          "title": "Summary"
+        },
+        {
+          "title": "Data"
+        }
+      ]
+    }
+  }
+}
+```
+
+---
+
+<a id="google-sheets-add-sheet"></a>
+#### Example 7: Google Sheets - Add Sheet
+
+Add a sheet to an existing spreadsheet
+
+```json
+{
+  "automationType": "google_sheets",
+  "nodeId": "sheets-add-sheet-001",
+  "nodeParams": {
+    "action": "add_sheet",
+    "params": {
+      "spreadsheetId": "1AbCDefGhIJkLmNoPqRstUvWxYz",
+      "newSheetTitle": "NewData"
+    }
+  }
+}
+```
+
+---
+
+<a id="google-sheets-rename-sheet"></a>
+#### Example 8: Google Sheets - Rename Sheet
+
+Rename a sheet in a spreadsheet
+
+```json
+{
+  "automationType": "google_sheets",
+  "nodeId": "sheets-rename-sheet-001",
+  "nodeParams": {
+    "action": "rename_sheet",
+    "params": {
+      "spreadsheetId": "1AbCDefGhIJkLmNoPqRstUvWxYz",
+      "sheetId": 123456,
+      "newSheetTitle": "RenamedSheet"
+    }
+  }
+}
+```
+
+---
+
+<a id="google-sheets-delete-sheet"></a>
+#### Example 9: Google Sheets - Delete Sheet
+
+Delete a sheet by id from a spreadsheet
+
+```json
+{
+  "automationType": "google_sheets",
+  "nodeId": "sheets-delete-sheet-001",
+  "nodeParams": {
+    "action": "delete_sheet",
+    "params": {
+      "spreadsheetId": "1AbCDefGhIJkLmNoPqRstUvWxYz",
+      "sheetId": 123456
+    }
+  }
+}
+```
+
+---
+
+<a id="google-sheets-delete-spreadsheet"></a>
+#### Example 10: Google Sheets - Delete Spreadsheet
+
+Delete a spreadsheet (uses Drive API)
+
+```json
+{
+  "automationType": "google_sheets",
+  "nodeId": "sheets-delete-001",
+  "nodeParams": {
+    "action": "delete_spreadsheet",
+    "params": {
+      "fileId": "1AbCDefGhIJkLmNoPqRstUvWxYz"
+    }
+  }
+}
+```
+
+---
+
+<a id="google-sheets-list-spreadsheets"></a>
+#### Example 11: Google Sheets - List Spreadsheets
+
+List spreadsheets in Drive
+
+```json
+{
+  "automationType": "google_sheets",
+  "nodeId": "sheets-list-001",
+  "nodeParams": {
+    "action": "list_spreadsheets",
+    "params": {
+      "listParentFolderId": "1a2b3cFolderId"
+    }
+  }
+}
+```
+
+## Third-Party Documentation
+
+- [https://developers.google.com/sheets/api](https://developers.google.com/sheets/api)

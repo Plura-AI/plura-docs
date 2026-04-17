@@ -1,0 +1,801 @@
+---
+title: "Stripe"
+description: "Accept payments, manage customers, and handle subscriptions with Stripe"
+---
+
+## Overview
+
+Accept payments, manage customers, and handle subscriptions with Stripe. Call actions with `automationType`, `action`, and `params` from any workflow node that supports automations.
+
+## Authentication
+
+- Stripe Secret API Key (per-account); restricted keys supported.
+
+## Available Actions
+
+Click any action to jump to its example payload.
+
+
+**Checkout**
+
+- [Retrieve Checkout Session](#stripe-retrieve-checkout-session)
+
+**Customers**
+
+- [Create Customer](#stripe-create-customer)
+- [List Customers](#stripe-list-customers)
+- [Retrieve Customer](#stripe-retrieve-customer)
+
+**Payment Methods**
+
+- [Attach Payment Method](#stripe-attach-payment-method)
+- [Create Payment Method](#stripe-create-payment-method)
+- [Detach Payment Method](#stripe-detach-payment-method)
+
+**Payments**
+
+- [Cancel Payment Intent](#stripe-cancel-payment-intent)
+- [Create Payment Intent](#stripe-create-payment-intent)
+- [Retrieve Payment Intent](#stripe-retrieve-payment-intent)
+
+**Prices**
+
+- [Create Price](#stripe-create-price)
+- [Retrieve Price](#stripe-retrieve-price)
+
+**Products**
+
+- [List Products](#stripe-list-products)
+
+**Refunds**
+
+- [Create Refund](#stripe-create-refund)
+
+**Subscriptions**
+
+- [Cancel Subscription](#stripe-cancel-subscription)
+- [Create Subscription](#stripe-create-subscription)
+- [List Subscriptions](#stripe-list-subscriptions)
+- [Retrieve Subscription](#stripe-retrieve-subscription)
+
+## Examples
+
+<a id="stripe-create-payment-intent"></a>
+#### Example 1: Stripe - Create Payment Intent
+
+Create a payment intent for $10.00
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-create-pi-001",
+  "nodeParams": {
+    "action": "create_payment_intent",
+    "params": {
+      "amount": 1000,
+      "currency": "usd",
+      "description": "Test Payment Intent from Automation",
+      "metadata": {
+        "order_id": "12345"
+      },
+      "webhookUrl": "https://webhook.site/test-callback"
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-confirm-payment-intent"></a>
+#### Example 2: Stripe - Confirm Payment Intent
+
+Confirm an existing payment intent with a payment method
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-confirm-pi-001",
+  "nodeParams": {
+    "action": "confirm_payment_intent",
+    "params": {
+      "paymentIntentId": "pi_3L...xxx",
+      "paymentMethodId": "pm_card_visa",
+      "returnUrl": "https://example.com/checkout/complete"
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-retrieve-payment-intent"></a>
+#### Example 3: Stripe - Retrieve Payment Intent
+
+Get details of a payment intent by ID
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-retrieve-pi-001",
+  "nodeParams": {
+    "action": "retrieve_payment_intent",
+    "params": {
+      "paymentIntentId": "pi_3L...xxx"
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-cancel-payment-intent"></a>
+#### Example 4: Stripe - Cancel Payment Intent
+
+Cancel a payment intent by ID
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-cancel-pi-001",
+  "nodeParams": {
+    "action": "cancel_payment_intent",
+    "params": {
+      "paymentIntentId": "pi_3L...xxx"
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-create-checkout-session"></a>
+#### Example 5: Stripe - Create Checkout Session
+
+Create a checkout session for a one-time payment product
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-create-cs-001",
+  "nodeParams": {
+    "action": "create_checkout_session",
+    "params": {
+      "mode": "payment",
+      "successUrl": "https://example.com/success",
+      "cancelUrl": "https://example.com/cancel",
+      "lineItems": [
+        {
+          "price_data": {
+            "currency": "usd",
+            "product_data": {
+              "name": "Premium Plan"
+            },
+            "unit_amount": 5000
+          },
+          "quantity": 1
+        }
+      ],
+      "customer_email": "customer@example.com",
+      "webhookUrl": "https://webhook.site/test-callback"
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-retrieve-checkout-session"></a>
+#### Example 6: Stripe - Retrieve Checkout Session
+
+Get details of a checkout session by ID
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-retrieve-cs-001",
+  "nodeParams": {
+    "action": "retrieve_checkout_session",
+    "params": {
+      "sessionId": "cs_test_...xxx"
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-create-refund"></a>
+#### Example 7: Stripe - Create Refund
+
+Refund a payment intent
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-create-refund-001",
+  "nodeParams": {
+    "action": "create_refund",
+    "params": {
+      "paymentIntentId": "pi_3L...xxx",
+      "amount": 500,
+      "reason": "requested_by_customer"
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-create-customer"></a>
+#### Example 8: Stripe - Create Customer
+
+Create a new customer in Stripe
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-create-cust-001",
+  "nodeParams": {
+    "action": "create_customer",
+    "params": {
+      "email": "newuser@example.com",
+      "name": "New User",
+      "phone": "+15550001234",
+      "metadata": {
+        "internal_id": "u_123"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-retrieve-customer"></a>
+#### Example 9: Stripe - Retrieve Customer
+
+Get details of a customer by ID
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-retrieve-cust-001",
+  "nodeParams": {
+    "action": "retrieve_customer",
+    "params": {
+      "customerId": "cus_...xxx"
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-create-subscription"></a>
+#### Example 10: Stripe - Create Subscription
+
+Create a new subscription for a customer
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-create-sub-001",
+  "nodeParams": {
+    "action": "create_subscription",
+    "params": {
+      "customerId": "cus_...xxx",
+      "items": [
+        {
+          "price": "price_...xxx",
+          "quantity": 1
+        }
+      ],
+      "metadata": {
+        "plan": "premium"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-update-subscription"></a>
+#### Example 11: Stripe - Update Subscription
+
+Update an existing subscription
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-update-sub-001",
+  "nodeParams": {
+    "action": "update_subscription",
+    "params": {
+      "subscriptionId": "sub_...xxx",
+      "cancelAtPeriodEnd": true
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-retrieve-subscription"></a>
+#### Example 12: Stripe - Retrieve Subscription
+
+Get details of a subscription by ID
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-retrieve-sub-001",
+  "nodeParams": {
+    "action": "retrieve_subscription",
+    "params": {
+      "subscriptionId": "sub_...xxx"
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-cancel-subscription"></a>
+#### Example 13: Stripe - Cancel Subscription
+
+Cancel a subscription immediately or at period end
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-cancel-sub-001",
+  "nodeParams": {
+    "action": "cancel_subscription",
+    "params": {
+      "subscriptionId": "sub_...xxx",
+      "invoiceNow": false,
+      "prorate": true
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-list-subscriptions"></a>
+#### Example 14: Stripe - List Subscriptions
+
+List subscriptions with optional filters
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-list-subs-001",
+  "nodeParams": {
+    "action": "list_subscriptions",
+    "params": {
+      "customerId": "cus_...xxx",
+      "status": "active",
+      "limit": 10
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-create-product"></a>
+#### Example 15: Stripe - Create Product
+
+Create a new product in Stripe
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-create-prod-001",
+  "nodeParams": {
+    "action": "create_product",
+    "params": {
+      "name": "Premium Plan",
+      "description": "Access to all premium features"
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-update-product"></a>
+#### Example 16: Stripe - Update Product
+
+Update product details
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-update-prod-001",
+  "nodeParams": {
+    "action": "update_product",
+    "params": {
+      "productId": "prod_...xxx",
+      "name": "Premium Plan Updated"
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-retrieve-product"></a>
+#### Example 17: Stripe - Retrieve Product
+
+Get product details by ID
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-retrieve-prod-001",
+  "nodeParams": {
+    "action": "retrieve_product",
+    "params": {
+      "productId": "prod_...xxx"
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-list-products"></a>
+#### Example 18: Stripe - List Products
+
+List all products
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-list-prods-001",
+  "nodeParams": {
+    "action": "list_products",
+    "params": {
+      "limit": 10
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-delete-product"></a>
+#### Example 19: Stripe - Delete Product
+
+Archive a product
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-delete-prod-001",
+  "nodeParams": {
+    "action": "delete_product",
+    "params": {
+      "productId": "prod_...xxx"
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-create-price"></a>
+#### Example 20: Stripe - Create Price
+
+Create a price for a product
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-create-price-001",
+  "nodeParams": {
+    "action": "create_price",
+    "params": {
+      "productId": "prod_...xxx",
+      "currency": "usd",
+      "unitAmount": 1000
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-update-price"></a>
+#### Example 21: Stripe - Update Price
+
+Update price metadata
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-update-price-001",
+  "nodeParams": {
+    "action": "update_price",
+    "params": {
+      "priceId": "price_...xxx",
+      "metadata": {
+        "tier": "premium"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-retrieve-price"></a>
+#### Example 22: Stripe - Retrieve Price
+
+Get price details by ID
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-retrieve-price-001",
+  "nodeParams": {
+    "action": "retrieve_price",
+    "params": {
+      "priceId": "price_...xxx"
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-list-prices"></a>
+#### Example 23: Stripe - List Prices
+
+List all prices
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-list-prices-001",
+  "nodeParams": {
+    "action": "list_prices",
+    "params": {
+      "productId": "prod_...xxx",
+      "limit": 10
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-list-customers"></a>
+#### Example 24: Stripe - List Customers
+
+List all customers with optional filters
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-list-customers-001",
+  "nodeParams": {
+    "action": "list_customers",
+    "params": {
+      "limit": 10
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-create-subscription"></a>
+#### Example 25: Stripe - Create Subscription with Free Trial
+
+Create subscription with 14-day trial and coupon
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-sub-trial-001",
+  "nodeParams": {
+    "action": "create_subscription",
+    "params": {
+      "customerId": "cus_...xxx",
+      "items": [
+        {
+          "price": "price_...xxx",
+          "quantity": 1
+        }
+      ],
+      "trialPeriodDays": 14,
+      "coupon": "WELCOME20"
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-create-price"></a>
+#### Example 26: Stripe - Create Tiered Price (Volume Discounts)
+
+Create graduated tiered pricing for volume discounts
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-tiered-price-001",
+  "nodeParams": {
+    "action": "create_price",
+    "params": {
+      "productId": "prod_...xxx",
+      "currency": "usd",
+      "billingScheme": "tiered",
+      "tiersMode": "graduated",
+      "tiers": [
+        {
+          "up_to": 100,
+          "unit_amount": 1000
+        },
+        {
+          "up_to": 1000,
+          "unit_amount": 800
+        },
+        {
+          "up_to": "inf",
+          "unit_amount": 600
+        }
+      ],
+      "recurring": {
+        "interval": "month"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-create-checkout-session"></a>
+#### Example 27: Stripe - Checkout Session with Shipping
+
+Create checkout session with shipping address collection
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-checkout-shipping-001",
+  "nodeParams": {
+    "action": "create_checkout_session",
+    "params": {
+      "lineItems": [
+        {
+          "price": "price_...xxx",
+          "quantity": 1
+        }
+      ],
+      "mode": "payment",
+      "successUrl": "https://example.com/success",
+      "cancelUrl": "https://example.com/cancel",
+      "allowPromotionCodes": true,
+      "billingAddressCollection": "required",
+      "shippingAddressCollection": {
+        "allowed_countries": [
+          "US",
+          "CA",
+          "GB"
+        ]
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-create-payment-intent"></a>
+#### Example 28: Stripe - Payment Intent with Shipping
+
+Create payment intent with shipping address
+
+```json
+{
+  "automationType": "stripe",
+  "nodeId": "stripe-payment-shipping-001",
+  "nodeParams": {
+    "action": "create_payment_intent",
+    "params": {
+      "amount": 2000,
+      "currency": "usd",
+      "receiptEmail": "customer@example.com",
+      "shipping": {
+        "name": "John Doe",
+        "address": {
+          "line1": "123 Main St",
+          "city": "San Francisco",
+          "state": "CA",
+          "postal_code": "94102",
+          "country": "US"
+        }
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-create-payment-method"></a>
+#### Example 29: Create Payment Method
+
+
+
+```json
+{
+  "automationType": "stripe",
+  "nodeParams": {
+    "action": "create_payment_method",
+    "params": {
+      "type": "card",
+      "card": {
+        "number": "4242424242424242",
+        "exp_month": 12,
+        "exp_year": 2025,
+        "cvc": "123"
+      },
+      "billingDetails": {
+        "name": "John Doe",
+        "email": "john@example.com"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-attach-payment-method"></a>
+#### Example 30: Attach Payment Method
+
+
+
+```json
+{
+  "automationType": "stripe",
+  "nodeParams": {
+    "action": "attach_payment_method",
+    "params": {
+      "paymentMethodId": "pm_1234567890",
+      "customerId": "cus_1234567890"
+    }
+  }
+}
+```
+
+---
+
+<a id="stripe-detach-payment-method"></a>
+#### Example 31: Detach Payment Method
+
+
+
+```json
+{
+  "automationType": "stripe",
+  "nodeParams": {
+    "action": "detach_payment_method",
+    "params": {
+      "paymentMethodId": "pm_1234567890"
+    }
+  }
+}
+```
+
+## Third-Party Documentation
+
+- [https://stripe.com/docs/api](https://stripe.com/docs/api)

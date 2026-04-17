@@ -1,0 +1,1862 @@
+---
+title: "Retreaver"
+description: "Call tracking, routing, and attribution with Retreaver"
+---
+
+## Overview
+
+Call tracking, routing, and attribution with Retreaver. Call actions with `automationType`, `action`, and `params` from any workflow node that supports automations.
+
+## Authentication
+
+- Retreaver API Key and Company ID (both per-account).
+
+## Available Actions
+
+Click any action to jump to its example payload.
+
+
+**Affiliates**
+
+- [Create Affiliate](#retreaver-affiliates-create)
+- [Delete Affiliate](#retreaver-affiliates-delete)
+- [Get Affiliate by AFID](#retreaver-affiliates-get)
+- [List All Affiliates](#retreaver-affiliates-get-all)
+- [Update Affiliate](#retreaver-affiliates-update)
+
+**Caller-Lists**
+
+- [Add Number to Caller List](#retreaver-caller-lists-add-number)
+- [Check Number in Caller List](#retreaver-caller-lists-check-number)
+- [Delete Number from Caller List](#retreaver-caller-lists-delete-number)
+- [Upload Numbers to Caller List](#retreaver-caller-lists-upload)
+
+**Calls**
+
+- [Get Call by UUID (V2)](#retreaver-calls-v2-get)
+- [Get Recent Calls (V1)](#retreaver-calls-v1-get-recent)
+- [Get Recent Calls (V2)](#retreaver-calls-v2-get-recent)
+- [Write Call Data (GET)](#retreaver-call-data-write-get)
+- [Write Call Data (POST)](#retreaver-call-data-write-post)
+
+**Campaigns**
+
+- [Delete Campaign](#retreaver-campaigns-delete)
+- [Get Campaign by CID](#retreaver-campaigns-get)
+- [List All Campaigns](#retreaver-campaigns-get-all)
+- [Update Campaign](#retreaver-campaigns-update)
+
+**Companies**
+
+- [Get Company by ID](#retreaver-companies-get)
+- [List All Companies](#retreaver-companies-get-all)
+
+**Contacts**
+
+- [Create Contact](#retreaver-contacts-create)
+- [Delete Contact Number](#retreaver-contact-numbers-delete)
+- [Delete Contact by Phone](#retreaver-contacts-delete-by-phone)
+- [Get Contact by ID](#retreaver-contacts-get)
+- [Get Contact by Phone](#retreaver-contacts-get-by-phone)
+- [Update Contact](#retreaver-contacts-update)
+- [Update Contact by Phone](#retreaver-contacts-update-by-phone)
+
+**Number-Pools**
+
+- [Create Number Pool](#retreaver-number-pools-create)
+- [Get Number Pool by ID](#retreaver-number-pools-get)
+- [List All Number Pools](#retreaver-number-pools-get-all)
+
+**Numbers**
+
+- [Create Number](#retreaver-numbers-create)
+- [Delete Number](#retreaver-numbers-delete)
+- [List All Numbers](#retreaver-numbers-get-all)
+
+**Raw**
+
+- Raw API Request
+
+**Reports**
+
+- [Get Reports](#retreaver-reports-get)
+
+**Rtb**
+
+- [Confirm RTB Reservation](#retreaver-rtb-confirm-reservation)
+
+**Static-Caller-Numbers**
+
+- [Delete Static Caller Number](#retreaver-static-caller-numbers-delete)
+- [List All Static Caller Numbers](#retreaver-static-caller-numbers-get-all)
+
+**Suppressed-Numbers**
+
+- [Check Suppressed Numbers](#retreaver-suppressed-numbers-check)
+- [Get Suppressed Number](#retreaver-suppressed-numbers-get)
+- [List All Suppressed Numbers](#retreaver-suppressed-numbers-get-all)
+- [Update Suppressed Number](#retreaver-suppressed-numbers-update)
+
+**Target-Groups**
+
+- [Create Target Group](#retreaver-target-groups-create)
+- [Delete Target Group](#retreaver-target-groups-delete)
+- [Get Target Group](#retreaver-target-groups-get)
+- [List All Target Groups](#retreaver-target-groups-get-all)
+- [Reset Target Group Caps](#retreaver-target-groups-reset-caps)
+
+**Targets**
+
+- [Create Target](#retreaver-targets-create)
+- [Get Target by ID](#retreaver-targets-get)
+- [Get Target by TID](#retreaver-targets-get-by-tid)
+- [List All Targets](#retreaver-targets-get-all)
+- [Reset Target Cap](#retreaver-targets-reset-cap)
+- [Update Target](#retreaver-targets-update)
+
+## Examples
+
+<a id="retreaver-calls-v1-get-recent"></a>
+#### Example 1: V1 - Get recent calls
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "calls_v1_get_recent",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "query": {
+        "page": 1
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-calls-v1-get"></a>
+#### Example 2: V1 - Get call by UUID
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "calls_v1_get",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "uuid": "YOUR_CALL_UUID"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-calls-v2-get-recent"></a>
+#### Example 3: V2 - Get recent calls
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "calls_v2_get_recent",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "query": {
+        "page": 1
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-calls-v2-get"></a>
+#### Example 4: V2 - Get call by UUID
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "calls_v2_get",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "uuid": "YOUR_CALL_UUID"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-call-data-write-get"></a>
+#### Example 5: Call data write GET
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "call_data_write_get",
+    "params": {
+      "key": "POSTBACK_KEY_UUID",
+      "caller_number": "YOUR_CALLER_NUMBER",
+      "call_uuid": "YOUR_CALL_UUID"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-call-data-write-post"></a>
+#### Example 6: Call data write POST
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "call_data_write_post",
+    "params": {
+      "key": "POSTBACK_KEY_UUID",
+      "caller_number": "YOUR_CALLER_NUMBER",
+      "call_uuid": "YOUR_CALL_UUID"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-affiliates-get-all"></a>
+#### Example 7: Get all affiliates
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "affiliates_get_all",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-affiliates-get"></a>
+#### Example 8: Get affiliate by afid
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "affiliates_get",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "afid": "AFFILIATE_ID"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-affiliates-create"></a>
+#### Example 9: Create affiliate
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "affiliates_create",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "affiliate": {
+        "afid": "0002",
+        "first_name": "Nancy",
+        "last_name": "Drew"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-affiliates-update"></a>
+#### Example 10: Update affiliate
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "affiliates_update",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "afid": "AFFILIATE_ID",
+      "affiliate": {
+        "first_name": "Nathan"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-affiliates-delete"></a>
+#### Example 11: Delete affiliate
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "affiliates_delete",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "afid": "AFFILIATE_ID"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-targets-get-all"></a>
+#### Example 12: Get all targets
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "targets_get_all",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-targets-get"></a>
+#### Example 13: Get target by ID
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "targets_get",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "targetId": "YOUR_TARGET_ID"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-targets-get-by-tid"></a>
+#### Example 14: Get target by tid
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "targets_get_by_tid",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "tid": "TARGET_TID"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-targets-create"></a>
+#### Example 15: Create target
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "targets_create",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "target": {
+        "number": "+18668987878",
+        "name": "Retreaver Support"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-targets-update"></a>
+#### Example 16: Update target
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "targets_update",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "targetId": "YOUR_TARGET_ID",
+      "target": {
+        "paused": true
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-targets-delete"></a>
+#### Example 17: Delete target
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "targets_delete",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "targetId": "YOUR_TARGET_ID"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-targets-reset-cap"></a>
+#### Example 18: Reset target cap
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "targets_reset_cap",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "targetId": "YOUR_TARGET_ID"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-campaigns-get-all"></a>
+#### Example 19: Get all campaigns
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "campaigns_get_all",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-campaigns-get"></a>
+#### Example 20: Get campaign by cid
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "campaigns_get",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "cid": "CAMPAIGN_ID"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-campaigns-create"></a>
+#### Example 21: Create campaign
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "campaigns_create",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "campaign": {
+        "cid": "000333",
+        "name": "MyCampaign",
+        "message": "Thanks for calling.",
+        "voice_gender": "Male"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-campaigns-update"></a>
+#### Example 22: Update campaign
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "campaigns_update",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "cid": "CAMPAIGN_ID",
+      "campaign": {
+        "name": "My Other Campaign"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-campaigns-delete"></a>
+#### Example 23: Delete campaign
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "campaigns_delete",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "cid": "CAMPAIGN_ID"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-numbers-get-all"></a>
+#### Example 24: Get all numbers
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "numbers_get_all",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-numbers-get"></a>
+#### Example 25: Get number by ID
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "numbers_get",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "numberId": "YOUR_NUMBER_ID"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-numbers-create"></a>
+#### Example 26: Create number
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "numbers_create",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "number": {
+        "type": "Toll-free",
+        "afid": "0002",
+        "cid": "0001"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-numbers-update"></a>
+#### Example 27: Update number
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "numbers_update",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "numberId": "YOUR_NUMBER_ID",
+      "number": {
+        "afid": "0005"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-numbers-delete"></a>
+#### Example 28: Delete number
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "numbers_delete",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "numberId": "YOUR_NUMBER_ID"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-number-pools-get-all"></a>
+#### Example 29: Get all number pools
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "number_pools_get_all",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-number-pools-get"></a>
+#### Example 30: Get number pool by ID
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "number_pools_get",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "poolId": "YOUR_NUMBER_POOL_ID"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-number-pools-create"></a>
+#### Example 31: Create number pool
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "number_pools_create",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "number_pool": {
+        "cid": "111",
+        "max_pool_size": 100
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-number-pools-update"></a>
+#### Example 32: Update number pool
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "number_pools_update",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "poolId": "YOUR_NUMBER_POOL_ID",
+      "number_pool": {
+        "max_pool_size": 1000
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-number-pools-delete"></a>
+#### Example 33: Delete number pool
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "number_pools_delete",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "poolId": "YOUR_NUMBER_POOL_ID"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-companies-get-active"></a>
+#### Example 34: Get active company
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "companies_get_active",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-companies-get"></a>
+#### Example 35: Get company by ID
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "companies_get",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-companies-get-all"></a>
+#### Example 36: Get all companies
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "companies_get_all",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-companies-create"></a>
+#### Example 37: Create company
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "companies_create",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "company": {
+        "name": "Retreaver"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-companies-update"></a>
+#### Example 38: Update company
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "companies_update",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "company": {
+        "name": "Retreaver"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-companies-delete"></a>
+#### Example 39: Delete company
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "companies_delete",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-contacts-get-all"></a>
+#### Example 40: Get all contacts
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "contacts_get_all",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-contacts-get"></a>
+#### Example 41: Get contact by ID
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "contacts_get",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "contactId": "YOUR_CONTACT_ID"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-contacts-create"></a>
+#### Example 42: Create contact
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "contacts_create",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "contact": {
+        "tag_list": "<<<<<<name:Support>>>>>>",
+        "contact_numbers_attributes": [
+          {
+            "number": "8668987878",
+            "description": "Landline"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-contacts-update"></a>
+#### Example 43: Update contact
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "contacts_update",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "contactId": "YOUR_CONTACT_ID",
+      "contact": {
+        "contact_numbers_attributes": [
+          {
+            "id": 2,
+            "number": "+18001234567"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-contacts-delete"></a>
+#### Example 44: Delete contact
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "contacts_delete",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "contactId": "YOUR_CONTACT_ID"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-contacts-get-by-phone"></a>
+#### Example 45: Get contact by phone
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "contacts_get_by_phone",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "phoneNumber": "YOUR_PHONE_NUMBER"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-contacts-update-by-phone"></a>
+#### Example 46: Update contact by phone
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "contacts_update_by_phone",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "phoneNumber": "YOUR_PHONE_NUMBER",
+      "contact": {
+        "tag_list": "<<<<<<name:Invalid>>>>>>"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-contacts-delete-by-phone"></a>
+#### Example 47: Delete contact by phone
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "contacts_delete_by_phone",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "phoneNumber": "YOUR_PHONE_NUMBER"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-contact-numbers-delete"></a>
+#### Example 48: Delete contact number
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "contact_numbers_delete",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "phoneNumber": "YOUR_PHONE_NUMBER"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-contact-numbers-update"></a>
+#### Example 49: Update contact number
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "contact_numbers_update",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "phoneNumber": "YOUR_PHONE_NUMBER",
+      "contact_number": {
+        "number": "+18005551234"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-caller-lists-create"></a>
+#### Example 50: Create caller list
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "caller_lists_create",
+    "params": {
+      "postbackKeyUuid": "POSTBACK_KEY_UUID",
+      "secretKey": "YOUR_POSTBACK_SECRET",
+      "targetId": "YOUR_TARGET_ID",
+      "caller_list": {
+        "name": "suppressed"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-caller-lists-delete"></a>
+#### Example 51: Delete caller list
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "caller_lists_delete",
+    "params": {
+      "postbackKeyUuid": "POSTBACK_KEY_UUID",
+      "secretKey": "YOUR_POSTBACK_SECRET",
+      "targetId": "YOUR_TARGET_ID",
+      "name": "YOUR_CALLER_LIST_NAME"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-caller-lists-get"></a>
+#### Example 52: Get caller list
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "caller_lists_get",
+    "params": {
+      "postbackKeyUuid": "POSTBACK_KEY_UUID",
+      "secretKey": "YOUR_POSTBACK_SECRET",
+      "targetId": "YOUR_TARGET_ID",
+      "name": "YOUR_CALLER_LIST_NAME"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-caller-lists-add-number"></a>
+#### Example 53: Add number to caller list
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "caller_lists_add_number",
+    "params": {
+      "postbackKeyUuid": "POSTBACK_KEY_UUID",
+      "secretKey": "YOUR_POSTBACK_SECRET",
+      "targetId": "YOUR_TARGET_ID",
+      "name": "YOUR_CALLER_LIST_NAME",
+      "caller_list_number": {
+        "number": "+15855752500"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-caller-lists-delete-number"></a>
+#### Example 54: Delete number from caller list
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "caller_lists_delete_number",
+    "params": {
+      "postbackKeyUuid": "POSTBACK_KEY_UUID",
+      "secretKey": "YOUR_POSTBACK_SECRET",
+      "targetId": "YOUR_TARGET_ID",
+      "name": "YOUR_CALLER_LIST_NAME",
+      "phoneNumber": "YOUR_PHONE_NUMBER"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-caller-lists-check-number"></a>
+#### Example 55: Check number on caller list
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "caller_lists_check_number",
+    "params": {
+      "postbackKeyUuid": "POSTBACK_KEY_UUID",
+      "secretKey": "YOUR_POSTBACK_SECRET",
+      "targetId": "YOUR_TARGET_ID",
+      "name": "YOUR_CALLER_LIST_NAME",
+      "phoneNumber": "YOUR_PHONE_NUMBER"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-caller-lists-check"></a>
+#### Example 56: Caller list check (POST)
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "caller_lists_check",
+    "params": {
+      "postbackKeyUuid": "POSTBACK_KEY_UUID",
+      "secretKey": "YOUR_POSTBACK_SECRET",
+      "targetId": "YOUR_TARGET_ID",
+      "name": "YOUR_CALLER_LIST_NAME",
+      "caller_list_check": {
+        "number": "+15855752500"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-caller-lists-upload"></a>
+#### Example 57: Caller list upload
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "caller_lists_upload",
+    "params": {
+      "postbackKeyUuid": "POSTBACK_KEY_UUID",
+      "secretKey": "YOUR_POSTBACK_SECRET",
+      "targetId": "YOUR_TARGET_ID",
+      "name": "YOUR_CALLER_LIST_NAME",
+      "caller_list_upload": {
+        "numbers": "+15855752500\n15855752501",
+        "action": "create"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-suppressed-numbers-check"></a>
+#### Example 58: Check suppressed numbers
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "suppressed_numbers_check",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-suppressed-numbers-get-all"></a>
+#### Example 59: Get all suppressed numbers
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "suppressed_numbers_get_all",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-suppressed-numbers-get"></a>
+#### Example 60: Get suppressed number
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "suppressed_numbers_get",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "number": "YOUR_PHONE_NUMBER"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-suppressed-numbers-delete"></a>
+#### Example 61: Delete suppressed number
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "suppressed_numbers_delete",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "number": "YOUR_PHONE_NUMBER"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-suppressed-numbers-create"></a>
+#### Example 62: Create suppressed number
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "suppressed_numbers_create",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "number": "YOUR_PHONE_NUMBER",
+      "suppressed_number": {
+        "can_resubscribe": false
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-suppressed-numbers-update"></a>
+#### Example 63: Update suppressed number
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "suppressed_numbers_update",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "number": "YOUR_PHONE_NUMBER",
+      "suppressed_number": {
+        "can_resubscribe": false
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-static-caller-numbers-get-all"></a>
+#### Example 64: Get all static caller numbers
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "static_caller_numbers_get_all",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-static-caller-numbers-create"></a>
+#### Example 65: Create static caller number
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "static_caller_numbers_create",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "static_caller_number": {
+        "number": "+18668987878"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-static-caller-numbers-delete"></a>
+#### Example 66: Delete static caller number
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "static_caller_numbers_delete",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "id": "YOUR_STATIC_CALLER_NUMBER_ID"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-target-groups-get-all"></a>
+#### Example 67: Get all target groups
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "target_groups_get_all",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-target-groups-get"></a>
+#### Example 68: Get target group by ID
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "target_groups_get",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "groupId": "YOUR_TARGET_GROUP_ID"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-target-groups-create"></a>
+#### Example 69: Create target group
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "target_groups_create",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "target_group": {
+        "name": "test",
+        "target_ids": [
+          1,
+          2,
+          3
+        ],
+        "concurrency_cap": 5
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-target-groups-update"></a>
+#### Example 70: Update target group
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "target_groups_update",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "groupId": "YOUR_TARGET_GROUP_ID",
+      "target_group": {
+        "name": "hello"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-target-groups-delete"></a>
+#### Example 71: Delete target group
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "target_groups_delete",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "groupId": "YOUR_TARGET_GROUP_ID"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-target-groups-reset-caps"></a>
+#### Example 72: Reset target group caps
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "target_groups_reset_caps",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "groupId": "YOUR_TARGET_GROUP_ID"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-rtb-create-reservation"></a>
+#### Example 73: Create RTB reservation
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "rtb_create_reservation",
+    "params": {
+      "key": "YOUR_RTB_KEY",
+      "publisher_id": "YOUR_PUBLISHER_ID",
+      "caller_number": "+18558485518"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-rtb-confirm-reservation"></a>
+#### Example 74: Confirm RTB reservation
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "rtb_confirm_reservation",
+    "params": {
+      "key": "YOUR_RTB_KEY",
+      "reservationUuid": "YOUR_RESERVATION_UUID",
+      "status": "confirmed"
+    }
+  }
+}
+```
+
+---
+
+<a id="retreaver-reports-get"></a>
+#### Example 75: Get reports
+
+
+
+```json
+{
+  "automationType": "retreaver",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "reports_get",
+    "params": {
+      "apiKey": "YOUR_RETREAVER_API_KEY",
+      "companyId": 0,
+      "query": {
+        "domain": "calls",
+        "facet": "tag_value",
+        "created_at_start": "2024-10-25",
+        "created_at_end": "2024-10-28"
+      }
+    }
+  }
+}
+```
+
+## Third-Party Documentation
+
+- [https://retreaver.com/api-documentation](https://retreaver.com/api-documentation)

@@ -1,0 +1,485 @@
+---
+title: "DocuSign"
+description: "Create, send, and track e-signature envelopes in DocuSign"
+---
+
+## Overview
+
+Create, send, and track e-signature envelopes in DocuSign. Call actions with `automationType`, `action`, and `params` from any workflow node that supports automations.
+
+## Authentication
+
+- DocuSign OAuth 2.0 (JWT or Authorization Code grant).
+
+## Available Actions
+
+Click any action to jump to its example payload.
+
+
+**Account**
+
+- [Get Account](#docusign-get-account)
+
+**Document**
+
+- [Add Documents](#docusign-add-documents)
+- Download Document
+- [List Envelope Documents](#docusign-list-envelope-documents)
+
+**Envelope**
+
+- [Create Envelope](#docusign-create-envelope)
+- [Create Sender View](#docusign-create-sender-view)
+- [Get Envelope](#docusign-get-envelope)
+- Get Envelope Form Data
+- [List Envelopes](#docusign-list-envelopes)
+- [Send Envelope](#docusign-send-envelope)
+- Update Envelope
+- [Void Envelope](#docusign-void-envelope)
+
+**Folder**
+
+- [List Folder Envelopes](#docusign-list-folder-envelopes)
+- [List Folders](#docusign-list-folders)
+
+**Recipient**
+
+- [Add Recipients](#docusign-add-recipients)
+- [Create Recipient View](#docusign-create-recipient-view)
+
+**Template**
+
+- [Get Template](#docusign-get-template)
+- [List Templates](#docusign-list-templates)
+
+## Examples
+
+<a id="docusign-get-service-info"></a>
+#### Example 1: DocuSign: Get Service Info
+
+Retrieves available REST API versions. No account ID required.
+
+```json
+{
+  "automationType": "docusign",
+  "nodeId": "docusign-service-info-001",
+  "nodeParams": {
+    "action": "get_service_info",
+    "params": {
+      "accessToken": "YOUR_DOCUSIGN_ACCESS_TOKEN"
+    }
+  }
+}
+```
+
+---
+
+<a id="docusign-get-account"></a>
+#### Example 2: DocuSign: Get Account
+
+Retrieves account information for the specified account
+
+```json
+{
+  "automationType": "docusign",
+  "nodeId": "docusign-account-001",
+  "nodeParams": {
+    "action": "get_account",
+    "params": {
+      "accessToken": "YOUR_DOCUSIGN_ACCESS_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "include_account_settings": "true"
+    }
+  }
+}
+```
+
+---
+
+<a id="docusign-create-envelope"></a>
+#### Example 3: DocuSign: Create Envelope
+
+Creates a new envelope (draft or sent)
+
+```json
+{
+  "automationType": "docusign",
+  "nodeId": "docusign-create-envelope-001",
+  "nodeParams": {
+    "action": "create_envelope",
+    "params": {
+      "accessToken": "YOUR_DOCUSIGN_ACCESS_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "body": {
+        "emailSubject": "Please sign this document",
+        "documents": [
+          {
+            "documentBase64": "BASE64_ENCODED_DOCUMENT",
+            "name": "contract.pdf",
+            "fileExtension": "pdf",
+            "documentId": "1"
+          }
+        ],
+        "recipients": {
+          "signers": [
+            {
+              "email": "signer@example.com",
+              "name": "Signer Name",
+              "recipientId": "1"
+            }
+          ]
+        },
+        "status": "created"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="docusign-get-envelope"></a>
+#### Example 4: DocuSign: Get Envelope
+
+Gets the status of an envelope
+
+```json
+{
+  "automationType": "docusign",
+  "nodeId": "docusign-get-envelope-001",
+  "nodeParams": {
+    "action": "get_envelope",
+    "params": {
+      "accessToken": "YOUR_DOCUSIGN_ACCESS_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "envelopeId": "ENVELOPE_ID_HERE"
+    }
+  }
+}
+```
+
+---
+
+<a id="docusign-list-envelopes"></a>
+#### Example 5: DocuSign: List Envelopes
+
+Gets status changes for one or more envelopes
+
+```json
+{
+  "automationType": "docusign",
+  "nodeId": "docusign-list-envelopes-001",
+  "nodeParams": {
+    "action": "list_envelopes",
+    "params": {
+      "accessToken": "YOUR_DOCUSIGN_ACCESS_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "count": 20,
+      "from_date": "2025-01-01T00:00:00Z",
+      "status": "sent",
+      "order_by": "created",
+      "order": "desc"
+    }
+  }
+}
+```
+
+---
+
+<a id="docusign-send-envelope"></a>
+#### Example 6: DocuSign: Send Envelope
+
+Sends a draft envelope
+
+```json
+{
+  "automationType": "docusign",
+  "nodeId": "docusign-send-envelope-001",
+  "nodeParams": {
+    "action": "send_envelope",
+    "params": {
+      "accessToken": "YOUR_DOCUSIGN_ACCESS_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "envelopeId": "ENVELOPE_ID_HERE",
+      "body": {
+        "status": "sent"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="docusign-void-envelope"></a>
+#### Example 7: DocuSign: Void Envelope
+
+Voids an envelope
+
+```json
+{
+  "automationType": "docusign",
+  "nodeId": "docusign-void-envelope-001",
+  "nodeParams": {
+    "action": "void_envelope",
+    "params": {
+      "accessToken": "YOUR_DOCUSIGN_ACCESS_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "envelopeId": "ENVELOPE_ID_HERE",
+      "body": {
+        "status": "voided",
+        "voidedReason": "Envelope voided by request"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="docusign-list-folders"></a>
+#### Example 8: DocuSign: List Folders
+
+Returns a list of folders
+
+```json
+{
+  "automationType": "docusign",
+  "nodeId": "docusign-list-folders-001",
+  "nodeParams": {
+    "action": "list_folders",
+    "params": {
+      "accessToken": "YOUR_DOCUSIGN_ACCESS_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "include": "templates"
+    }
+  }
+}
+```
+
+---
+
+<a id="docusign-list-folder-envelopes"></a>
+#### Example 9: DocuSign: List Folder Envelopes
+
+Returns envelopes from a folder
+
+```json
+{
+  "automationType": "docusign",
+  "nodeId": "docusign-list-folder-envelopes-001",
+  "nodeParams": {
+    "action": "list_folder_envelopes",
+    "params": {
+      "accessToken": "YOUR_DOCUSIGN_ACCESS_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "folderId": "FOLDER_ID_HERE",
+      "count": 20,
+      "include": "sentdate"
+    }
+  }
+}
+```
+
+---
+
+<a id="docusign-list-templates"></a>
+#### Example 10: DocuSign: List Templates
+
+Gets the list of templates for an account
+
+```json
+{
+  "automationType": "docusign",
+  "nodeId": "docusign-list-templates-001",
+  "nodeParams": {
+    "action": "list_templates",
+    "params": {
+      "accessToken": "YOUR_DOCUSIGN_ACCESS_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "include": "documents"
+    }
+  }
+}
+```
+
+---
+
+<a id="docusign-list-envelope-documents"></a>
+#### Example 11: DocuSign: List Envelope Documents
+
+Lists documents in an envelope
+
+```json
+{
+  "automationType": "docusign",
+  "nodeId": "docusign-list-docs-001",
+  "nodeParams": {
+    "action": "list_envelope_documents",
+    "params": {
+      "accessToken": "YOUR_DOCUSIGN_ACCESS_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "envelopeId": "ENVELOPE_ID_HERE"
+    }
+  }
+}
+```
+
+---
+
+<a id="docusign-list-recipients"></a>
+#### Example 12: DocuSign: List Recipients
+
+Gets recipient status for an envelope
+
+```json
+{
+  "automationType": "docusign",
+  "nodeId": "docusign-list-recipients-001",
+  "nodeParams": {
+    "action": "list_recipients",
+    "params": {
+      "accessToken": "YOUR_DOCUSIGN_ACCESS_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "envelopeId": "ENVELOPE_ID_HERE"
+    }
+  }
+}
+```
+
+---
+
+<a id="docusign-create-recipient-view"></a>
+#### Example 13: DocuSign: Create Recipient View
+
+Returns embedded signing URL for a recipient
+
+```json
+{
+  "automationType": "docusign",
+  "nodeId": "docusign-recipient-view-001",
+  "nodeParams": {
+    "action": "create_recipient_view",
+    "params": {
+      "accessToken": "YOUR_DOCUSIGN_ACCESS_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "envelopeId": "ENVELOPE_ID_HERE",
+      "recipientId": "1",
+      "returnUrl": "https://yourapp.com/signing-complete",
+      "clientUserId": "user-123"
+    }
+  }
+}
+```
+
+---
+
+<a id="docusign-get-template"></a>
+#### Example 14: DocuSign: Get Template
+
+Gets a template by ID
+
+```json
+{
+  "automationType": "docusign",
+  "nodeId": "docusign-get-template-001",
+  "nodeParams": {
+    "action": "get_template",
+    "params": {
+      "accessToken": "YOUR_DOCUSIGN_ACCESS_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "templateId": "TEMPLATE_ID_HERE"
+    }
+  }
+}
+```
+
+---
+
+<a id="docusign-create-sender-view"></a>
+#### Example 15: DocuSign: Create Sender View
+
+Returns URL to preview envelope in DocuSign UI
+
+```json
+{
+  "automationType": "docusign",
+  "nodeId": "docusign-sender-view-001",
+  "nodeParams": {
+    "action": "create_sender_view",
+    "params": {
+      "accessToken": "YOUR_DOCUSIGN_ACCESS_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "envelopeId": "ENVELOPE_ID_HERE",
+      "returnUrl": "https://yourapp.com/preview-done"
+    }
+  }
+}
+```
+
+---
+
+<a id="docusign-add-recipients"></a>
+#### Example 16: DocuSign: Add Recipients
+
+Adds recipients to a draft envelope
+
+```json
+{
+  "automationType": "docusign",
+  "nodeId": "docusign-add-recipients-001",
+  "nodeParams": {
+    "action": "add_recipients",
+    "params": {
+      "accessToken": "YOUR_DOCUSIGN_ACCESS_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "envelopeId": "ENVELOPE_ID_HERE",
+      "body": {
+        "signers": [
+          {
+            "email": "signer2@example.com",
+            "name": "Second Signer",
+            "recipientId": "2"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="docusign-add-documents"></a>
+#### Example 17: DocuSign: Add Documents
+
+Adds documents to a draft envelope
+
+```json
+{
+  "automationType": "docusign",
+  "nodeId": "docusign-add-docs-001",
+  "nodeParams": {
+    "action": "add_documents",
+    "params": {
+      "accessToken": "YOUR_DOCUSIGN_ACCESS_TOKEN",
+      "accountId": "YOUR_ACCOUNT_ID",
+      "envelopeId": "ENVELOPE_ID_HERE",
+      "body": {
+        "documents": [
+          {
+            "documentBase64": "BASE64",
+            "name": "extra.pdf",
+            "fileExtension": "pdf",
+            "documentId": "2"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+## Third-Party Documentation
+
+- [https://developers.docusign.com/docs/esign-rest-api/](https://developers.docusign.com/docs/esign-rest-api/)

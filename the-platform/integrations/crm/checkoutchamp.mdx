@@ -1,0 +1,1692 @@
+---
+title: "Checkout Champ"
+description: "Manage customers, orders, subscriptions, and campaigns in Checkout Champ"
+---
+
+## Overview
+
+Manage customers, orders, subscriptions, and campaigns in Checkout Champ. Call actions with `automationType`, `action`, and `params` from any workflow node that supports automations.
+
+## Authentication
+
+- Checkout Champ API Login ID and Password (per-account).
+
+## Available Actions
+
+Click any action to jump to its example payload.
+
+
+**Affiliates**
+
+- [Affiliate Update](#checkoutchamp-affiliate-update)
+
+**Campaigns**
+
+- [Create Campaign](#checkoutchamp-create-campaign)
+- [Create Campaign Product](#checkoutchamp-create-campaign-product)
+- [Update Campaign](#checkoutchamp-update-campaign)
+- [Update Campaign Countries](#checkoutchamp-update-campaign-countries)
+- [Update Campaign Product](#checkoutchamp-update-campaign-product)
+
+**Club-Members**
+
+- [Cancel Club Membership](#checkoutchamp-cancel-club-membership)
+- [Query Club Members](#checkoutchamp-query-club-members)
+- [Reactivate Club Membership](#checkoutchamp-reactivate-club-membership)
+- [Reset Club Members](#checkoutchamp-reset-club-members)
+- [Update Club Members](#checkoutchamp-update-club-members)
+
+**Coupons**
+
+- [Create Coupon](#checkoutchamp-create-coupon)
+- [Create Coupon Range Profile](#checkoutchamp-create-coupon-range-profile)
+- [Query Coupon](#checkoutchamp-query-coupon)
+- [Update Coupon Range Profile](#checkoutchamp-update-coupon-range-profile)
+
+**Customer**
+
+- [Add Customer Note](#checkoutchamp-add-customer-note)
+- [Create Blacklist](#checkoutchamp-create-blacklist)
+- [Delete Customers](#checkoutchamp-delete-customers)
+- [Query Customer Contracts](#checkoutchamp-query-customer-contracts)
+- [Update Customer](#checkoutchamp-update-customer)
+- [Update Customer Card](#checkoutchamp-update-customer-card)
+
+**Fulfillment**
+
+- [Query Fulfillment](#checkoutchamp-query-fulfillment)
+- [Update Fulfillment](#checkoutchamp-update-fulfillment)
+
+**Funnels**
+
+- [Query Funnels](#checkoutchamp-query-funnels)
+
+**Gateway**
+
+- [Query Gateway](#checkoutchamp-query-gateway)
+
+**Order**
+
+- [Cancel Order](#checkoutchamp-cancel-order)
+- [Confirm Order](#checkoutchamp-confirm-order)
+- [Import Order](#checkoutchamp-import-order)
+- [Import Upsale](#checkoutchamp-import-upsale)
+- [Order Coupon](#checkoutchamp-order-coupon)
+- [Order QA](#checkoutchamp-order-qa)
+- [Order Sales Tax](#checkoutchamp-order-sales-tax)
+- [Order Ship Rate](#checkoutchamp-order-ship-rate)
+- [Order Surcharge](#checkoutchamp-order-surcharge)
+- [Refund Order](#checkoutchamp-refund-order)
+- [Rerun Declined Sale](#checkoutchamp-rerun-declined-sale)
+- [Resend Autoresponder](#checkoutchamp-resend-autoresponder)
+- [Update Order](#checkoutchamp-update-order)
+
+**Payments**
+
+- [Confirm PayPal](#checkoutchamp-confirm-paypal)
+
+**Products**
+
+- [Create Product](#checkoutchamp-create-product)
+- [Query Product](#checkoutchamp-query-product)
+
+**Purchase**
+
+- [Query Purchases](#checkoutchamp-query-purchases)
+- [Update Purchase](#checkoutchamp-update-purchase)
+
+**Purchases**
+
+- [Pause Purchase](#checkoutchamp-pause-purchase)
+
+**Reports**
+
+- [Query Order Summary Report](#checkoutchamp-query-order-summary-report)
+- [Query Projected Billing Report](#checkoutchamp-query-projected-billing-report)
+- [Query Retention Report](#checkoutchamp-query-retention-report)
+- [Query Transaction Summary Report](#checkoutchamp-query-transaction-summary-report)
+
+**Transaction**
+
+- [Capture Transaction](#checkoutchamp-capture-transaction)
+- [Composite Data Query](#checkoutchamp-composite-data-query)
+- [Query Transactions](#checkoutchamp-query-transactions)
+- [Refund Transactions](#checkoutchamp-refund-transactions)
+- [Transaction Range Select](#checkoutchamp-transaction-range-select)
+- [Update Transaction](#checkoutchamp-update-transaction)
+
+## Examples
+
+<a id="checkoutchamp-import-lead"></a>
+#### Example 1: Checkout Champ: Import Lead
+
+Add a new lead/order through the Import Lead API
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-import-lead-001",
+  "nodeParams": {
+    "action": "import_lead",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "campaignId": 13,
+      "firstName": "Test",
+      "lastName": "Robinson",
+      "emailAddress": "test@example.com",
+      "phoneNumber": "11233399",
+      "address1": "4455 Hollywood Blvd",
+      "address2": "Apt. 1120",
+      "city": "Rome",
+      "state": "NY",
+      "country": "US",
+      "postalCode": "00012"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-preauth-order"></a>
+#### Example 2: Checkout Champ: Preauth Order
+
+Preauthorize a credit card for $1.00 on new orders
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-preauth-order-001",
+  "nodeParams": {
+    "action": "preauth_order",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "orderId": "C3E67A9BD0",
+      "firstName": "Test",
+      "lastName": "Robinson",
+      "address1": "4455 Hollywood Blvd",
+      "city": "Rome",
+      "state": "NY",
+      "country": "US",
+      "postalCode": "00012",
+      "cardNumber": "4111111111111111",
+      "cardExpiryDate": "02/2025",
+      "cardSecurityCode": "123",
+      "paySource": "CREDITCARD"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-order-qa"></a>
+#### Example 3: Checkout Champ: Order QA
+
+Approve or decline orders pending Quality Assurance
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-order-qa-001",
+  "nodeParams": {
+    "action": "order_qa",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "orderId": "C3E67A9BD0",
+      "action": "APPROVE"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-rerun-declined-sale"></a>
+#### Example 4: Checkout Champ: Rerun Declined Sale
+
+Retry billing of a declined transaction in a new sale
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-rerun-declined-sale-001",
+  "nodeParams": {
+    "action": "rerun_declined_sale",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "orderId": "C3E67A9BD0"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-refund-order"></a>
+#### Example 5: Checkout Champ: Refund Order
+
+Refund an order
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-refund-order-001",
+  "nodeParams": {
+    "action": "refund_order",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "orderId": "C3E67A9BD0"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-cancel-order"></a>
+#### Example 6: Checkout Champ: Cancel Order
+
+Cancel an order
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-cancel-order-001",
+  "nodeParams": {
+    "action": "cancel_order",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "orderId": "C3E67A9BD0"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-import-order"></a>
+#### Example 7: Checkout Champ: Import Order
+
+Import a new order
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-import-order-001",
+  "nodeParams": {
+    "action": "import_order",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "campaignId": 13,
+      "firstName": "Test",
+      "lastName": "Robinson",
+      "emailAddress": "test@example.com",
+      "phoneNumber": "11233399",
+      "postalCode": "00012"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-order-sales-tax"></a>
+#### Example 8: Checkout Champ: Order Sales Tax
+
+Calculate sales tax for an order
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-order-sales-tax-001",
+  "nodeParams": {
+    "action": "order_sales_tax",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "orderId": "C3E67A9BD0"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-order-surcharge"></a>
+#### Example 9: Checkout Champ: Order Surcharge
+
+Apply surcharge to an order
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-order-surcharge-001",
+  "nodeParams": {
+    "action": "order_surcharge",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "orderId": "C3E67A9BD0"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-update-fulfillment"></a>
+#### Example 10: Checkout Champ: Update Fulfillment
+
+Update fulfillment status and tracking information
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-update-fulfillment-001",
+  "nodeParams": {
+    "action": "update_fulfillment",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "fulfillmentId": "12345",
+      "status": "SHIPPED",
+      "trackingNumber": "1Z999AA10123456784"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-query-fulfillment"></a>
+#### Example 11: Checkout Champ: Query Fulfillment
+
+Query fulfillment information by order ID or fulfillment ID
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-query-fulfillment-001",
+  "nodeParams": {
+    "action": "query_fulfillment",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "orderId": "C3E67A9BD0"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-confirm-order"></a>
+#### Example 12: Checkout Champ: Confirm Order
+
+Confirm an order
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-confirm-order-001",
+  "nodeParams": {
+    "action": "confirm_order",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "orderId": "C3E67A9BD0"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-query-order"></a>
+#### Example 13: Checkout Champ: Query Order
+
+Query order details by order ID or customer ID
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-query-order-001",
+  "nodeParams": {
+    "action": "query_order",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "orderId": "C3E67A9BD0"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-import-upsale"></a>
+#### Example 14: Checkout Champ: Import Upsale
+
+Import an upsale order
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-import-upsale-001",
+  "nodeParams": {
+    "action": "import_upsale",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "campaignId": 13,
+      "orderId": "C3E67A9BD0"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-update-order"></a>
+#### Example 15: Checkout Champ: Update Order
+
+Update an existing order
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-update-order-001",
+  "nodeParams": {
+    "action": "update_order",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "orderId": "C3E67A9BD0"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-order-ship-rate"></a>
+#### Example 16: Checkout Champ: Order Ship Rate
+
+Get shipping rate for an order
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-order-ship-rate-001",
+  "nodeParams": {
+    "action": "order_ship_rate",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "orderId": "C3E67A9BD0"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-order-coupon"></a>
+#### Example 17: Checkout Champ: Order Coupon
+
+Apply a coupon code to an order
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-order-coupon-001",
+  "nodeParams": {
+    "action": "order_coupon",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "orderId": "C3E67A9BD0",
+      "couponCode": "SAVE10"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-resend-autoresponder"></a>
+#### Example 18: Checkout Champ: Resend Autoresponder
+
+Resend autoresponders that may have been sent to the wrong email or phone
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-resend-autoresponder-001",
+  "nodeParams": {
+    "action": "resend_autoresponder",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "orderId": "C3E67A9BD0",
+      "autoresponderType": "ORDER",
+      "type": "EMAIL"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-create-blacklist"></a>
+#### Example 19: Checkout Champ: Create Blacklist
+
+Add or remove a blacklist entry by card bin, country/state, email, phone, or IP
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-create-blacklist-001",
+  "nodeParams": {
+    "action": "create_blacklist",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "blacklistType": "cardBin",
+      "cardBin": "411111"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-query-customer-contracts"></a>
+#### Example 20: Checkout Champ: Query Customer Contracts
+
+Get base64-encoded customer contract PDF files by order ID or customer ID
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-query-customer-contracts-001",
+  "nodeParams": {
+    "action": "query_customer_contracts",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "orderId": "C3E67A9BD0"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-add-customer-note"></a>
+#### Example 21: Checkout Champ: Add Customer Note
+
+Add a note to a customer record
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-add-customer-note-001",
+  "nodeParams": {
+    "action": "add_customer_note",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "customerId": "46611",
+      "note": "Customer called regarding order status"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-update-customer-card"></a>
+#### Example 22: Checkout Champ: Update Customer Card
+
+Update credit card information for a customer
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-update-customer-card-001",
+  "nodeParams": {
+    "action": "update_customer_card",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "customerId": "46611",
+      "cardNumber": "4111111111111111",
+      "cardExpiryDate": "02/2025",
+      "cardSecurityCode": "123"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-update-customer"></a>
+#### Example 23: Checkout Champ: Update Customer
+
+Update customer information
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-update-customer-001",
+  "nodeParams": {
+    "action": "update_customer",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "customerId": "46611"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-delete-customers"></a>
+#### Example 24: Checkout Champ: Delete Customers
+
+Delete a customer record
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-delete-customers-001",
+  "nodeParams": {
+    "action": "delete_customers",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "customerId": "46611"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-query-customer-history"></a>
+#### Example 25: Checkout Champ: Query Customer History
+
+Query customer order and transaction history
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-query-customer-history-001",
+  "nodeParams": {
+    "action": "query_customer_history",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "customerId": "46611"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-query-customers"></a>
+#### Example 26: Checkout Champ: Query Customers
+
+Query customer information
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-query-customers-001",
+  "nodeParams": {
+    "action": "query_customers",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "customerId": "46611"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-query-transactions"></a>
+#### Example 27: Checkout Champ: Query Transactions
+
+Query transaction information by order ID or customer ID
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-query-transactions-001",
+  "nodeParams": {
+    "action": "query_transactions",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "orderId": "C3E67A9BD0"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-update-transaction"></a>
+#### Example 28: Checkout Champ: Update Transaction
+
+Update transaction information
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-update-transaction-001",
+  "nodeParams": {
+    "action": "update_transaction",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "transactionId": "TXN123456"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-refund-transactions"></a>
+#### Example 29: Checkout Champ: Refund Transactions
+
+Refund a transaction
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-refund-transactions-001",
+  "nodeParams": {
+    "action": "refund_transactions",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "transactionId": "TXN123456"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-composite-data-query"></a>
+#### Example 30: Checkout Champ: Composite Data Query
+
+Query composite data
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-composite-data-query-001",
+  "nodeParams": {
+    "action": "composite_data_query",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-transaction-range-select"></a>
+#### Example 31: Checkout Champ: Transaction Range Select
+
+Select transactions within a date range
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-transaction-range-select-001",
+  "nodeParams": {
+    "action": "transaction_range_select",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-query-purchases"></a>
+#### Example 32: Checkout Champ: Query Purchases
+
+Query purchase/subscription information
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-query-purchases-001",
+  "nodeParams": {
+    "action": "query_purchases",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "customerId": "46611"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-update-purchase"></a>
+#### Example 33: Checkout Champ: Update Purchase
+
+Update purchase/subscription information
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-update-purchase-001",
+  "nodeParams": {
+    "action": "update_purchase",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "purchaseId": "PURCH123"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-cancel-purchase"></a>
+#### Example 34: Checkout Champ: Cancel Purchase
+
+Cancel a purchase/subscription
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-cancel-purchase-001",
+  "nodeParams": {
+    "action": "cancel_purchase",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "purchaseId": "PURCH123"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-pause-purchase"></a>
+#### Example 35: Checkout Champ: Pause Purchase
+
+Pause a purchase/subscription
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-pause-purchase-001",
+  "nodeParams": {
+    "action": "pause_purchase",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "purchaseId": "PURCH123"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-refund-purchase"></a>
+#### Example 36: Checkout Champ: Refund Purchase
+
+Refund a purchase/subscription
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-refund-purchase-001",
+  "nodeParams": {
+    "action": "refund_purchase",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "purchaseId": "PURCH123"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-query-product"></a>
+#### Example 37: Checkout Champ: Query Product
+
+Query product information
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-query-product-001",
+  "nodeParams": {
+    "action": "query_product",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "productId": "1"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-create-product"></a>
+#### Example 38: Checkout Champ: Create Product
+
+Create a new product
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-create-product-001",
+  "nodeParams": {
+    "action": "create_product",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "productName": "My Product"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-update-product"></a>
+#### Example 39: Checkout Champ: Update Product
+
+Update product information
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-update-product-001",
+  "nodeParams": {
+    "action": "update_product",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "productId": "1"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-query-campaign"></a>
+#### Example 40: Checkout Champ: Query Campaign
+
+Query campaign information
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-query-campaign-001",
+  "nodeParams": {
+    "action": "query_campaign",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "campaignId": 13
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-create-campaign"></a>
+#### Example 41: Checkout Champ: Create Campaign
+
+Create a new campaign
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-create-campaign-001",
+  "nodeParams": {
+    "action": "create_campaign",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "campaignName": "My Campaign"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-update-campaign"></a>
+#### Example 42: Checkout Champ: Update Campaign
+
+Update campaign information
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-update-campaign-001",
+  "nodeParams": {
+    "action": "update_campaign",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "campaignId": 13
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-create-campaign-product"></a>
+#### Example 43: Checkout Champ: Create Campaign Product
+
+Add a product to a campaign
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-create-campaign-product-001",
+  "nodeParams": {
+    "action": "create_campaign_product",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "campaignId": 13,
+      "productId": 1
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-update-campaign-product"></a>
+#### Example 44: Checkout Champ: Update Campaign Product
+
+Update product settings within a campaign
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-update-campaign-product-001",
+  "nodeParams": {
+    "action": "update_campaign_product",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "campaignId": 13,
+      "productId": 1
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-create-coupon"></a>
+#### Example 45: Checkout Champ: Create Coupon
+
+Create a new coupon
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-create-coupon-001",
+  "nodeParams": {
+    "action": "create_coupon",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "couponCode": "SAVE10"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-query-coupon"></a>
+#### Example 46: Checkout Champ: Query Coupon
+
+Query coupon information
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-query-coupon-001",
+  "nodeParams": {
+    "action": "query_coupon",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "couponCode": "SAVE10"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-update-coupon"></a>
+#### Example 47: Checkout Champ: Update Coupon
+
+Update coupon information
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-update-coupon-001",
+  "nodeParams": {
+    "action": "update_coupon",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "couponCode": "SAVE10"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-create-coupon-range-profile"></a>
+#### Example 48: Checkout Champ: Create Coupon Range Profile
+
+Create a coupon range profile
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-create-coupon-range-profile-001",
+  "nodeParams": {
+    "action": "create_coupon_range_profile",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "couponCode": "SAVE10"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-update-coupon-range-profile"></a>
+#### Example 49: Checkout Champ: Update Coupon Range Profile
+
+Update a coupon range profile
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-update-coupon-range-profile-001",
+  "nodeParams": {
+    "action": "update_coupon_range_profile",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "couponCode": "SAVE10"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-import-click"></a>
+#### Example 50: Checkout Champ: Import Click
+
+Import a click/tracking event for a campaign
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-import-click-001",
+  "nodeParams": {
+    "action": "import_click",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "campaignId": 13
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-confirm-paypal"></a>
+#### Example 51: Checkout Champ: Confirm PayPal
+
+Confirm a PayPal transaction
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-confirm-paypal-001",
+  "nodeParams": {
+    "action": "confirm_paypal",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "transactionId": "TXN123456"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-club-member-login"></a>
+#### Example 52: Checkout Champ: Club Member Login
+
+Authenticate a club member
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-club-member-login-001",
+  "nodeParams": {
+    "action": "club_member_login",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "memberIdentifier": "member@example.com",
+      "memberPassword": "memberpassword"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-cancel-club-membership"></a>
+#### Example 53: Checkout Champ: Cancel Club Membership
+
+Cancel a club membership
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-cancel-club-membership-001",
+  "nodeParams": {
+    "action": "cancel_club_membership",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "memberId": "MEMBER123"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-query-club-members"></a>
+#### Example 54: Checkout Champ: Query Club Members
+
+Query club member information
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-query-club-members-001",
+  "nodeParams": {
+    "action": "query_club_members",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "memberId": "MEMBER123"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-update-club-members"></a>
+#### Example 55: Checkout Champ: Update Club Members
+
+Update club member information
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-update-club-members-001",
+  "nodeParams": {
+    "action": "update_club_members",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "memberId": "MEMBER123"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-reactivate-club-membership"></a>
+#### Example 56: Checkout Champ: Reactivate Club Membership
+
+Reactivate a cancelled club membership
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-reactivate-club-membership-001",
+  "nodeParams": {
+    "action": "reactivate_club_membership",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "memberId": "MEMBER123"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-reset-club-members"></a>
+#### Example 57: Checkout Champ: Reset Club Members
+
+Reset club member password or credentials
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-reset-club-members-001",
+  "nodeParams": {
+    "action": "reset_club_members",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "memberId": "MEMBER123"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-affiliate-query"></a>
+#### Example 58: Checkout Champ: Affiliate Query
+
+Query affiliate information
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-affiliate-query-001",
+  "nodeParams": {
+    "action": "affiliate_query",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "affiliateId": "AFF123"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-affiliate-create"></a>
+#### Example 59: Checkout Champ: Affiliate Create
+
+Create a new affiliate
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-affiliate-create-001",
+  "nodeParams": {
+    "action": "affiliate_create",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "affiliateName": "New Affiliate"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-affiliate-update"></a>
+#### Example 60: Checkout Champ: Affiliate Update
+
+Update affiliate information
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-affiliate-update-001",
+  "nodeParams": {
+    "action": "affiliate_update",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "affiliateId": "AFF123"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-query-mid-summary-report"></a>
+#### Example 61: Checkout Champ: Query Mid Summary Report
+
+Query mid summary report data
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-query-mid-summary-report-001",
+  "nodeParams": {
+    "action": "query_mid_summary_report",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-query-bin-approval-report"></a>
+#### Example 62: Checkout Champ: Query Bin Approval Report
+
+Query bin approval report data
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-query-bin-approval-report-001",
+  "nodeParams": {
+    "action": "query_bin_approval_report",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-query-retention-report"></a>
+#### Example 63: Checkout Champ: Query Retention Report
+
+Query customer retention report data
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-query-retention-report-001",
+  "nodeParams": {
+    "action": "query_retention_report",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-query-projected-billing-report"></a>
+#### Example 64: Checkout Champ: Query Projected Billing Report
+
+Query projected billing report data
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-query-projected-billing-report-001",
+  "nodeParams": {
+    "action": "query_projected_billing_report",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-query-gateway"></a>
+#### Example 65: Checkout Champ: Query Gateway
+
+Query gateway/merchant information
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-query-gateway-001",
+  "nodeParams": {
+    "action": "query_gateway",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-query-transaction-summary-report"></a>
+#### Example 66: Checkout Champ: Query Transaction Summary Report
+
+Query transaction summary report data
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-query-transaction-summary-report-001",
+  "nodeParams": {
+    "action": "query_transaction_summary_report",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-query-order-summary-report"></a>
+#### Example 67: Checkout Champ: Query Order Summary Report
+
+Query order summary report data
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-query-order-summary-report-001",
+  "nodeParams": {
+    "action": "query_order_summary_report",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-query-funnels"></a>
+#### Example 68: Checkout Champ: Query Funnels
+
+Query funnel/list information
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-query-funnels-001",
+  "nodeParams": {
+    "action": "query_funnels",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-capture-transaction"></a>
+#### Example 69: Checkout Champ: Capture Transaction
+
+Capture (settle) a previously authorized transaction
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-capture-transaction-001",
+  "nodeParams": {
+    "action": "capture_transaction",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "orderId": "C3E67A9BD0"
+    }
+  }
+}
+```
+
+---
+
+<a id="checkoutchamp-update-campaign-countries"></a>
+#### Example 70: Checkout Champ: Update Campaign Countries
+
+Update the list of allowed countries for a campaign
+
+```json
+{
+  "automationType": "checkoutchamp",
+  "nodeId": "checkoutchamp-update-campaign-countries-001",
+  "nodeParams": {
+    "action": "update_campaign_countries",
+    "params": {
+      "loginId": "YOUR_CHECKOUTCHAMP_LOGIN_ID",
+      "password": "YOUR_CHECKOUTCHAMP_PASSWORD",
+      "campaignId": 29,
+      "countries": "US,CA,GB"
+    }
+  }
+}
+```
+
+## Third-Party Documentation
+
+- [https://docs.checkoutchamp.com/](https://docs.checkoutchamp.com/)

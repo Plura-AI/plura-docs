@@ -1,0 +1,2487 @@
+---
+title: "Klaviyo"
+description: "Email and SMS marketing automation with Klaviyo"
+---
+
+## Overview
+
+Email and SMS marketing automation with Klaviyo. Call actions with `automationType`, `action`, and `params` from any workflow node that supports automations.
+
+## Authentication
+
+- Klaviyo Private API Key (per-account).
+
+## Available Actions
+
+Click any action to jump to its example payload.
+
+
+**Accounts**
+
+- [Get Account](#klaviyo-get-account)
+- [Get Accounts](#klaviyo-get-accounts)
+- [Request Deletion](#klaviyo-request-deletion)
+
+**Campaigns**
+
+- [Cancel Campaign Send](#klaviyo-cancel-campaign-send)
+- [Clone Campaign](#klaviyo-clone-campaign)
+- [Create Campaign](#klaviyo-create-campaign)
+- [Get Campaign Recipient Estimation](#klaviyo-get-campaign-recipient-estimation)
+- [Get Campaigns](#klaviyo-get-campaigns)
+- [Send Campaign](#klaviyo-send-campaign)
+- [Update Campaign](#klaviyo-update-campaign)
+
+**Catalog**
+
+- [Create Catalog Variant](#klaviyo-create-catalog-variant)
+- [Delete Catalog Item](#klaviyo-delete-catalog-item)
+- [Get Catalog Categories](#klaviyo-get-catalog-categories)
+- [Get Catalog Items](#klaviyo-get-catalog-items)
+- [Get Catalog Variants](#klaviyo-get-catalog-variants)
+- [Update Catalog Category](#klaviyo-update-catalog-category)
+- [Update Catalog Item](#klaviyo-update-catalog-item)
+
+**Coupons**
+
+- [Create Coupon Code](#klaviyo-create-coupon-code)
+- [Delete Coupon](#klaviyo-delete-coupon)
+- [Delete Coupon Code](#klaviyo-delete-coupon-code)
+- [Get Coupon Codes](#klaviyo-get-coupon-codes)
+
+**Events**
+
+- [Bulk Create Events](#klaviyo-bulk-create-events)
+- [Create Event](#klaviyo-create-event)
+- [Get Event](#klaviyo-get-event)
+- [Get Events](#klaviyo-get-events)
+
+**Flows**
+
+- [Create Flow](#klaviyo-create-flow)
+- [Get Flow](#klaviyo-get-flow)
+- [Get Flow Messages](#klaviyo-get-flow-messages)
+- [Get Flows](#klaviyo-get-flows)
+- [Update Flow Status](#klaviyo-update-flow-status)
+
+**Forms**
+
+- [Get Form](#klaviyo-get-form)
+- [Get Form Versions](#klaviyo-get-form-versions)
+- [Get Forms](#klaviyo-get-forms)
+
+**Images**
+
+- [Get Images](#klaviyo-get-images)
+- [Upload Image](#klaviyo-upload-image)
+
+**Lists**
+
+- [Add to List](#klaviyo-add-to-list)
+- [Create List](#klaviyo-create-list)
+- [Delete List](#klaviyo-delete-list)
+- [Get List](#klaviyo-get-list)
+- [Get List Profiles](#klaviyo-get-list-profiles)
+- [Get Lists](#klaviyo-get-lists)
+- [Remove from List](#klaviyo-remove-from-list)
+- [Update List](#klaviyo-update-list)
+
+**Metrics**
+
+- [Get Metric](#klaviyo-get-metric)
+- [Get Metrics](#klaviyo-get-metrics)
+- [Query Metric Aggregates](#klaviyo-query-metric-aggregates)
+
+**Profiles**
+
+- [Bulk Import Profiles](#klaviyo-bulk-import-profiles)
+- [Create Profile](#klaviyo-create-profile)
+- [Create or Update Profile](#klaviyo-create-or-update-profile)
+- [Get Profiles](#klaviyo-get-profiles)
+- [Merge Profiles](#klaviyo-merge-profiles)
+- [Suppress Profiles](#klaviyo-suppress-profiles)
+- [Unsubscribe Profiles](#klaviyo-unsubscribe-profiles)
+- [Unsuppress Profiles](#klaviyo-unsuppress-profiles)
+- [Update Profile](#klaviyo-update-profile)
+
+**Reporting**
+
+- [Report Campaign Values](#klaviyo-report-campaign-values)
+- [Report Flow Values](#klaviyo-report-flow-values)
+- [Report Form Values](#klaviyo-report-form-values)
+
+**Segments**
+
+- [Create Segment](#klaviyo-create-segment)
+- [Get Segment](#klaviyo-get-segment)
+- [Get Segments](#klaviyo-get-segments)
+- [Update Segment](#klaviyo-update-segment)
+
+**Tags**
+
+- [Create Tag](#klaviyo-create-tag)
+- [Delete Tag](#klaviyo-delete-tag)
+- [Get Tags](#klaviyo-get-tags)
+- [Tag Resources](#klaviyo-tag-resources)
+- [Untag Resources](#klaviyo-untag-resources)
+
+**Templates**
+
+- [Create Template](#klaviyo-create-template)
+- [Delete Template](#klaviyo-delete-template)
+- [Get Template](#klaviyo-get-template)
+- [Get Templates](#klaviyo-get-templates)
+- [Render Template](#klaviyo-render-template)
+- [Update Template](#klaviyo-update-template)
+
+**Webhooks**
+
+- [Create Webhook](#klaviyo-create-webhook)
+- [Get Webhook](#klaviyo-get-webhook)
+- [Get Webhook Topics](#klaviyo-get-webhook-topics)
+- [Get Webhooks](#klaviyo-get-webhooks)
+
+## Examples
+
+<a id="klaviyo-get-accounts"></a>
+#### Example 1: Get Accounts
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_accounts",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-account"></a>
+#### Example 2: Get Account
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_account",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "account_id": "YOUR_ACCOUNTID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-profiles"></a>
+#### Example 3: Get Profiles
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_profiles",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-create-profile"></a>
+#### Example 4: Create Profile
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "create_profile",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "email": "postman-YOUR_$TIMESTAMP@test.com",
+      "first_name": "Postman",
+      "last_name": "Tester",
+      "properties": {
+        "source": "postman"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-profile"></a>
+#### Example 5: Get Profile
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_profile",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "profile_id": "YOUR_PROFILEID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-update-profile"></a>
+#### Example 6: Update Profile
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "update_profile",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "profile_id": "YOUR_PROFILEID",
+      "first_name": "Updated",
+      "organization": "Postman Corp"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-create-or-update-profile"></a>
+#### Example 7: Create or Update Profile
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "create_or_update_profile",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "email": "upsert-YOUR_$TIMESTAMP@test.com",
+      "first_name": "Upsert"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-merge-profiles"></a>
+#### Example 8: Merge Profiles
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "merge_profiles",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "body": {
+        "data": {
+          "type": "profile-merge",
+          "id": "YOUR_PROFILEID",
+          "relationships": {
+            "profiles": {
+              "data": [
+                {
+                  "type": "profile",
+                  "id": "REPLACE_WITH_SOURCE_ID"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-suppress-profiles"></a>
+#### Example 9: Suppress Profiles
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "suppress_profiles",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "emails": [
+        "suppress-YOUR_$TIMESTAMP@test.com"
+      ]
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-unsuppress-profiles"></a>
+#### Example 10: Unsuppress Profiles
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "unsuppress_profiles",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "emails": [
+        "suppress-YOUR_$TIMESTAMP@test.com"
+      ]
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-bulk-import-profiles"></a>
+#### Example 11: Bulk Import Profiles
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "bulk_import_profiles",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "profiles": [
+        {
+          "email": "bulk1-YOUR_$TIMESTAMP@test.com",
+          "first_name": "Bulk1"
+        },
+        {
+          "email": "bulk2-YOUR_$TIMESTAMP@test.com",
+          "first_name": "Bulk2"
+        }
+      ]
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-subscribe-profiles"></a>
+#### Example 12: Subscribe Profiles
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "subscribe_profiles",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "list_id": "YOUR_LISTID",
+      "emails": [
+        "subscribe-YOUR_$TIMESTAMP@test.com"
+      ],
+      "channel": "email"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-unsubscribe-profiles"></a>
+#### Example 13: Unsubscribe Profiles
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "unsubscribe_profiles",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "list_id": "YOUR_LISTID",
+      "emails": [
+        "subscribe-YOUR_$TIMESTAMP@test.com"
+      ],
+      "channel": "email"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-events"></a>
+#### Example 14: Get Events
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_events",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-create-event"></a>
+#### Example 15: Create Event
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "create_event",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "metric_name": "Placed Order",
+      "email": "event-YOUR_$TIMESTAMP@test.com",
+      "properties": {
+        "orderId": "ORD-YOUR_$TIMESTAMP",
+        "value": 99.99
+      },
+      "value": 99.99
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-event"></a>
+#### Example 16: Get Event
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_event",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "event_id": "YOUR_EVENTID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-bulk-create-events"></a>
+#### Example 17: Bulk Create Events
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "bulk_create_events",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "events": [
+        {
+          "metricName": "Viewed Product",
+          "profile": {
+            "email": "bulk-event-YOUR_$TIMESTAMP@test.com"
+          },
+          "properties": {
+            "productId": "P1"
+          }
+        },
+        {
+          "metricName": "Viewed Product",
+          "profile": {
+            "email": "bulk-event-YOUR_$TIMESTAMP@test.com"
+          },
+          "properties": {
+            "productId": "P2"
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-metrics"></a>
+#### Example 18: Get Metrics
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_metrics",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-metric"></a>
+#### Example 19: Get Metric
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_metric",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "metric_id": "YOUR_METRICID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-query-metric-aggregates"></a>
+#### Example 20: Query Metric Aggregates
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "query_metric_aggregates",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "body": {
+        "data": {
+          "type": "metric-aggregate",
+          "attributes": {
+            "metric_id": "YOUR_METRICID",
+            "measurements": [
+              "count"
+            ],
+            "interval": "day",
+            "filter": [
+              "greater-or-equal(datetime,2026-01-01T00:00:00)",
+              "less-than(datetime,2027-01-01T00:00:00)"
+            ],
+            "by": []
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-lists"></a>
+#### Example 21: Get Lists
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_lists",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-create-list"></a>
+#### Example 22: Create List
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "create_list",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "name": "Postman Test List YOUR_$TIMESTAMP"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-list"></a>
+#### Example 23: Get List
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_list",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "list_id": "YOUR_LISTID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-update-list"></a>
+#### Example 24: Update List
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "update_list",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "list_id": "YOUR_LISTID",
+      "name": "Postman Updated List"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-delete-list"></a>
+#### Example 25: Delete List
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "delete_list",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "list_id": "YOUR_LISTID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-list-profiles"></a>
+#### Example 26: Get List Profiles
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_list_profiles",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "list_id": "YOUR_LISTID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-add-to-list"></a>
+#### Example 27: Add Profiles to List
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "add_to_list",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "list_id": "YOUR_LISTID",
+      "profile_ids": [
+        "YOUR_PROFILEID"
+      ]
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-remove-from-list"></a>
+#### Example 28: Remove Profiles from List
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "remove_from_list",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "list_id": "YOUR_LISTID",
+      "profile_ids": [
+        "YOUR_PROFILEID"
+      ]
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-segments"></a>
+#### Example 29: Get Segments
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_segments",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-create-segment"></a>
+#### Example 30: Create Segment
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "create_segment",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "attributes": {
+        "name": "Postman Test Segment",
+        "definition": {
+          "condition_groups": []
+        }
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-segment"></a>
+#### Example 31: Get Segment
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_segment",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "segment_id": "YOUR_SEGMENTID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-update-segment"></a>
+#### Example 32: Update Segment
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "update_segment",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "segment_id": "YOUR_SEGMENTID",
+      "attributes": {
+        "name": "Postman Updated Segment"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-delete-segment"></a>
+#### Example 33: Delete Segment
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "delete_segment",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "segment_id": "YOUR_SEGMENTID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-segment-profiles"></a>
+#### Example 34: Get Segment Profiles
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_segment_profiles",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "segment_id": "YOUR_SEGMENTID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-campaigns"></a>
+#### Example 35: Get Campaigns
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_campaigns",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "query": {
+        "filter": "equals(messages.channel,'email')"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-create-campaign"></a>
+#### Example 36: Create Campaign
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "create_campaign",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "attributes": {
+        "name": "Postman Test Campaign",
+        "audiences": {
+          "included": [
+            "YOUR_LISTID"
+          ]
+        },
+        "campaign-messages": {
+          "data": [
+            {
+              "type": "campaign-message",
+              "attributes": {
+                "definition": {
+                  "channel": "email",
+                  "label": "Test message",
+                  "content": {
+                    "subject": "Test subject",
+                    "preview_text": "Preview",
+                    "from_email": "sender@example.com",
+                    "from_label": "Sender"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "send_strategy": {
+          "method": "static",
+          "datetime": "2027-01-01T00:00:00+00:00"
+        },
+        "send_options": {
+          "use_smart_sending": false
+        },
+        "tracking_options": {
+          "is_tracking_clicks": true,
+          "is_tracking_opens": true
+        }
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-campaign"></a>
+#### Example 37: Get Campaign
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_campaign",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "campaign_id": "YOUR_CAMPAIGNID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-update-campaign"></a>
+#### Example 38: Update Campaign
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "update_campaign",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "campaign_id": "YOUR_CAMPAIGNID",
+      "attributes": {
+        "name": "Postman Updated Campaign"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-delete-campaign"></a>
+#### Example 39: Delete Campaign
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "delete_campaign",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "campaign_id": "YOUR_CAMPAIGNID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-clone-campaign"></a>
+#### Example 40: Clone Campaign
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "clone_campaign",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "campaign_id": "YOUR_CAMPAIGNID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-send-campaign"></a>
+#### Example 41: Send Campaign
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "send_campaign",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "campaign_id": "YOUR_CAMPAIGNID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-cancel-campaign-send"></a>
+#### Example 42: Cancel Campaign Send
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "cancel_campaign_send",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "campaign_id": "YOUR_CAMPAIGNID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-campaign-messages"></a>
+#### Example 43: Get Campaign Messages
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_campaign_messages",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "campaign_id": "YOUR_CAMPAIGNID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-campaign-recipient-estimation"></a>
+#### Example 44: Get Campaign Recipient Estimation
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_campaign_recipient_estimation",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "campaign_id": "YOUR_CAMPAIGNID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-flows"></a>
+#### Example 45: Get Flows
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_flows",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-create-flow"></a>
+#### Example 46: Create Flow
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "create_flow",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "attributes": {
+        "name": "Postman Test Flow"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-flow"></a>
+#### Example 47: Get Flow
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_flow",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "flow_id": "YOUR_FLOWID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-update-flow-status"></a>
+#### Example 48: Update Flow Status
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "update_flow_status",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "flow_id": "YOUR_FLOWID",
+      "status": "draft"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-delete-flow"></a>
+#### Example 49: Delete Flow
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "delete_flow",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "flow_id": "YOUR_FLOWID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-flow-actions"></a>
+#### Example 50: Get Flow Actions
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_flow_actions",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "flow_id": "YOUR_FLOWID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-flow-messages"></a>
+#### Example 51: Get Flow Messages
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_flow_messages",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "action_id": "YOUR_FLOWACTIONID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-templates"></a>
+#### Example 52: Get Templates
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_templates",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-create-template"></a>
+#### Example 53: Create Template
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "create_template",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "attributes": {
+        "name": "Postman Test Template",
+        "editor_type": "CODE",
+        "html": "<html><body><p>Hello YOUR_FIRST_NAME</p></body></html>"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-template"></a>
+#### Example 54: Get Template
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_template",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "template_id": "YOUR_TEMPLATEID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-update-template"></a>
+#### Example 55: Update Template
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "update_template",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "template_id": "YOUR_TEMPLATEID",
+      "attributes": {
+        "name": "Postman Updated Template"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-delete-template"></a>
+#### Example 56: Delete Template
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "delete_template",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "template_id": "YOUR_TEMPLATEID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-render-template"></a>
+#### Example 57: Render Template
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "render_template",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "template_id": "YOUR_TEMPLATEID",
+      "context": {
+        "first_name": "Postman"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-clone-template"></a>
+#### Example 58: Clone Template
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "clone_template",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "template_id": "YOUR_TEMPLATEID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-catalog-items"></a>
+#### Example 59: Get Catalog Items
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_catalog_items",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-create-catalog-item"></a>
+#### Example 60: Create Catalog Item
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "create_catalog_item",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "attributes": {
+        "external_id": "POSTMAN-ITEM-YOUR_$TIMESTAMP",
+        "title": "Postman Test Product",
+        "description": "Postman test product description",
+        "url": "https://example.com/product",
+        "price": 29.99
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-catalog-item"></a>
+#### Example 61: Get Catalog Item
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_catalog_item",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "item_id": "YOUR_CATALOGITEMID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-update-catalog-item"></a>
+#### Example 62: Update Catalog Item
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "update_catalog_item",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "item_id": "YOUR_CATALOGITEMID",
+      "attributes": {
+        "title": "Postman Updated Product"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-delete-catalog-item"></a>
+#### Example 63: Delete Catalog Item
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "delete_catalog_item",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "item_id": "YOUR_CATALOGITEMID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-catalog-variants"></a>
+#### Example 64: Get Catalog Variants
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_catalog_variants",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-create-catalog-variant"></a>
+#### Example 65: Create Catalog Variant
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "create_catalog_variant",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "attributes": {
+        "external_id": "POSTMAN-VAR-YOUR_$TIMESTAMP",
+        "title": "Postman Variant",
+        "price": 19.99,
+        "catalog_type": "$default"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-update-catalog-variant"></a>
+#### Example 66: Update Catalog Variant
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "update_catalog_variant",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "variant_id": "YOUR_CATALOGVARIANTID",
+      "attributes": {
+        "title": "Postman Updated Variant"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-delete-catalog-variant"></a>
+#### Example 67: Delete Catalog Variant
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "delete_catalog_variant",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "variant_id": "YOUR_CATALOGVARIANTID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-catalog-categories"></a>
+#### Example 68: Get Catalog Categories
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_catalog_categories",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-create-catalog-category"></a>
+#### Example 69: Create Catalog Category
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "create_catalog_category",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "attributes": {
+        "external_id": "POSTMAN-CAT-YOUR_$TIMESTAMP",
+        "name": "Postman Test Category"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-update-catalog-category"></a>
+#### Example 70: Update Catalog Category
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "update_catalog_category",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "category_id": "YOUR_CATALOGCATEGORYID",
+      "attributes": {
+        "name": "Postman Updated Category"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-delete-catalog-category"></a>
+#### Example 71: Delete Catalog Category
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "delete_catalog_category",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "category_id": "YOUR_CATALOGCATEGORYID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-coupons"></a>
+#### Example 72: Get Coupons
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_coupons",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-create-coupon"></a>
+#### Example 73: Create Coupon
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "create_coupon",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "attributes": {
+        "external_id": "POSTMANCOUPYOUR_$TIMESTAMP",
+        "description": "Postman test coupon"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-coupon"></a>
+#### Example 74: Get Coupon
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_coupon",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "coupon_id": "YOUR_COUPONID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-update-coupon"></a>
+#### Example 75: Update Coupon
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "update_coupon",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "coupon_id": "YOUR_COUPONID",
+      "attributes": {
+        "description": "Updated coupon"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-delete-coupon"></a>
+#### Example 76: Delete Coupon
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "delete_coupon",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "coupon_id": "YOUR_COUPONID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-create-coupon-code"></a>
+#### Example 77: Create Coupon Code
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "create_coupon_code",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "coupon_id": "YOUR_COUPONID",
+      "attributes": {
+        "unique_code": "POSTMANYOUR_$TIMESTAMP"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-coupon-codes"></a>
+#### Example 78: Get Coupon Codes
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_coupon_codes",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "query": {
+        "filter": "equals(coupon.id,\"YOUR_COUPONID\")"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-delete-coupon-code"></a>
+#### Example 79: Delete Coupon Code
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "delete_coupon_code",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "code_id": "YOUR_COUPONCODEID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-tags"></a>
+#### Example 80: Get Tags
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_tags",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-create-tag"></a>
+#### Example 81: Create Tag
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "create_tag",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "name": "postman-tag-YOUR_$TIMESTAMP"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-delete-tag"></a>
+#### Example 82: Delete Tag
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "delete_tag",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "tag_id": "YOUR_TAGID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-tag-resources"></a>
+#### Example 83: Tag Resources
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "tag_resources",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "tag_id": "YOUR_TAGID",
+      "resource_type": "lists",
+      "resource_ids": [
+        "YOUR_LISTID"
+      ]
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-untag-resources"></a>
+#### Example 84: Untag Resources
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "untag_resources",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "tag_id": "YOUR_TAGID",
+      "resource_type": "lists",
+      "resource_ids": [
+        "YOUR_LISTID"
+      ]
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-images"></a>
+#### Example 85: Get Images
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_images",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-upload-image"></a>
+#### Example 86: Upload Image
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "upload_image",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "image_url": "https://via.placeholder.com/100x100.png",
+      "name": "postman-image-YOUR_$TIMESTAMP"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-forms"></a>
+#### Example 87: Get Forms
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_forms",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-form"></a>
+#### Example 88: Get Form
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_form",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "form_id": "YOUR_FORMID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-form-versions"></a>
+#### Example 89: Get Form Versions
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_form_versions",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "form_id": "YOUR_FORMID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-webhooks"></a>
+#### Example 90: Get Webhooks
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_webhooks",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-create-webhook"></a>
+#### Example 91: Create Webhook
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "create_webhook",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "attributes": {
+        "name": "postman-webhook-YOUR_$TIMESTAMP",
+        "endpoint_url": "https://httpbin.org/post?t=YOUR_$TIMESTAMP",
+        "description": "Postman test webhook"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-webhook"></a>
+#### Example 92: Get Webhook
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_webhook",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "webhook_id": "YOUR_WEBHOOKID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-update-webhook"></a>
+#### Example 93: Update Webhook
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "update_webhook",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "webhook_id": "YOUR_WEBHOOKID",
+      "attributes": {
+        "name": "postman-updated-webhook"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-delete-webhook"></a>
+#### Example 94: Delete Webhook
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "delete_webhook",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "webhook_id": "YOUR_WEBHOOKID"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-get-webhook-topics"></a>
+#### Example 95: Get Webhook Topics
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_webhook_topics",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-report-campaign-values"></a>
+#### Example 96: Report Campaign Values
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "report_campaign_values",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "body": {
+        "data": {
+          "type": "campaign-values-report",
+          "attributes": {
+            "statistics": [
+              "opens",
+              "clicks"
+            ],
+            "timeframe": {
+              "key": "last_30_days"
+            },
+            "conversion_metric_id": "YOUR_METRICID"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-report-flow-values"></a>
+#### Example 97: Report Flow Values
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "report_flow_values",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "body": {
+        "data": {
+          "type": "flow-values-report",
+          "attributes": {
+            "statistics": [
+              "recipients"
+            ],
+            "timeframe": {
+              "key": "last_30_days"
+            },
+            "conversion_metric_id": "YOUR_METRICID"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-report-flow-series"></a>
+#### Example 98: Report Flow Series
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "report_flow_series",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "body": {
+        "data": {
+          "type": "flow-series-report",
+          "attributes": {
+            "statistics": [
+              "recipients"
+            ],
+            "timeframe": {
+              "key": "last_30_days"
+            },
+            "interval": "daily",
+            "conversion_metric_id": "YOUR_METRICID"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-report-form-values"></a>
+#### Example 99: Report Form Values
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "report_form_values",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "body": {
+        "data": {
+          "type": "form-values-report",
+          "attributes": {
+            "statistics": [
+              "submits"
+            ],
+            "timeframe": {
+              "key": "last_30_days"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="klaviyo-request-deletion"></a>
+#### Example 100: Request Profile Deletion
+
+
+
+```json
+{
+  "automationType": "klaviyo",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "request_deletion",
+    "params": {
+      "apiKey": "YOUR_KLAVIYO_PRIVATE_API_KEY",
+      "email": "delete-me-YOUR_$TIMESTAMP@test.com"
+    }
+  }
+}
+```
+
+## Third-Party Documentation
+
+- [https://developers.klaviyo.com/en/reference/api_overview](https://developers.klaviyo.com/en/reference/api_overview)

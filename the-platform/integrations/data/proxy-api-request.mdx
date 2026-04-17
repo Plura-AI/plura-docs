@@ -1,0 +1,207 @@
+---
+title: "Proxy API Request"
+description: "Make authenticated outbound HTTP requests to any third-party API from inside a workflow"
+---
+
+## Overview
+
+Make authenticated outbound HTTP requests to any third-party API from inside a workflow. Call actions with `automationType`, `action`, and `params` from any workflow node that supports automations.
+
+## Authentication
+
+- Per-request authentication (Bearer token, Basic auth, API key header, or none). Optional outbound proxy for geo/IP-restricted APIs.
+
+## Available Actions
+
+The Proxy integration exposes a single generic HTTP request. Configure method, URL, auth, headers, and body in `params`. Click any example for a ready-to-copy payload.
+
+- [POST JSON](#proxy-proxy-post-json)
+- [Async (for slow targets)](#proxy-proxy-async-slow-target)
+- [GET with Query](#proxy-proxy-get-query)
+- [PUT JSON](#proxy-proxy-put-json)
+- [DELETE](#proxy-proxy-delete)
+
+## Examples
+
+<a id="proxy-proxy-post-json"></a>
+#### Example 1: Proxy - POST JSON
+
+POST JSON to httpbin.org
+
+```json
+{
+  "automationType": "proxy",
+  "nodeId": "proxy-post-001",
+  "nodeParams": {
+    "params": {
+      "apiMethod": "POST",
+      "apiURL": "https://httpbin.org/post",
+      "authenticationSelect": "Bearer Token",
+      "bearerToken": "webhook-secret-token-123",
+      "contentType": "application/json",
+      "responseType": "json",
+      "enableHeaders": true,
+      "headers": [
+        {
+          "name": "X-Webhook-Source",
+          "value": "plura-automation"
+        }
+      ],
+      "requestBody": true,
+      "requestBodyJson": {
+        "event_type": "purchase_completed",
+        "user_id": "user-123",
+        "transaction_id": "txn-abc123",
+        "amount": 9.99,
+        "currency": "USD"
+      },
+      "timeoutMs": 55000
+    }
+  }
+}
+```
+
+---
+
+<a id="proxy-proxy-async-slow-target"></a>
+#### Example 2: Proxy - Async (for slow targets)
+
+Use async+callbackUrl for slow targets (api.plura.ai, Salesforce) to avoid timeouts. Returns immediately; result POSTed to callbackUrl.
+
+```json
+{
+  "automationType": "proxy",
+  "async": true,
+  "callbackUrl": "https://your-app.com/api/automation/callback",
+  "nodeId": "proxy-async-001",
+  "nodeParams": {
+    "params": {
+      "apiMethod": "POST",
+      "apiURL": "https://api.plura.ai/v1/lead/sendtoworkflow",
+      "authenticationSelect": "Bearer Token",
+      "bearerToken": "YOUR_TOKEN",
+      "contentType": "application/json",
+      "responseType": "json",
+      "enableHeaders": false,
+      "requestBody": true,
+      "requestBodyJson": {
+        "workflow_id": "...",
+        "lead_id": "...",
+        "record": []
+      },
+      "timeoutMs": 120000
+    }
+  }
+}
+```
+
+---
+
+<a id="proxy-proxy-get-query"></a>
+#### Example 3: Proxy - GET with Query
+
+GET with query params to httpbin.org
+
+```json
+{
+  "automationType": "proxy",
+  "nodeId": "proxy-get-001",
+  "nodeParams": {
+    "params": {
+      "apiMethod": "GET",
+      "apiURL": "https://httpbin.org/get",
+      "authenticationSelect": "None",
+      "contentType": "application/json",
+      "responseType": "json",
+      "enableHeaders": true,
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "requestBody": false,
+      "queryParams": {
+        "user_id": "user-123",
+        "include_metadata": "true"
+      },
+      "timeoutMs": 55000
+    }
+  }
+}
+```
+
+---
+
+<a id="proxy-proxy-put-json"></a>
+#### Example 4: Proxy - PUT JSON
+
+PUT JSON to httpbin.org
+
+```json
+{
+  "automationType": "proxy",
+  "nodeId": "proxy-put-001",
+  "nodeParams": {
+    "params": {
+      "apiMethod": "PUT",
+      "apiURL": "https://httpbin.org/put",
+      "authenticationSelect": "Bearer Token",
+      "bearerToken": "user-api-token",
+      "contentType": "application/json",
+      "responseType": "json",
+      "enableHeaders": true,
+      "headers": [
+        {
+          "name": "X-Update-Source",
+          "value": "automation"
+        }
+      ],
+      "requestBody": true,
+      "requestBodyJson": {
+        "preferences": {
+          "email": true,
+          "sms": false
+        }
+      },
+      "timeoutMs": 55000
+    }
+  }
+}
+```
+
+---
+
+<a id="proxy-proxy-delete"></a>
+#### Example 5: Proxy - DELETE
+
+DELETE with query params to httpbin.org
+
+```json
+{
+  "automationType": "proxy",
+  "nodeId": "proxy-delete-001",
+  "nodeParams": {
+    "params": {
+      "apiMethod": "DELETE",
+      "apiURL": "https://httpbin.org/delete",
+      "authenticationSelect": "Bearer Token",
+      "bearerToken": "admin-api-token",
+      "contentType": "application/json",
+      "responseType": "json",
+      "enableHeaders": true,
+      "headers": [
+        {
+          "name": "X-Delete-Reason",
+          "value": "automation_cleanup"
+        }
+      ],
+      "requestBody": false,
+      "queryParams": {
+        "force": "true"
+      },
+      "timeoutMs": 55000
+    }
+  }
+}
+```

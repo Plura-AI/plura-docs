@@ -1,0 +1,1106 @@
+---
+title: "Calendly"
+description: "Schedule, manage, and route Calendly events from your workflows"
+---
+
+## Overview
+
+Schedule, manage, and route Calendly events from your workflows. Call actions with `automationType`, `action`, and `params` from any workflow node that supports automations.
+
+## Authentication
+
+- Calendly OAuth 2.0 access token (or Personal Access Token).
+
+## Available Actions
+
+Click any action to jump to its example payload.
+
+
+**Activity Logs**
+
+- [List Activity Log Entries](#calendly-list-activity-log-entries)
+
+**Availability**
+
+- [Get User Availability Schedule](#calendly-get-user-availability-schedule)
+- [List User Availability Schedules](#calendly-list-user-availability-schedules)
+- [List User Busy Times](#calendly-list-user-busy-times)
+
+**Event Invitees**
+
+- [Get Event Invitee](#calendly-get-event-invitee)
+- [List Event Invitees](#calendly-list-event-invitees)
+
+**Event Types**
+
+- [Get Event Type](#calendly-get-event-type)
+- [List Event Type Available Times](#calendly-list-event-type-available-times)
+- [List Event Type Hosts](#calendly-list-event-type-hosts)
+
+**Groups**
+
+- [Get Group](#calendly-get-group)
+- [List Group Relationships](#calendly-list-group-relationships)
+- [List Groups](#calendly-list-groups)
+
+**Organizations**
+
+- [Get Organization Invitation](#calendly-get-organization-invitation)
+- [Invite User to Organization](#calendly-invite-user-to-organization)
+- [List Organization Invitations](#calendly-list-organization-invitations)
+- [List Organization Memberships](#calendly-list-organization-memberships)
+- [Remove User from Organization](#calendly-remove-user-from-organization)
+- [Revoke Organization Invitation](#calendly-revoke-organization-invitation)
+
+**Routing Forms**
+
+- [Get Routing Form](#calendly-get-routing-form)
+- [Get Routing Form Submission](#calendly-get-routing-form-submission)
+- [List Routing Form Submissions](#calendly-list-routing-form-submissions)
+- [List Routing Forms](#calendly-list-routing-forms)
+
+**Scheduled Events**
+
+- [Cancel Event](#calendly-cancel-event)
+- [Get Event](#calendly-get-event)
+
+**Scheduling Links**
+
+- [Create Single Use Scheduling Link](#calendly-create-single-use-scheduling-link)
+
+**Users**
+
+- [Get Current User](#calendly-get-current-user)
+- [Get User](#calendly-get-user)
+
+**Webhooks**
+
+- [Create Webhook Subscription](#calendly-create-webhook-subscription)
+- [Delete Webhook Subscription](#calendly-delete-webhook-subscription)
+- [Get Sample Webhook Data](#calendly-get-sample-webhook-data)
+- [Get Webhook Subscription](#calendly-get-webhook-subscription)
+- [List Webhook Subscriptions](#calendly-list-webhook-subscriptions)
+
+## Examples
+
+<a id="calendly-get-current-user"></a>
+#### Example 1: Calendly: Get Current User
+
+Get information about the authenticated user
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-get-current-user-001",
+  "nodeParams": {
+    "action": "get_current_user",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN"
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-list-events"></a>
+#### Example 2: Calendly: List Events
+
+List scheduled events with optional filtering
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-list-events-001",
+  "nodeParams": {
+    "action": "list_events",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "query": {
+        "count": 20,
+        "status": "active",
+        "sort": "start_time:asc"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-get-event"></a>
+#### Example 3: Calendly: Get Event
+
+Get a specific scheduled event by UUID
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-get-event-001",
+  "nodeParams": {
+    "action": "get_event",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "uuid": "EVENT_UUID_HERE"
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-list-event-invitees"></a>
+#### Example 4: Calendly: List Event Invitees
+
+List invitees for a specific event
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-list-event-invitees-001",
+  "nodeParams": {
+    "action": "list_event_invitees",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "eventUuid": "EVENT_UUID_HERE",
+      "query": {
+        "status": "active",
+        "count": 20
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-list-event-types"></a>
+#### Example 5: Calendly: List Event Types
+
+List available event types
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-list-event-types-001",
+  "nodeParams": {
+    "action": "list_event_types",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "query": {
+        "active": true,
+        "count": 20
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-get-event-type"></a>
+#### Example 6: Calendly: Get Event Type
+
+Get a specific event type by UUID
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-get-event-type-001",
+  "nodeParams": {
+    "action": "get_event_type",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "uuid": "EVENT_TYPE_UUID_HERE"
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-list-webhook-subscriptions"></a>
+#### Example 7: Calendly: List Webhook Subscriptions
+
+List webhook subscriptions for the authenticated user or organization
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-list-webhook-subscriptions-001",
+  "nodeParams": {
+    "action": "list_webhook_subscriptions",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "query": {
+        "scope": "user",
+        "count": 20
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-create-webhook-subscription"></a>
+#### Example 8: Calendly: Create Webhook Subscription
+
+Create a new webhook subscription
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-create-webhook-subscription-001",
+  "nodeParams": {
+    "action": "create_webhook_subscription",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "body": {
+        "url": "https://your-app.com/webhooks/calendly",
+        "events": [
+          "invitee.created",
+          "invitee.canceled"
+        ],
+        "organization": "https://api.calendly.com/organizations/ORG_UUID",
+        "user": "https://api.calendly.com/users/USER_UUID",
+        "scope": "user"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-list-organization-memberships"></a>
+#### Example 9: Calendly: List Organization Memberships
+
+List organization memberships
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-list-organization-memberships-001",
+  "nodeParams": {
+    "action": "list_organization_memberships",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "query": {
+        "count": 20
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-list-organization-memberships"></a>
+#### Example 10: Calendly: Get Organization
+
+Get organization details (via list_organization_memberships or direct API call)
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-get-organization-001",
+  "nodeParams": {
+    "action": "list_organization_memberships",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "query": {
+        "count": 1
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-cancel-event"></a>
+#### Example 11: Calendly: Cancel Event
+
+Cancel a scheduled event
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-cancel-event-001",
+  "nodeParams": {
+    "action": "cancel_event",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "uuid": "EVENT_UUID_HERE",
+      "body": {
+        "reason": "Event cancelled by organizer"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-delete-scheduled-event-data"></a>
+#### Example 12: Calendly: Delete Scheduled Event Data
+
+Delete scheduled event data for compliance
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-delete-scheduled-event-data-001",
+  "nodeParams": {
+    "action": "delete_scheduled_event_data",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "body": {
+        "events": [
+          "https://api.calendly.com/scheduled_events/EVENT_UUID"
+        ]
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-get-event-invitee"></a>
+#### Example 13: Calendly: Get Event Invitee
+
+Get a specific invitee for an event
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-get-event-invitee-001",
+  "nodeParams": {
+    "action": "get_event_invitee",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "eventUuid": "EVENT_UUID_HERE",
+      "inviteeUuid": "INVITEE_UUID_HERE"
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-delete-invitee-data"></a>
+#### Example 14: Calendly: Delete Invitee Data
+
+Delete invitee data for compliance
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-delete-invitee-data-001",
+  "nodeParams": {
+    "action": "delete_invitee_data",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "body": {
+        "invitees": [
+          "https://api.calendly.com/scheduled_events/EVENT_UUID/invitees/INVITEE_UUID"
+        ]
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-create-invitee-no-show"></a>
+#### Example 15: Calendly: Create Invitee No Show
+
+Mark an invitee as a no-show
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-create-invitee-no-show-001",
+  "nodeParams": {
+    "action": "create_invitee_no_show",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "body": {
+        "invitee": "https://api.calendly.com/scheduled_events/EVENT_UUID/invitees/INVITEE_UUID"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-get-invitee-no-show"></a>
+#### Example 16: Calendly: Get Invitee No Show
+
+Get no-show information for an invitee
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-get-invitee-no-show-001",
+  "nodeParams": {
+    "action": "get_invitee_no_show",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "uuid": "NO_SHOW_UUID_HERE"
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-delete-invitee-no-show"></a>
+#### Example 17: Calendly: Delete Invitee No Show
+
+Delete a no-show record
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-delete-invitee-no-show-001",
+  "nodeParams": {
+    "action": "delete_invitee_no_show",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "uuid": "NO_SHOW_UUID_HERE"
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-create-one-off-event-type"></a>
+#### Example 18: Calendly: Create One-Off Event Type
+
+Create a one-time event type
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-create-one-off-event-type-001",
+  "nodeParams": {
+    "action": "create_one_off_event_type",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "body": {
+        "name": "One-on-One Meeting",
+        "duration": 30,
+        "kind": "solo",
+        "scheduling_url": "https://calendly.com/username/event-slug"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-list-event-type-available-times"></a>
+#### Example 19: Calendly: List Event Type Available Times
+
+Get available time slots for an event type
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-list-event-type-available-times-001",
+  "nodeParams": {
+    "action": "list_event_type_available_times",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "query": {
+        "event_type": "https://api.calendly.com/event_types/EVENT_TYPE_UUID",
+        "start_time": "2025-01-20T00:00:00Z",
+        "end_time": "2025-01-27T00:00:00Z"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-list-event-type-hosts"></a>
+#### Example 20: Calendly: List Event Type Hosts
+
+List hosts for an event type
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-list-event-type-hosts-001",
+  "nodeParams": {
+    "action": "list_event_type_hosts",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "query": {
+        "event_type": "https://api.calendly.com/event_types/EVENT_TYPE_UUID",
+        "count": 20
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-get-user"></a>
+#### Example 21: Calendly: Get User
+
+Get a specific user by UUID
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-get-user-001",
+  "nodeParams": {
+    "action": "get_user",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "uuid": "USER_UUID_HERE"
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-list-user-availability-schedules"></a>
+#### Example 22: Calendly: List User Availability Schedules
+
+List availability schedules for a user
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-list-user-availability-schedules-001",
+  "nodeParams": {
+    "action": "list_user_availability_schedules",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "query": {
+        "user": "https://api.calendly.com/users/USER_UUID",
+        "count": 20
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-get-user-availability-schedule"></a>
+#### Example 23: Calendly: Get User Availability Schedule
+
+Get a specific availability schedule for a user
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-get-user-availability-schedule-001",
+  "nodeParams": {
+    "action": "get_user_availability_schedule",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "uuid": "AVAILABILITY_SCHEDULE_UUID_HERE"
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-list-user-busy-times"></a>
+#### Example 24: Calendly: List User Busy Times
+
+List busy time slots for a user
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-list-user-busy-times-001",
+  "nodeParams": {
+    "action": "list_user_busy_times",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "query": {
+        "user": "https://api.calendly.com/users/USER_UUID",
+        "start_time": "2025-01-20T00:00:00Z",
+        "end_time": "2025-01-27T00:00:00Z"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-get-organization-membership"></a>
+#### Example 25: Calendly: Get Organization Membership
+
+Get a specific organization membership by UUID
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-get-organization-membership-001",
+  "nodeParams": {
+    "action": "get_organization_membership",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "uuid": "ORGANIZATION_MEMBERSHIP_UUID_HERE"
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-invite-user-to-organization"></a>
+#### Example 26: Calendly: Invite User to Organization
+
+Invite a user to join an organization
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-invite-user-to-organization-001",
+  "nodeParams": {
+    "action": "invite_user_to_organization",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "orgUuid": "ORGANIZATION_UUID_HERE",
+      "body": {
+        "email": "user@example.com"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-revoke-organization-invitation"></a>
+#### Example 27: Calendly: Revoke Organization Invitation
+
+Revoke a pending organization invitation
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-revoke-organization-invitation-001",
+  "nodeParams": {
+    "action": "revoke_organization_invitation",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "orgUuid": "ORGANIZATION_UUID_HERE",
+      "invitationUuid": "INVITATION_UUID_HERE"
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-list-organization-invitations"></a>
+#### Example 28: Calendly: List Organization Invitations
+
+List pending invitations for an organization
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-list-organization-invitations-001",
+  "nodeParams": {
+    "action": "list_organization_invitations",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "orgUuid": "ORGANIZATION_UUID_HERE",
+      "query": {
+        "count": 20
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-get-organization-invitation"></a>
+#### Example 29: Calendly: Get Organization Invitation
+
+Get a specific organization invitation by UUID
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-get-organization-invitation-001",
+  "nodeParams": {
+    "action": "get_organization_invitation",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "orgUuid": "ORGANIZATION_UUID_HERE",
+      "invitationUuid": "INVITATION_UUID_HERE"
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-remove-user-from-organization"></a>
+#### Example 30: Calendly: Remove User from Organization
+
+Remove a user from an organization
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-remove-user-from-organization-001",
+  "nodeParams": {
+    "action": "remove_user_from_organization",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "membershipUuid": "ORGANIZATION_MEMBERSHIP_UUID_HERE"
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-list-groups"></a>
+#### Example 31: Calendly: List Groups
+
+List groups in an organization
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-list-groups-001",
+  "nodeParams": {
+    "action": "list_groups",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "query": {
+        "organization": "https://api.calendly.com/organizations/ORG_UUID",
+        "count": 20
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-get-group"></a>
+#### Example 32: Calendly: Get Group
+
+Get a specific group by UUID
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-get-group-001",
+  "nodeParams": {
+    "action": "get_group",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "uuid": "GROUP_UUID_HERE"
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-list-group-relationships"></a>
+#### Example 33: Calendly: List Group Relationships
+
+List relationships for a group
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-list-group-relationships-001",
+  "nodeParams": {
+    "action": "list_group_relationships",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "query": {
+        "group": "https://api.calendly.com/groups/GROUP_UUID",
+        "count": 20
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-get-group-relationship"></a>
+#### Example 34: Calendly: Get Group Relationship
+
+Get a specific group relationship by UUID
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-get-group-relationship-001",
+  "nodeParams": {
+    "action": "get_group_relationship",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "uuid": "GROUP_RELATIONSHIP_UUID_HERE"
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-list-routing-forms"></a>
+#### Example 35: Calendly: List Routing Forms
+
+List routing forms in an organization
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-list-routing-forms-001",
+  "nodeParams": {
+    "action": "list_routing_forms",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "query": {
+        "organization": "https://api.calendly.com/organizations/ORG_UUID",
+        "count": 20
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-get-routing-form"></a>
+#### Example 36: Calendly: Get Routing Form
+
+Get a specific routing form by UUID
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-get-routing-form-001",
+  "nodeParams": {
+    "action": "get_routing_form",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "uuid": "ROUTING_FORM_UUID_HERE"
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-list-routing-form-submissions"></a>
+#### Example 37: Calendly: List Routing Form Submissions
+
+List submissions for a routing form
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-list-routing-form-submissions-001",
+  "nodeParams": {
+    "action": "list_routing_form_submissions",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "query": {
+        "form": "https://api.calendly.com/routing_forms/FORM_UUID",
+        "count": 20
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-get-routing-form-submission"></a>
+#### Example 38: Calendly: Get Routing Form Submission
+
+Get a specific routing form submission by UUID
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-get-routing-form-submission-001",
+  "nodeParams": {
+    "action": "get_routing_form_submission",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "uuid": "ROUTING_FORM_SUBMISSION_UUID_HERE"
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-get-webhook-subscription"></a>
+#### Example 39: Calendly: Get Webhook Subscription
+
+Get a specific webhook subscription by UUID
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-get-webhook-subscription-001",
+  "nodeParams": {
+    "action": "get_webhook_subscription",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "webhookUuid": "WEBHOOK_UUID_HERE"
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-delete-webhook-subscription"></a>
+#### Example 40: Calendly: Delete Webhook Subscription
+
+Delete a webhook subscription
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-delete-webhook-subscription-001",
+  "nodeParams": {
+    "action": "delete_webhook_subscription",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "webhookUuid": "WEBHOOK_UUID_HERE"
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-get-sample-webhook-data"></a>
+#### Example 41: Calendly: Get Sample Webhook Data
+
+Get sample webhook payload data for testing
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-get-sample-webhook-data-001",
+  "nodeParams": {
+    "action": "get_sample_webhook_data",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "query": {
+        "event": "invitee.created",
+        "organization": "https://api.calendly.com/organizations/ORG_UUID",
+        "scope": "organization"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-create-single-use-scheduling-link"></a>
+#### Example 42: Calendly: Create Single-Use Scheduling Link
+
+Create a single-use scheduling link for an event type (used to create events)
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-create-single-use-scheduling-link-001",
+  "nodeParams": {
+    "action": "create_single_use_scheduling_link",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "body": {
+        "max_event_count": 1,
+        "owner": "https://api.calendly.com/event_types/EVENT_TYPE_UUID",
+        "owner_type": "EventType"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-create-share"></a>
+#### Example 43: Calendly: Create Share
+
+Create a customized share link for an event type
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-create-share-001",
+  "nodeParams": {
+    "action": "create_share",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "body": {
+        "event_type": "https://api.calendly.com/event_types/EVENT_TYPE_UUID",
+        "name": "Custom Meeting",
+        "duration": 30,
+        "period_type": "fixed"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="calendly-list-activity-log-entries"></a>
+#### Example 44: Calendly: List Activity Log Entries
+
+List activity log entries for an organization
+
+```json
+{
+  "automationType": "calendly",
+  "nodeId": "calendly-list-activity-log-entries-001",
+  "nodeParams": {
+    "action": "list_activity_log_entries",
+    "params": {
+      "accessToken": "YOUR_CALENDLY_ACCESS_TOKEN",
+      "query": {
+        "organization": "https://api.calendly.com/organizations/ORG_UUID",
+        "count": 20,
+        "sort": "occurred_at:desc"
+      }
+    }
+  }
+}
+```
+
+## Third-Party Documentation
+
+- [https://developer.calendly.com/api-docs](https://developer.calendly.com/api-docs)

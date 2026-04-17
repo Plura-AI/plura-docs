@@ -1,0 +1,220 @@
+---
+title: "TrestleIQ"
+description: "Phone, address, and identity validation via TrestleIQ"
+---
+
+## Overview
+
+Phone, address, and identity validation via TrestleIQ. Call actions with `automationType`, `action`, and `params` from any workflow node that supports automations.
+
+## Authentication
+
+- TrestleIQ API Key.
+
+## Available Actions
+
+Click any action to jump to its example payload.
+
+- [Caller ID](#trestleiq-caller-id)
+- [Phone Feedback](#trestleiq-phone-feedback)
+- [Phone Intel](#trestleiq-phone-intel)
+- [Real Contact](#trestleiq-real-contact)
+- [Reverse Address Lookup](#trestleiq-reverse-address)
+- [Reverse Phone Lookup](#trestleiq-reverse-phone)
+- [Smart CNAM](#trestleiq-smart-cnam)
+
+## Examples
+
+<a id="trestleiq-phone-intel"></a>
+#### Example 1: TrestleIQ - Phone Intel
+
+Validate phone number and get phone metadata including carrier, line type, prepaid status, and activity score
+
+```json
+{
+  "automationType": "trestleiq",
+  "nodeId": "trestleiq-phone-intel-001",
+  "nodeParams": {
+    "action": "phone_intel",
+    "params": {
+      "apiKey": "YOUR_TRESTLEIQ_API_KEY",
+      "phone": "+17022918207",
+      "country_code": "US"
+    }
+  }
+}
+```
+
+---
+
+<a id="trestleiq-phone-intel"></a>
+#### Example 2: TrestleIQ - Phone Intel with Add-ons
+
+Phone validation with litigator add-on enabled
+
+```json
+{
+  "automationType": "trestleiq",
+  "nodeId": "trestleiq-phone-intel-addons-001",
+  "nodeParams": {
+    "action": "phone_intel",
+    "params": {
+      "apiKey": "YOUR_TRESTLEIQ_API_KEY",
+      "phone": "+17022918207",
+      "country_code": "US",
+      "add_ons": "litigator_checks"
+    }
+  }
+}
+```
+
+---
+
+<a id="trestleiq-real-contact"></a>
+#### Example 3: TrestleIQ - Real Contact
+
+Verify and grade phone numbers, emails, and addresses with essential insights
+
+```json
+{
+  "automationType": "trestleiq",
+  "nodeId": "trestleiq-real-contact-001",
+  "nodeParams": {
+    "action": "real_contact",
+    "params": {
+      "apiKey": "YOUR_TRESTLEIQ_API_KEY",
+      "name": "John Doe",
+      "phone": "+17022918207",
+      "email": "john.doe@example.com",
+      "address_street_line_1": "123 Main St",
+      "address_city": "New York",
+      "address_state_code": "NY",
+      "address_postal_code": "10001",
+      "address_country_code": "US"
+    }
+  }
+}
+```
+
+---
+
+<a id="trestleiq-reverse-phone"></a>
+#### Example 4: TrestleIQ - Reverse Phone
+
+Comprehensive verification and enrichment of phone numbers including phone validity, line type, carrier data, and all owners
+
+```json
+{
+  "automationType": "trestleiq",
+  "nodeId": "trestleiq-reverse-phone-001",
+  "nodeParams": {
+    "action": "reverse_phone",
+    "params": {
+      "apiKey": "YOUR_TRESTLEIQ_API_KEY",
+      "phone": "+17022918207",
+      "country_code": "US",
+      "name": "John Doe",
+      "postal_code": "10001"
+    }
+  }
+}
+```
+
+---
+
+<a id="trestleiq-caller-id"></a>
+#### Example 5: TrestleIQ - Caller ID
+
+Identify caller information including name, demographics, address, and email
+
+```json
+{
+  "automationType": "trestleiq",
+  "nodeId": "trestleiq-caller-id-001",
+  "nodeParams": {
+    "action": "caller_id",
+    "params": {
+      "apiKey": "YOUR_TRESTLEIQ_API_KEY",
+      "phone": "+17022918207",
+      "country_code": "US"
+    }
+  }
+}
+```
+
+---
+
+<a id="trestleiq-smart-cnam"></a>
+#### Example 6: TrestleIQ - Smart CNAM
+
+Validate phone numbers and identify the name or business to which the phone number belongs
+
+```json
+{
+  "automationType": "trestleiq",
+  "nodeId": "trestleiq-smart-cnam-001",
+  "nodeParams": {
+    "action": "smart_cnam",
+    "params": {
+      "apiKey": "YOUR_TRESTLEIQ_API_KEY",
+      "phone": "+17022918207",
+      "country_code": "US"
+    }
+  }
+}
+```
+
+---
+
+<a id="trestleiq-reverse-address"></a>
+#### Example 7: TrestleIQ - Reverse Address
+
+Validate and normalize addresses while providing insights into current residents information
+
+```json
+{
+  "automationType": "trestleiq",
+  "nodeId": "trestleiq-reverse-address-001",
+  "nodeParams": {
+    "action": "reverse_address",
+    "params": {
+      "apiKey": "YOUR_TRESTLEIQ_API_KEY",
+      "street_line_1": "100 Syrws St",
+      "street_line_2": "Ste 1",
+      "city": "Lynden",
+      "postal_code": "98264",
+      "state_code": "WA",
+      "country_code": "US"
+    }
+  }
+}
+```
+
+---
+
+<a id="trestleiq-phone-feedback"></a>
+#### Example 8: TrestleIQ - Phone Feedback
+
+Provide feedback to Trestle about dialed numbers for connected/disconnected status and right party contact confirmation
+
+```json
+{
+  "automationType": "trestleiq",
+  "nodeId": "trestleiq-phone-feedback-001",
+  "nodeParams": {
+    "action": "phone_feedback",
+    "params": {
+      "apiKey": "YOUR_TRESTLEIQ_API_KEY",
+      "response_id": "resp_1234567890",
+      "phone": "+17022918207",
+      "name": "John Doe",
+      "status": "Connected",
+      "right_party_contact": true
+    }
+  }
+}
+```
+
+## Third-Party Documentation
+
+- [https://trestleiq.com/documentation/](https://trestleiq.com/documentation/)

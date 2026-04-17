@@ -1,0 +1,563 @@
+---
+title: "Salesforce"
+description: "AI-powered conversations synced to managed contacts and pipelines"
+---
+
+### Description
+
+AI-powered conversations synced to managed contacts and pipelines. Use this integration to query data with SOQL/SOSL, manage contacts, accounts, leads, opportunities, tasks, notes, cases, and events.
+
+### Authentication
+
+- OAuth 2.0 or Salesforce Access Token with instance URL.
+
+### Available Actions
+
+- SOQL query (standard, paginated, and queryAll)
+- SOSL search
+- Find contacts by email
+- Find accounts by name
+- Search/get tasks
+- Get notes
+- Find events
+- Find/create/update cases
+- Create events
+- Get/delete/upsert sObjects
+- Create/update contacts, accounts, leads, opportunities
+- Associate opportunities with contacts
+- Create tasks and notes
+
+### Examples
+
+**Example 1: Salesforce - SOQL Query**
+
+Run a SOQL query using OAuth token or apiKey override.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-soql-001",
+  "nodeParams": {
+    "action": "soql_query",
+    "params": {
+      "soql": "SELECT Id, Name, Email FROM Contact WHERE Email LIKE '%@example.com' LIMIT 5",
+      "apiKey": "SF_ACCESS_TOKEN",
+      "instanceUrl": "https://your-instance.my.salesforce.com"
+    }
+  }
+}
+```
+
+**Example 2: Salesforce - SOQL Query (Paginated)**
+
+Run a SOQL query and auto-follow nextRecordsUrl up to pageLimit.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-soql-paginated-001",
+  "nodeParams": {
+    "action": "soql_query_paginated",
+    "params": {
+      "soql": "SELECT Id, Name FROM Account WHERE Name LIKE 'A%'",
+      "pageLimit": 5
+    }
+  }
+}
+```
+
+**Example 3: Salesforce - SOQL QueryAll**
+
+Run a SOQL query using /queryAll to include archived/deleted as applicable.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-soql-all-001",
+  "nodeParams": {
+    "action": "soql_query_all",
+    "params": {
+      "soql": "SELECT Id, IsDeleted, Name FROM Account WHERE IsDeleted = true LIMIT 5"
+    }
+  }
+}
+```
+
+**Example 4: Salesforce - SOSL Search**
+
+Run a SOSL FIND query across objects.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-sosl-001",
+  "nodeParams": {
+    "action": "sosl_search",
+    "params": {
+      "search": "FIND 'Acme*' IN ALL FIELDS RETURNING Account(Id,Name), Contact(Id,FirstName,LastName)"
+    }
+  }
+}
+```
+
+**Example 5: Salesforce - Find Contact by Email**
+
+Helper to search Contact by exact email.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-find-contact-001",
+  "nodeParams": {
+    "action": "find_contact_by_email",
+    "params": {
+      "email": "jane@example.com"
+    }
+  }
+}
+```
+
+**Example 6: Salesforce - Find Account by Name**
+
+Helper to search Account by name (LIKE %name%).
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-find-account-001",
+  "nodeParams": {
+    "action": "find_account_by_name",
+    "params": {
+      "name": "Acme"
+    }
+  }
+}
+```
+
+**Example 7: Salesforce - Search Tasks (SOSL)**
+
+Search tasks by text using SOSL.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-search-tasks-001",
+  "nodeParams": {
+    "action": "search_tasks",
+    "params": {
+      "search": "Follow*"
+    }
+  }
+}
+```
+
+**Example 8: Salesforce - Get Tasks**
+
+List tasks by filters (WhoId/WhatId/Status/SubjectLike).
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-get-tasks-001",
+  "nodeParams": {
+    "action": "get_tasks",
+    "params": {
+      "Status": "Not Started",
+      "SubjectLike": "Follow",
+      "limit": 25
+    }
+  }
+}
+```
+
+**Example 9: Salesforce - Get Notes**
+
+List Notes for a given ParentId.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-get-notes-001",
+  "nodeParams": {
+    "action": "get_notes",
+    "params": {
+      "ParentId": "003xx000004T123AAC",
+      "limit": 20
+    }
+  }
+}
+```
+
+**Example 10: Salesforce - Find Events**
+
+Find Events by WhoId/WhatId/SubjectLike/time window.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-find-events-001",
+  "nodeParams": {
+    "action": "find_events",
+    "params": {
+      "SubjectLike": "Follow",
+      "start": "2025-10-01T00:00:00.000Z",
+      "end": "2025-11-01T00:00:00.000Z",
+      "limit": 25
+    }
+  }
+}
+```
+
+**Example 11: Salesforce - Find Cases**
+
+Find Cases by AccountId/ContactId/Status/SubjectLike.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-find-cases-001",
+  "nodeParams": {
+    "action": "find_cases",
+    "params": {
+      "Status": "New",
+      "SubjectLike": "Support",
+      "limit": 25
+    }
+  }
+}
+```
+
+**Example 12: Salesforce - Create Case**
+
+Create a Case record.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-create-case-001",
+  "nodeParams": {
+    "action": "create_case",
+    "params": {
+      "Subject": "Support needed",
+      "Origin": "Phone"
+    }
+  }
+}
+```
+
+**Example 13: Salesforce - Update Case**
+
+Update a Case record.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-update-case-001",
+  "nodeParams": {
+    "action": "update_case",
+    "params": {
+      "id": "500xx000002X123AAC",
+      "Status": "Working",
+      "Priority": "High"
+    }
+  }
+}
+```
+
+**Example 14: Salesforce - Create Event**
+
+Create an Event (calendar activity).
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-create-event-001",
+  "nodeParams": {
+    "action": "create_event",
+    "params": {
+      "Subject": "Follow-up Meeting",
+      "StartDateTime": "2025-11-01T10:00:00.000Z",
+      "EndDateTime": "2025-11-01T10:30:00.000Z",
+      "WhoId": "003xx000004T123AAC"
+    }
+  }
+}
+```
+
+**Example 15: Salesforce - Get sObject**
+
+Retrieve a record by sObject API name and Id.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-get-sobject-001",
+  "nodeParams": {
+    "action": "get_sobject",
+    "params": {
+      "sobject": "Account",
+      "id": "001xx000003F123AAC"
+    }
+  }
+}
+```
+
+**Example 16: Salesforce - Delete sObject**
+
+Delete a record by sObject API name and Id.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-delete-sobject-001",
+  "nodeParams": {
+    "action": "delete_sobject",
+    "params": {
+      "sobject": "Contact",
+      "id": "003xx000004T123AAC"
+    }
+  }
+}
+```
+
+**Example 17: Salesforce - Upsert sObject by External ID**
+
+PATCH via externalIdField/externalIdValue.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-upsert-sobject-001",
+  "nodeParams": {
+    "action": "upsert_sobject",
+    "params": {
+      "sobject": "Contact",
+      "externalIdField": "External_Id__c",
+      "externalIdValue": "C-12345",
+      "fields": {
+        "FirstName": "Jane",
+        "LastName": "Doe",
+        "Email": "jane@example.com"
+      }
+    }
+  }
+}
+```
+
+**Example 18: Salesforce - Upsert Lead by Email**
+
+Create or update a Lead by email with explicit required fields.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-upsert-lead-001",
+  "nodeParams": {
+    "action": "upsert_lead_by_email",
+    "params": {
+      "email": "john.doe@example.com",
+      "Company": "Example Corp",
+      "LastName": "Doe",
+      "FirstName": "John"
+    }
+  }
+}
+```
+
+**Example 19: Salesforce - Create Opportunity**
+
+Create an Opportunity and optionally associate a primary Contact.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-create-opp-001",
+  "nodeParams": {
+    "action": "create_opportunity",
+    "params": {
+      "Name": "API Demo",
+      "StageName": "Prospecting",
+      "CloseDate": "2025-10-31",
+      "associations": {
+        "contactId": "003xx000004T123AAC"
+      }
+    }
+  }
+}
+```
+
+**Example 20: Salesforce - Associate Opportunity with Contact**
+
+Create an OpportunityContactRole (primary by default).
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-assoc-opp-contact-001",
+  "nodeParams": {
+    "action": "associate_opportunity_contact",
+    "params": {
+      "opportunityId": "006xx000003G123AAC",
+      "contactId": "003xx000004T123AAC",
+      "isPrimary": true
+    }
+  }
+}
+```
+
+**Example 21: Salesforce - Create Contact**
+
+Create a Contact record.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-create-contact-001",
+  "nodeParams": {
+    "action": "create_contact",
+    "params": {
+      "LastName": "Doe",
+      "FirstName": "Jane",
+      "Email": "jane@example.com"
+    }
+  }
+}
+```
+
+**Example 22: Salesforce - Update Contact**
+
+Update an existing Contact.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-update-contact-001",
+  "nodeParams": {
+    "action": "update_contact",
+    "params": {
+      "id": "003xx000004T123AAC",
+      "Phone": "+1-555-000-1111"
+    }
+  }
+}
+```
+
+**Example 23: Salesforce - Create Account**
+
+Create an Account record.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-create-account-001",
+  "nodeParams": {
+    "action": "create_account",
+    "params": {
+      "Name": "Acme Corporation"
+    }
+  }
+}
+```
+
+**Example 24: Salesforce - Update Account**
+
+Update an Account record by Id.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-update-account-001",
+  "nodeParams": {
+    "action": "update_account",
+    "params": {
+      "id": "001xx000003F123AAC",
+      "Industry": "Technology"
+    }
+  }
+}
+```
+
+**Example 25: Salesforce - Create Task**
+
+Create a Task record related to another record (e.g., Contact).
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-create-task-001",
+  "nodeParams": {
+    "action": "create_task",
+    "params": {
+      "Subject": "Follow up",
+      "WhoId": "003xx000004T123AAC",
+      "Status": "Not Started"
+    }
+  }
+}
+```
+
+**Example 26: Salesforce - Create Note**
+
+Create a Note associated to a parent record.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-create-note-001",
+  "nodeParams": {
+    "action": "create_note",
+    "params": {
+      "ParentId": "003xx000004T123AAC",
+      "Title": "Call Notes",
+      "Body": "Spoke with customer."
+    }
+  }
+}
+```
+
+**Example 27: Salesforce - Create sObject**
+
+Generic sObject create for flexibility.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-create-sobject-001",
+  "nodeParams": {
+    "action": "create_sobject",
+    "params": {
+      "sobject": "Case",
+      "fields": {
+        "Subject": "API Created Case",
+        "Status": "New"
+      }
+    }
+  }
+}
+```
+
+**Example 28: Salesforce - Update sObject**
+
+Generic sObject update by API name and Id.
+
+```json
+{
+  "automationType": "salesforce",
+  "nodeId": "salesforce-update-sobject-001",
+  "nodeParams": {
+    "action": "update_sobject",
+    "params": {
+      "sobject": "Case",
+      "id": "500xx000002X123AAC",
+      "fields": {
+        "Priority": "High"
+      }
+    }
+  }
+}
+```
+
+### Third-Party Documentation
+
+- [https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_what_is_rest_api.htm](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_what_is_rest_api.htm)
+- [https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/)

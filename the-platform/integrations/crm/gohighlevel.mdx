@@ -1,0 +1,1005 @@
+---
+title: "Go High Level"
+description: "Sync leads and automate workflows using Go High Level"
+---
+
+### Description
+
+Sync leads and automate workflows using Go High Level. Use this integration to manage contacts, businesses, conversations, appointments, opportunities, pipelines, tags, notes, tasks, campaigns, and locations.
+
+### Authentication
+
+- Go High Level Access Token (OAuth 2.0).
+
+### Available Actions
+
+**Contacts:**
+- Get contacts
+- Get contact by email or phone
+- Create/update/delete contacts
+
+**Custom Fields:**
+- Get/create/delete custom fields
+
+**Businesses:**
+- Get businesses
+- Get business by ID
+- Create/update/delete businesses
+
+**Conversations:**
+- Search conversations
+- Get conversation by ID
+- Create/update/delete conversations
+- Add inbound message
+- Send message
+- Update message status
+
+**Calendars & Appointments:**
+- Get calendars
+- Get calendar by ID
+- Get appointments
+- Create/update/delete appointments
+
+**Opportunities:**
+- Get opportunities
+- Get opportunity by ID
+- Create/update/delete opportunities
+
+**Pipelines:**
+- Get pipelines
+- Get pipeline by ID
+
+**Tags:**
+- Get tags
+- Create/update/delete tags
+
+**Notes:**
+- Get notes
+- Create/update/delete notes
+
+**Tasks:**
+- Get tasks
+- Create/update/delete tasks
+
+**Campaigns:**
+- Get campaigns
+- Get campaign by ID
+
+**Locations:**
+- Get locations
+- Get location by ID
+- Get installed locations
+
+### Examples
+
+**Example 1: Go High Level - Get Contacts**
+
+Retrieve a list of contacts for a location.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-get-contacts-001",
+  "nodeParams": {
+    "action": "get_contacts",
+    "params": {
+      "locationId": "YOUR_LOCATION_ID"
+    }
+  }
+}
+```
+
+**Example 2: Go High Level - Get Contact by Email or Phone**
+
+Search for a contact by email address or phone number.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-get-contact-by-email-or-phone-001",
+  "nodeParams": {
+    "action": "get_contact_by_email_or_phone",
+    "params": {
+      "locationId": "YOUR_LOCATION_ID",
+      "email": "contact@example.com"
+    }
+  }
+}
+```
+
+**Example 3: Go High Level - Create Contact**
+
+Create a new contact.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-create-contact-001",
+  "nodeParams": {
+    "action": "create_contact",
+    "params": {
+      "locationId": "YOUR_LOCATION_ID",
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john.doe@example.com",
+      "phone": "+1234567890",
+      "companyName": "Acme Corp"
+    }
+  }
+}
+```
+
+**Example 4: Go High Level - Update Contact**
+
+Update an existing contact.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-update-contact-001",
+  "nodeParams": {
+    "action": "update_contact",
+    "params": {
+      "contactId": "CONTACT_ID",
+      "firstName": "Jane",
+      "lastName": "Smith"
+    }
+  }
+}
+```
+
+**Example 5: Go High Level - Delete Contact**
+
+Delete a contact.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-delete-contact-001",
+  "nodeParams": {
+    "action": "delete_contact",
+    "params": {
+      "contactId": "CONTACT_ID"
+    }
+  }
+}
+```
+
+**Example 6: Go High Level - Get Custom Fields**
+
+Retrieve custom fields for a location.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-get-custom-fields-001",
+  "nodeParams": {
+    "action": "get_custom_fields",
+    "params": {
+      "locationId": "YOUR_LOCATION_ID"
+    }
+  }
+}
+```
+
+**Example 7: Go High Level - Create Custom Field**
+
+Create a new custom field.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-create-custom-field-001",
+  "nodeParams": {
+    "action": "create_custom_field",
+    "params": {
+      "locationId": "YOUR_LOCATION_ID",
+      "name": "Custom Field Name",
+      "dataType": "TEXT"
+    }
+  }
+}
+```
+
+**Example 8: Go High Level - Delete Custom Field**
+
+Delete a custom field.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-delete-custom-field-001",
+  "nodeParams": {
+    "action": "delete_custom_field",
+    "params": {
+      "locationId": "YOUR_LOCATION_ID",
+      "id": "FIELD_ID"
+    }
+  }
+}
+```
+
+**Example 9: Go High Level - Get Businesses**
+
+Retrieve businesses for a location.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-get-businesses-001",
+  "nodeParams": {
+    "action": "get_businesses",
+    "params": {
+      "locationId": "YOUR_LOCATION_ID"
+    }
+  }
+}
+```
+
+**Example 10: Go High Level - Get Business by ID**
+
+Retrieve a specific business by ID.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-get-business-by-id-001",
+  "nodeParams": {
+    "action": "get_business_by_id",
+    "params": {
+      "businessId": "BUSINESS_ID"
+    }
+  }
+}
+```
+
+**Example 11: Go High Level - Create Business**
+
+Create a new business.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-create-business-001",
+  "nodeParams": {
+    "action": "create_business",
+    "params": {
+      "locationId": "YOUR_LOCATION_ID",
+      "name": "Acme Corporation",
+      "phone": "+1234567890",
+      "email": "info@acme.com",
+      "website": "https://www.acme.com",
+      "address": "123 Main St",
+      "city": "New York",
+      "state": "NY",
+      "postalCode": "10001",
+      "country": "US"
+    }
+  }
+}
+```
+
+**Example 12: Go High Level - Update Business**
+
+Update an existing business.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-update-business-001",
+  "nodeParams": {
+    "action": "update_business",
+    "params": {
+      "businessId": "BUSINESS_ID",
+      "name": "Updated Business Name"
+    }
+  }
+}
+```
+
+**Example 13: Go High Level - Delete Business**
+
+Delete a business.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-delete-business-001",
+  "nodeParams": {
+    "action": "delete_business",
+    "params": {
+      "businessId": "BUSINESS_ID"
+    }
+  }
+}
+```
+
+**Example 14: Go High Level - Search Conversations**
+
+Search for conversations.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-search-conversations-001",
+  "nodeParams": {
+    "action": "search_conversations",
+    "params": {
+      "locationId": "YOUR_LOCATION_ID",
+      "contactId": "CONTACT_ID"
+    }
+  }
+}
+```
+
+**Example 15: Go High Level - Get Conversation by ID**
+
+Retrieve a specific conversation by ID.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-get-conversation-by-id-001",
+  "nodeParams": {
+    "action": "get_conversation_by_id",
+    "params": {
+      "conversationId": "CONVERSATION_ID"
+    }
+  }
+}
+```
+
+**Example 16: Go High Level - Create Conversation**
+
+Create a new conversation.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-create-conversation-001",
+  "nodeParams": {
+    "action": "create_conversation",
+    "params": {
+      "locationId": "YOUR_LOCATION_ID",
+      "contactId": "CONTACT_ID"
+    }
+  }
+}
+```
+
+**Example 17: Go High Level - Update Conversation**
+
+Update a conversation.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-update-conversation-001",
+  "nodeParams": {
+    "action": "update_conversation",
+    "params": {
+      "conversationId": "CONVERSATION_ID",
+      "unreadCount": 0
+    }
+  }
+}
+```
+
+**Example 18: Go High Level - Delete Conversation**
+
+Delete a conversation.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-delete-conversation-001",
+  "nodeParams": {
+    "action": "delete_conversation",
+    "params": {
+      "conversationId": "CONVERSATION_ID"
+    }
+  }
+}
+```
+
+**Example 19: Go High Level - Add Inbound Message**
+
+Add an inbound message to a conversation.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-add-inbound-message-001",
+  "nodeParams": {
+    "action": "add_inbound_message",
+    "params": {
+      "conversationId": "CONVERSATION_ID",
+      "conversationProviderId": "PROVIDER_ID",
+      "direction": "inbound",
+      "type": "Custom",
+      "message": "Hello, this is an inbound message",
+      "date": "2024-01-15T10:30:00Z"
+    }
+  }
+}
+```
+
+**Example 20: Go High Level - Send Message**
+
+Send a new message.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-send-message-001",
+  "nodeParams": {
+    "action": "send_message",
+    "params": {
+      "contactId": "CONTACT_ID",
+      "conversationProviderId": "PROVIDER_ID",
+      "type": "SMS",
+      "message": "Hello, this is a test message"
+    }
+  }
+}
+```
+
+**Example 21: Go High Level - Update Message Status**
+
+Update the status of a message.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-update-message-status-001",
+  "nodeParams": {
+    "action": "update_message_status",
+    "params": {
+      "messageId": "MESSAGE_ID",
+      "status": "delivered"
+    }
+  }
+}
+```
+
+**Example 22: Go High Level - Get Installed Locations**
+
+Retrieve installed locations for an app.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-get-installed-locations-001",
+  "nodeParams": {
+    "action": "get_installed_locations",
+    "params": {
+      "appId": "YOUR_APP_ID"
+    }
+  }
+}
+```
+
+**Example 23: Go High Level - Get Calendars**
+
+Retrieve calendars for a location.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-get-calendars-001",
+  "nodeParams": {
+    "action": "get_calendars",
+    "params": {
+      "locationId": "YOUR_LOCATION_ID"
+    }
+  }
+}
+```
+
+**Example 24: Go High Level - Get Calendar**
+
+Retrieve a specific calendar by ID.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-get-calendar-001",
+  "nodeParams": {
+    "action": "get_calendar",
+    "params": {
+      "calendarId": "CALENDAR_ID"
+    }
+  }
+}
+```
+
+**Example 25: Go High Level - Get Appointments**
+
+Retrieve appointments.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-get-appointments-001",
+  "nodeParams": {
+    "action": "get_appointments",
+    "params": {
+      "locationId": "YOUR_LOCATION_ID",
+      "calendarId": "CALENDAR_ID"
+    }
+  }
+}
+```
+
+**Example 26: Go High Level - Create Appointment**
+
+Create a new appointment.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-create-appointment-001",
+  "nodeParams": {
+    "action": "create_appointment",
+    "params": {
+      "locationId": "YOUR_LOCATION_ID",
+      "calendarId": "CALENDAR_ID",
+      "contactId": "CONTACT_ID",
+      "startTime": "2024-01-20T10:00:00Z",
+      "endTime": "2024-01-20T11:00:00Z",
+      "title": "Consultation Meeting",
+      "description": "Initial consultation with client"
+    }
+  }
+}
+```
+
+**Example 27: Go High Level - Update Appointment**
+
+Update an existing appointment.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-update-appointment-001",
+  "nodeParams": {
+    "action": "update_appointment",
+    "params": {
+      "appointmentId": "APPOINTMENT_ID",
+      "startTime": "2024-01-20T14:00:00Z",
+      "endTime": "2024-01-20T15:00:00Z"
+    }
+  }
+}
+```
+
+**Example 28: Go High Level - Delete Appointment**
+
+Delete an appointment.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-delete-appointment-001",
+  "nodeParams": {
+    "action": "delete_appointment",
+    "params": {
+      "appointmentId": "APPOINTMENT_ID"
+    }
+  }
+}
+```
+
+**Example 29: Go High Level - Get Opportunities**
+
+Retrieve opportunities for a location.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-get-opportunities-001",
+  "nodeParams": {
+    "action": "get_opportunities",
+    "params": {
+      "locationId": "YOUR_LOCATION_ID"
+    }
+  }
+}
+```
+
+**Example 30: Go High Level - Get Opportunity**
+
+Retrieve a specific opportunity by ID.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-get-opportunity-001",
+  "nodeParams": {
+    "action": "get_opportunity",
+    "params": {
+      "opportunityId": "OPPORTUNITY_ID"
+    }
+  }
+}
+```
+
+**Example 31: Go High Level - Create Opportunity**
+
+Create a new opportunity.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-create-opportunity-001",
+  "nodeParams": {
+    "action": "create_opportunity",
+    "params": {
+      "locationId": "YOUR_LOCATION_ID",
+      "contactId": "CONTACT_ID",
+      "pipelineId": "PIPELINE_ID",
+      "stageId": "STAGE_ID",
+      "title": "New Sales Opportunity",
+      "monetaryValue": 5000
+    }
+  }
+}
+```
+
+**Example 32: Go High Level - Update Opportunity**
+
+Update an existing opportunity.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-update-opportunity-001",
+  "nodeParams": {
+    "action": "update_opportunity",
+    "params": {
+      "opportunityId": "OPPORTUNITY_ID",
+      "stageId": "NEW_STAGE_ID",
+      "monetaryValue": 7500
+    }
+  }
+}
+```
+
+**Example 33: Go High Level - Delete Opportunity**
+
+Delete an opportunity.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-delete-opportunity-001",
+  "nodeParams": {
+    "action": "delete_opportunity",
+    "params": {
+      "opportunityId": "OPPORTUNITY_ID"
+    }
+  }
+}
+```
+
+**Example 34: Go High Level - Get Pipelines**
+
+Retrieve all pipelines for a location.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-get-pipelines-001",
+  "nodeParams": {
+    "action": "get_pipelines",
+    "params": {
+      "locationId": "YOUR_LOCATION_ID"
+    }
+  }
+}
+```
+
+**Example 35: Go High Level - Get Pipeline**
+
+Retrieve a specific pipeline by ID.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-get-pipeline-001",
+  "nodeParams": {
+    "action": "get_pipeline",
+    "params": {
+      "pipelineId": "PIPELINE_ID"
+    }
+  }
+}
+```
+
+**Example 36: Go High Level - Get Tags**
+
+Retrieve all tags for a location.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-get-tags-001",
+  "nodeParams": {
+    "action": "get_tags",
+    "params": {
+      "locationId": "YOUR_LOCATION_ID"
+    }
+  }
+}
+```
+
+**Example 37: Go High Level - Create Tag**
+
+Create a new tag.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-create-tag-001",
+  "nodeParams": {
+    "action": "create_tag",
+    "params": {
+      "locationId": "YOUR_LOCATION_ID",
+      "name": "Important",
+      "color": "#FF0000"
+    }
+  }
+}
+```
+
+**Example 38: Go High Level - Update Tag**
+
+Update an existing tag.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-update-tag-001",
+  "nodeParams": {
+    "action": "update_tag",
+    "params": {
+      "tagId": "TAG_ID",
+      "name": "Updated Tag Name"
+    }
+  }
+}
+```
+
+**Example 39: Go High Level - Delete Tag**
+
+Delete a tag.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-delete-tag-001",
+  "nodeParams": {
+    "action": "delete_tag",
+    "params": {
+      "tagId": "TAG_ID"
+    }
+  }
+}
+```
+
+**Example 40: Go High Level - Get Notes**
+
+Retrieve notes for a location or contact.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-get-notes-001",
+  "nodeParams": {
+    "action": "get_notes",
+    "params": {
+      "locationId": "YOUR_LOCATION_ID",
+      "contactId": "CONTACT_ID"
+    }
+  }
+}
+```
+
+**Example 41: Go High Level - Create Note**
+
+Create a new note for a contact.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-create-note-001",
+  "nodeParams": {
+    "action": "create_note",
+    "params": {
+      "locationId": "YOUR_LOCATION_ID",
+      "contactId": "CONTACT_ID",
+      "body": "This is a note about the contact"
+    }
+  }
+}
+```
+
+**Example 42: Go High Level - Update Note**
+
+Update an existing note.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-update-note-001",
+  "nodeParams": {
+    "action": "update_note",
+    "params": {
+      "noteId": "NOTE_ID",
+      "body": "Updated note content"
+    }
+  }
+}
+```
+
+**Example 43: Go High Level - Delete Note**
+
+Delete a note.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-delete-note-001",
+  "nodeParams": {
+    "action": "delete_note",
+    "params": {
+      "noteId": "NOTE_ID"
+    }
+  }
+}
+```
+
+**Example 44: Go High Level - Get Tasks**
+
+Retrieve tasks for a location or contact.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-get-tasks-001",
+  "nodeParams": {
+    "action": "get_tasks",
+    "params": {
+      "locationId": "YOUR_LOCATION_ID",
+      "contactId": "CONTACT_ID"
+    }
+  }
+}
+```
+
+**Example 45: Go High Level - Create Task**
+
+Create a new task.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-create-task-001",
+  "nodeParams": {
+    "action": "create_task",
+    "params": {
+      "locationId": "YOUR_LOCATION_ID",
+      "contactId": "CONTACT_ID",
+      "title": "Follow up with client",
+      "body": "Call to discuss proposal",
+      "dueDate": "2025-01-25T10:00:00Z"
+    }
+  }
+}
+```
+
+**Example 46: Go High Level - Update Task**
+
+Update an existing task.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-update-task-001",
+  "nodeParams": {
+    "action": "update_task",
+    "params": {
+      "taskId": "TASK_ID",
+      "status": "completed"
+    }
+  }
+}
+```
+
+**Example 47: Go High Level - Delete Task**
+
+Delete a task.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-delete-task-001",
+  "nodeParams": {
+    "action": "delete_task",
+    "params": {
+      "taskId": "TASK_ID"
+    }
+  }
+}
+```
+
+**Example 48: Go High Level - Get Campaigns**
+
+Retrieve all campaigns for a location.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-get-campaigns-001",
+  "nodeParams": {
+    "action": "get_campaigns",
+    "params": {
+      "locationId": "YOUR_LOCATION_ID"
+    }
+  }
+}
+```
+
+**Example 49: Go High Level - Get Campaign**
+
+Retrieve a specific campaign by ID.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-get-campaign-001",
+  "nodeParams": {
+    "action": "get_campaign",
+    "params": {
+      "campaignId": "CAMPAIGN_ID"
+    }
+  }
+}
+```
+
+**Example 50: Go High Level - Get Locations**
+
+Retrieve all locations.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-get-locations-001",
+  "nodeParams": {
+    "action": "get_locations",
+    "params": {}
+  }
+}
+```
+
+**Example 51: Go High Level - Get Location**
+
+Retrieve a specific location by ID.
+
+```json
+{
+  "automationType": "gohighlevel",
+  "nodeId": "gohighlevel-get-location-001",
+  "nodeParams": {
+    "action": "get_location",
+    "params": {
+      "locationId": "YOUR_LOCATION_ID"
+    }
+  }
+}
+```
+
+### Third-Party Documentation
+
+- [https://highlevel.stoplight.io/](https://highlevel.stoplight.io/)
+- [https://highlevel.stoplight.io/docs/integrations](https://highlevel.stoplight.io/docs/integrations)

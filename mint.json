@@ -112,6 +112,8 @@
               "group": "Attribution",
               "pages": [
                 "the-platform/integrations/attribution/cometly",
+                "the-platform/integrations/attribution/meta",
+                "the-platform/integrations/attribution/retreaver",
                 "the-platform/integrations/attribution/ringba"
               ]
             },
@@ -133,36 +135,55 @@
               "group": "Calendars",
               "pages": [
                 "the-platform/integrations/calendars/cal-com",
+                "the-platform/integrations/calendars/calendly",
                 "the-platform/integrations/calendars/google-calendar"
               ]
             },
             {
               "group": "CRM",
               "pages": [
+                "the-platform/integrations/crm/checkoutchamp",
+                "the-platform/integrations/crm/followupboss",
+                "the-platform/integrations/crm/gohighlevel",
+                "the-platform/integrations/crm/housecallpro",
                 "the-platform/integrations/crm/hubspot",
                 "the-platform/integrations/crm/salesforce",
-                "the-platform/integrations/crm/zoho-crm"
+                "the-platform/integrations/crm/servicebridge",
+                "the-platform/integrations/crm/zoho"
               ]
             },
             {
               "group": "Data",
               "pages": [
+                "the-platform/integrations/data/airtable",
+                "the-platform/integrations/data/enformion",
+                "the-platform/integrations/data/firecrawl-web-scraper",
                 "the-platform/integrations/data/fullcontact",
-                "the-platform/integrations/data/people-data-labs"
+                "the-platform/integrations/data/people-data-labs",
+                "the-platform/integrations/data/proxy-api-request"
               ]
             },
             {
               "group": "Documents",
               "pages": [
+                "the-platform/integrations/documents/docusign",
                 "the-platform/integrations/documents/google-drive",
-                "the-platform/integrations/documents/google-sheets"
+                "the-platform/integrations/documents/google-sheets",
+                "the-platform/integrations/documents/pandadoc"
               ]
             },
             {
               "group": "Messaging",
               "pages": [
+                "the-platform/integrations/messaging/klaviyo",
                 "the-platform/integrations/messaging/microsoft-teams",
                 "the-platform/integrations/messaging/slack"
+              ]
+            },
+            {
+              "group": "Payments",
+              "pages": [
+                "the-platform/integrations/payments/stripe"
               ]
             },
             {
@@ -178,9 +199,10 @@
             {
               "group": "Validation",
               "pages": [
-                "the-platform/integrations/validation/blacklist-allience",
+                "the-platform/integrations/validation/blacklist-alliance",
                 "the-platform/integrations/validation/ipqualityscore",
-                "the-platform/integrations/validation/reassigned-numbers-db-rnd"
+                "the-platform/integrations/validation/reassigned-numbers-db-rnd",
+                "the-platform/integrations/validation/trestleiq"
               ]
             },
             {

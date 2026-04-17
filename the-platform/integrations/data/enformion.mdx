@@ -1,0 +1,1215 @@
+---
+title: "Enformion"
+description: "Identity, contact, and public-records data via the EnformionGO API"
+---
+
+## Overview
+
+Identity, contact, and public-records data via the EnformionGO API. Call actions with `automationType`, `action`, and `params` from any workflow node that supports automations.
+
+## Authentication
+
+- EnformionGO credentials (AP Name and AP Password).
+
+## Available Actions
+
+Click any action to jump to its example payload.
+
+
+**Alerts**
+
+- [Count Alerts](#enformion-count-alert)
+- [Get Alerts](#enformion-get-alert)
+
+**Business**
+
+- [Business Search](#enformion-business-search)
+- [Combined Business Search](#enformion-combined-business-search)
+- [Combined Business Teaser](#enformion-combined-business-teaser)
+- [FEIN Search](#enformion-fein-search)
+- [Workplace Search](#enformion-workplace-search)
+
+**Compliance**
+
+- [OFAC Search](#enformion-ofac-search)
+
+**Criminal**
+
+- [Criminal Search](#enformion-criminal-search)
+- [Criminal Watch Add](#enformion-crim-watch-add)
+- [Incarceration Search](#enformion-incarceration-search)
+
+**Enrichment**
+
+- [Contact Enrichment](#enformion-contact-enrichment)
+- Contact Enrichment Plus
+
+**Financial**
+
+- [Debt Search](#enformion-debt-search)
+
+**Identity**
+
+- Address Autocomplete
+- Address ID
+- Business ID
+- Caller ID
+- Caller ID Plus
+- Contact ID
+- Contact ID Plus
+- [Electronic Identity Verification](#enformion-eidv)
+- Email ID
+- LinkedIn ID
+
+**License**
+
+- [Professional License Search](#enformion-professional-license-search)
+
+**Person**
+
+- [Person Search](#enformion-person-search)
+- [SSN Address Trace](#enformion-ssn-address-trace)
+
+**Phone**
+
+- [Reverse Phone Search](#enformion-reverse-phone-search)
+
+**Property**
+
+- [Pre-Foreclosure Search](#enformion-pre-foreclosure-search)
+
+**Records**
+
+- [Divorce Search](#enformion-divorce-search)
+- [Eviction Search](#enformion-eviction-search)
+
+**Subscriptions**
+
+- [Add Subscription](#enformion-add-subscription)
+- [Get Subscription](#enformion-get-subscription)
+- [Remove Subscription](#enformion-remove-subscription)
+
+**Vehicle**
+
+- [Auto Search](#enformion-auto-search)
+- [Vehicle Ownership](#enformion-vehicle-ownership)
+
+## Examples
+
+<a id="enformion-person-search"></a>
+#### Example 1: Person Search
+
+Galaxy path: /PersonSearch | search-type: Person
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "person_search",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "FirstName": "John",
+      "LastName": "Smith",
+      "Dob": "",
+      "Ssn": "",
+      "Email": "",
+      "Phone": "",
+      "Addresses": [],
+      "TahoeIds": [],
+      "Includes": [],
+      "FilterOptions": [],
+      "Page": 1,
+      "ResultsPerPage": 5
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-ssn-address-trace"></a>
+#### Example 2: SSN Address Trace
+
+Galaxy path: /SsnAddressTraceSearch | search-type: SsnAddressTraceSearch
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "ssn_address_trace",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "SSN": "",
+      "FirstName": "",
+      "LastName": "",
+      "MiddleName": "",
+      "DOB": "",
+      "FilterOptions": [],
+      "YearsBack": 0,
+      "Page": 1,
+      "ResultsPerPage": 5
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-comprehensive-report"></a>
+#### Example 3: Comprehensive Report
+
+Galaxy path: /PersonSearch (search-type: BackgroundReport)
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "comprehensive_report",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "FirstName": "John",
+      "LastName": "Smith",
+      "Dob": "",
+      "Addresses": [],
+      "Includes": [],
+      "FilterOptions": [],
+      "Page": 1,
+      "ResultsPerPage": 5
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-eidv"></a>
+#### Example 4: eIDV
+
+Galaxy path: /IdvAuth/Person | search-type: IdvAuthPerson
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "eidv",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "FirstName": "John",
+      "LastName": "Smith",
+      "Ssn": "",
+      "Dob": "",
+      "AddressLine1": "",
+      "AddressLine2": "",
+      "Phone": "",
+      "Email": "",
+      "City": "",
+      "State": "",
+      "Zip": "",
+      "DriverLicense": "",
+      "Includes": [],
+      "FilterOptions": []
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-census-search"></a>
+#### Example 5: Census Search
+
+Galaxy path: /CensusSearch | search-type: Census
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "census_search",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "FirstName": "John",
+      "LastName": "Smith",
+      "State": "CA",
+      "Page": 1,
+      "ResultsPerPage": 5
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-debt-search"></a>
+#### Example 6: Debt Search (v2)
+
+Galaxy path: /DebtSearch/V2 | search-type: DebtV2
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "debt_search",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "FirstName": "John",
+      "LastName": "Smith",
+      "AddressLine1": "",
+      "AddressLine2": "",
+      "Page": 1,
+      "ResultsPerPage": 5
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-divorce-search"></a>
+#### Example 7: Divorce Search
+
+Galaxy path: /DivorceSearch | search-type: Divorce
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "divorce_search",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "FirstName": "John",
+      "LastName": "Smith",
+      "State": "CA",
+      "Page": 1,
+      "ResultsPerPage": 5
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-reverse-phone-search"></a>
+#### Example 8: Reverse Phone Search
+
+Galaxy path: /ReversePhoneSearch | search-type: ReversePhone
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "reverse_phone_search",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "Phone": "9165551234",
+      "Page": 1,
+      "ResultsPerPage": 5
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-business-search"></a>
+#### Example 9: Business Search
+
+Galaxy path: /BusinessV2Search | search-type: Business
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "business_search",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "businessName": "Acme",
+      "firstName": "",
+      "lastName": "",
+      "addressLine1": "",
+      "addressLine2": "",
+      "county": "",
+      "poseidonId": "",
+      "tahoeId": "",
+      "taxId": "",
+      "ssn": "",
+      "businessType": "",
+      "Page": 1,
+      "ResultsPerPage": 5
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-domain-search"></a>
+#### Example 10: Domain Search
+
+Galaxy path: /DomainSearch | search-type: Domain
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "domain_search",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "DomainName": "google.com",
+      "Page": 1,
+      "ResultsPerPage": 5
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-fein-search"></a>
+#### Example 11: FEIN Search
+
+Galaxy path: /FeinSearch | search-type: Fein
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "fein_search",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "BusinessName": "Acme",
+      "Page": 1,
+      "ResultsPerPage": 5
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-workplace-search"></a>
+#### Example 12: Workplace Search
+
+Galaxy path: /WorkplaceSearch | search-type: Workplace
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "workplace_search",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "FirstName": "John",
+      "LastName": "Smith",
+      "BusinessName": "",
+      "State": "",
+      "Industry": "",
+      "ResultsPerPage": 5
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-criminal-search"></a>
+#### Example 13: Criminal Search (v2)
+
+Galaxy path: /CriminalSearch/V2 | search-type: CriminalV2
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "criminal_search",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "FirstName": "John",
+      "LastName": "Smith",
+      "CategoryTypes": "ALL",
+      "Page": 1,
+      "ResultsPerPage": 5
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-eviction-search"></a>
+#### Example 14: Eviction Search
+
+Galaxy path: /EvictionSearch | search-type: EvictionSearch. Galaxy expects DefendantFirstName/DefendantLastName; FirstName/LastName are auto-mapped when defendant fields omitted.
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "eviction_search",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "FirstName": "John",
+      "LastName": "Smith",
+      "Page": 1,
+      "ResultsPerPage": 5
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-pre-foreclosure-search"></a>
+#### Example 15: Pre-Foreclosure Search
+
+Galaxy path: /ForeclosureV2Search | search-type: ForeclosureV2Search
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "pre_foreclosure_search",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "FirstName": "John",
+      "LastName": "Smith",
+      "AddressLine1": "",
+      "AddressLine2": "",
+      "City": "",
+      "State": "",
+      "SSN": "",
+      "Page": 1,
+      "ResultsPerPage": 5
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-ofac-search"></a>
+#### Example 16: OFAC Search
+
+Galaxy path: /OFACSearch | search-type: OFAC
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "ofac_search",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "PersonName": "John Smith",
+      "EntityName": "",
+      "Includes": [],
+      "Page": 1,
+      "ResultsPerPage": 20
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-vehicle-ownership"></a>
+#### Example 17: Vehicle Ownership
+
+Galaxy path: /VehicleRegistrationSearch | search-type: VehicleRegistration
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "vehicle_ownership",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "FirstName": "John",
+      "LastName": "Smith",
+      "VIN": "",
+      "LicensePlateNumber": "",
+      "LicensePlateState": "",
+      "AddressLine1": "",
+      "City": "",
+      "State": "",
+      "Page": 1,
+      "ResultsPerPage": 5
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-dea-search"></a>
+#### Example 18: DEA Search
+
+Galaxy path: /deasearch | search-type: Dea
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "dea_search",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "FirstName": "John",
+      "LastName": "Smith",
+      "BusinessName": "",
+      "DeaNumber": "",
+      "City": "",
+      "State": "",
+      "Page": 1,
+      "ResultsPerPage": 5
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-professional-license-search"></a>
+#### Example 19: Professional License Search
+
+Galaxy path: /ProLicenseSearch | search-type: ProLicense
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "professional_license_search",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "FirstName": "John",
+      "LastName": "Smith",
+      "State": "CA",
+      "Page": 1,
+      "ResultsPerPage": 5
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-incarceration-search"></a>
+#### Example 20: Incarceration Search
+
+Galaxy path: /IncarcerationSearch | search-type: IncarcerationSearch. When searching by name, Galaxy requires Dob (or DOB). Empty string params are stripped.
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "incarceration_search",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "FirstName": "John",
+      "LastName": "Smith",
+      "Dob": "1980-01-15",
+      "Page": 1,
+      "ResultsPerPage": 5
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-marriage-search"></a>
+#### Example 21: Marriage Search
+
+Galaxy path: /MarriageSearch | search-type: Marriage
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "marriage_search",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "FirstName": "John",
+      "LastName": "Smith",
+      "State": "CA",
+      "Page": 1,
+      "ResultsPerPage": 5
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-property-search"></a>
+#### Example 22: Property Search
+
+Galaxy path: /PropertyV2Search | search-type: PropertyV2
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "property_search",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "FirstName": "John",
+      "LastName": "Smith",
+      "AddressLine1": "",
+      "AddressLine2": "",
+      "Apn": "",
+      "TahoeId": "",
+      "PoseidonIds": "",
+      "Ssn": "",
+      "BusinessName": "",
+      "Page": 1,
+      "ResultsPerPage": 5
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-auto-search"></a>
+#### Example 23: Auto Search
+
+Galaxy path: /AutoSearch | search-type: Auto
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "auto_search",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "firstName": "John",
+      "lastName": "Smith",
+      "state": "CA",
+      "vin": "",
+      "licensePlateNumber": "",
+      "licensePlateState": "",
+      "page": 1,
+      "resultsPerPage": 5
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-crim-watch-add"></a>
+#### Example 24: Crim Watch — Add
+
+Galaxy path: search.enformion.com/api/search/AddIncarcerationWatch | search-type: CrimWatchAdd
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "crim_watch_add",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "FirstName": "John",
+      "LastName": "Smith",
+      "Ssn": "",
+      "Dob": "",
+      "DriverLicenseNumber": "",
+      "ReferenceTag": ""
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-crim-watch-cancel"></a>
+#### Example 25: Crim Watch — Cancel
+
+Galaxy path: search.enformion.com/api/search/CancelIncarcerationWatch | search-type: CrimWatchCancel
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "crim_watch_cancel",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "FirstName": "John",
+      "LastName": "Smith",
+      "Ssn": "",
+      "Dob": ""
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-crim-watch-check"></a>
+#### Example 26: Crim Watch — Check
+
+Galaxy path: search.enformion.com/api/search/CheckIncarcerationWatch | search-type: CrimWatchCheck
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "crim_watch_check",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "FirstName": "John",
+      "LastName": "Smith",
+      "Ssn": "",
+      "Dob": ""
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-kba-generate"></a>
+#### Example 27: KBA Generate (Step 1)
+
+Galaxy path: /eIDV/eKbaCompQ/eKBAIDV | search-type: KBAGenerate
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "kba_generate",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "Service": "ServiceA",
+      "FirstName": "John",
+      "LastName": "Smith",
+      "Dob": "01/15/1980",
+      "AddressLine1": "123 Main St",
+      "City": "Sacramento",
+      "State": "CA",
+      "Zip": "95814",
+      "Phone": "5551234567",
+      "Ssn": "1234"
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-kba-answer"></a>
+#### Example 28: KBA Answer (Step 2)
+
+Galaxy path: /eIDV/eKbaCompQ/eKBA | search-type: KBAAnswer
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "kba_answer",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "CorrelationId": "<from-kba-generate-response>",
+      "QuestionAnswers": [
+        {
+          "Id": "college1",
+          "Value": "None of the above"
+        },
+        {
+          "Id": "streetname3",
+          "Value": "MAIN"
+        }
+      ]
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-add-subscription"></a>
+#### Example 29: Add Subscription
+
+Galaxy path: /DataAlerts/AddSubscription | search-type: DataAlertsAddSubscription
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "add_subscription",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "clientId": "your-client-id",
+      "alertType": "NewBestPublicAddress",
+      "tahoeIds": [
+        "G-XXXXXXXXXXXXXXXXXX1"
+      ]
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-get-subscription"></a>
+#### Example 30: Get Subscription
+
+Galaxy path: /DataAlerts/GetSubscription | search-type: DataAlertsGetSubscription
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_subscription",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "clientId": "your-client-id",
+      "alertType": "NewBestPublicAddress",
+      "tahoeIds": [
+        "G-XXXXXXXXXXXXXXXXXX1"
+      ]
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-remove-subscription"></a>
+#### Example 31: Remove Subscription
+
+Galaxy path: /DataAlerts/RemoveSubscription | search-type: DataAlertsRemoveSubscription
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "remove_subscription",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "clientId": "your-client-id",
+      "alertType": "NewBestPublicAddress",
+      "tahoeIds": [
+        "G-XXXXXXXXXXXXXXXXXX1"
+      ]
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-get-alert"></a>
+#### Example 32: Get Alert
+
+Galaxy path: /DataAlerts/GetAlert | search-type: DataAlertsGetAlert
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "get_alert",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "clientId": "your-client-id",
+      "alertType": "NewBestPublicAddress",
+      "tahoeIds": [
+        "G-XXXXXXXXXXXXXXXXXX1"
+      ]
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-count-alert"></a>
+#### Example 33: Count Alert
+
+Galaxy path: /DataAlerts/CountAlert | search-type: DataAlertsCountAlert
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "count_alert",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "clientId": "your-client-id",
+      "alertType": "NewBestPublicAddress",
+      "tahoeIds": [
+        "G-XXXXXXXXXXXXXXXXXX1"
+      ]
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-combined-business-teaser"></a>
+#### Example 34: Combined Business Teaser
+
+Galaxy path: /CombinedBusinessTeaser | search-type: CombinedBusinessTeaser
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "combined_business_teaser",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "EntityName": "Acme Corp",
+      "PersonName": "",
+      "Page": 1,
+      "ResultsPerPage": 5
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-combined-business-search"></a>
+#### Example 35: Combined Business Search
+
+Galaxy path: /CombinedBusinessSearch | search-type: CombinedBusinessSearch
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "combined_business_search",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "businessName": "Acme Corp",
+      "poseidonId": "",
+      "tahoeId": "",
+      "ssn": "",
+      "taxId": "",
+      "phone": "",
+      "email": "",
+      "Page": 1,
+      "ResultsPerPage": 5
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-contact-enrichment"></a>
+#### Example 36: Contact Enrichment
+
+Galaxy path: /ContactEnrich | search-type: DevAPIContactEnrich
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "contact_enrichment",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "FirstName": "John",
+      "LastName": "Smith",
+      "MiddleName": "",
+      "Dob": "",
+      "Address": {
+        "addressLine1": "",
+        "addressLine2": ""
+      },
+      "Phone": "",
+      "Email": ""
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-verify-email"></a>
+#### Example 37: Verify Email
+
+Galaxy path: /VerifyEmail | search-type: VerifyEmail
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "verify_email",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "Email": "test@example.com"
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-eleadverify"></a>
+#### Example 38: eLeadVerify
+
+Galaxy path: /LeadVerify | search-type: IdvAuthPerson
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "eleadverify",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "FirstName": "John",
+      "LastName": "Smith",
+      "Ssn": "",
+      "Dob": "",
+      "AddressLine1": "",
+      "AddressLine2": "",
+      "City": "",
+      "State": "",
+      "Zip": "",
+      "Email": "",
+      "Phone": "",
+      "DriverLicense": ""
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-consumer-insights"></a>
+#### Example 39: Consumer Insights
+
+Galaxy path: /ConsumerInsights | search-type: ConsumerProfileSearch
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "consumer_insights",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "FirstName": "John",
+      "LastName": "Smith",
+      "Dob": "",
+      "Ssn": "",
+      "Email": "",
+      "Phone": "",
+      "TahoeIds": [],
+      "categoryType": 0
+    }
+  }
+}
+```
+
+---
+
+<a id="enformion-eprefill"></a>
+#### Example 40: ePreFill
+
+Galaxy path: /ePreFill | search-type: eIDVePrefillPerson
+
+```json
+{
+  "automationType": "enformion",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "eprefill",
+    "params": {
+      "apName": "YOUR_ENFORMION_AP_NAME",
+      "apPassword": "YOUR_ENFORMION_AP_PASSWORD",
+      "FirstName": "John",
+      "LastName": "Smith",
+      "Dob": "",
+      "AddressLine1": "",
+      "AddressLine2": "",
+      "City": "",
+      "State": "",
+      "Zip": "",
+      "Email": "",
+      "Phone": ""
+    }
+  }
+}
+```
+
+## Third-Party Documentation
+
+- [https://docs.enformion.com/](https://docs.enformion.com/)

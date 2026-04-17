@@ -1,0 +1,3650 @@
+---
+title: "Follow Up Boss"
+description: "Manage leads, contacts, deals, and conversations in Follow Up Boss"
+---
+
+## Overview
+
+Manage leads, contacts, deals, and conversations in Follow Up Boss. Call actions with `automationType`, `action`, and `params` from any workflow node that supports automations.
+
+## Authentication
+
+- Follow Up Boss API Key (per-account).
+
+## Available Actions
+
+Click any action to jump to its example payload.
+
+
+**Action-Plans**
+
+- [Update Action Plan Person](#followupboss-update-action-plan-person)
+
+**Appointments**
+
+- [Create Appointment](#followupboss-create-appointment)
+- [Create Appointment Type](#followupboss-create-appointment-type)
+- [Delete Appointment](#followupboss-delete-appointment)
+- [Delete Appointment Type](#followupboss-delete-appointment-type)
+- [Get Appointment Outcome by ID](#followupboss-get-appointment-outcome-by-id)
+- [Get Appointment Outcomes](#followupboss-get-appointment-outcomes)
+- [Get Appointment Type by ID](#followupboss-get-appointment-type-by-id)
+- [Get Appointment Types](#followupboss-get-appointment-types)
+- [Get Appointment by ID](#followupboss-get-appointment-by-id)
+- [Get Appointments](#followupboss-get-appointments)
+- [Update Appointment](#followupboss-update-appointment)
+- [Update Appointment Type](#followupboss-update-appointment-type)
+
+**Attachments**
+
+- [Create Person Attachment](#followupboss-create-person-attachment)
+- [Delete Person Attachment](#followupboss-delete-person-attachment)
+- [Get Person Attachment by ID](#followupboss-get-person-attachment-by-id)
+
+**Automations**
+
+- [Create Automation Person](#followupboss-create-automation-person)
+- [Get Automation Person by ID](#followupboss-get-automation-person-by-id)
+- [Get Automation by ID](#followupboss-get-automation-by-id)
+- [Get Automations](#followupboss-get-automations)
+- [Update Automation Person](#followupboss-update-automation-person)
+
+**Calls**
+
+- [Create Call](#followupboss-create-call)
+- [Get Calls](#followupboss-get-calls)
+- [Update Call](#followupboss-update-call)
+
+**Custom-Fields**
+
+- [Create Custom Field](#followupboss-create-custom-field)
+- [Delete Custom Field](#followupboss-delete-custom-field)
+- [Get Custom Field by ID](#followupboss-get-custom-field-by-id)
+- [Get Custom Fields](#followupboss-get-custom-fields)
+
+**Deals**
+
+- [Create Deal](#followupboss-create-deal)
+- [Create Deal Attachment](#followupboss-create-deal-attachment)
+- [Delete Deal Attachment](#followupboss-delete-deal-attachment)
+- [Delete Deal Custom Field](#followupboss-delete-deal-custom-field)
+- [Get Deal Attachment by ID](#followupboss-get-deal-attachment-by-id)
+- [Get Deal Custom Fields](#followupboss-get-deal-custom-fields)
+- [Get Deal by ID](#followupboss-get-deal-by-id)
+- [Update Deal](#followupboss-update-deal)
+- [Update Deal Custom Field](#followupboss-update-deal-custom-field)
+
+**Email-Marketing**
+
+- [Create Email Marketing Campaign](#followupboss-create-em-campaign)
+- [Create Email Marketing Event](#followupboss-create-em-event)
+- [Update Email Marketing Campaign](#followupboss-update-em-campaign)
+
+**Events**
+
+- [Create Event](#followupboss-create-event)
+
+**Groups**
+
+- [Create Group](#followupboss-create-group)
+- [Delete Group](#followupboss-delete-group)
+- [Get Group by ID](#followupboss-get-group-by-id)
+- [Get Groups](#followupboss-get-groups)
+- [Get Round Robin](#followupboss-get-round-robin)
+
+**Inbox**
+
+- [Add Message](#followupboss-add-message)
+- [Add Note](#followupboss-add-note)
+- [Deactivate Inbox App](#followupboss-deactivate-inbox-app)
+- [Get Installed Inbox Apps](#followupboss-get-installed-inbox-apps)
+- [Get Participants](#followupboss-get-participants)
+- [Install Inbox App](#followupboss-install-inbox-app)
+- [Update Conversation](#followupboss-update-conversation)
+- [Update Message](#followupboss-update-message)
+
+**Misc**
+
+- [Create Reaction](#followupboss-create-reaction)
+- [Delete Reaction](#followupboss-delete-reaction)
+- [Get Identity](#followupboss-get-identity)
+- [Get Reaction by ID](#followupboss-get-reaction-by-id)
+- [Get Timeframes](#followupboss-get-timeframes)
+
+**Notes**
+
+- [Create Note](#followupboss-create-note)
+- [Delete Note](#followupboss-delete-note)
+- [Get Note by ID](#followupboss-get-note-by-id)
+- [Update Note](#followupboss-update-note)
+
+**People**
+
+- [Claim Person](#followupboss-claim-person)
+- [Create Person](#followupboss-create-person)
+- [Delete Person](#followupboss-delete-person)
+- [Get Person by ID](#followupboss-get-person-by-id)
+- [Get Unclaimed](#followupboss-get-unclaimed)
+- [Ignore Unclaimed](#followupboss-ignore-unclaimed)
+- [Update Person](#followupboss-update-person)
+
+**Pipelines**
+
+- [Create Pipeline](#followupboss-create-pipeline)
+- [Delete Pipeline](#followupboss-delete-pipeline)
+- [Get Pipelines](#followupboss-get-pipelines)
+- [Update Pipeline](#followupboss-update-pipeline)
+
+**Ponds**
+
+- [Create Pond](#followupboss-create-pond)
+- [Delete Pond](#followupboss-delete-pond)
+- [Get Pond by ID](#followupboss-get-pond-by-id)
+- [Get Ponds](#followupboss-get-ponds)
+- [Update Pond](#followupboss-update-pond)
+
+**Relationships**
+
+- [Create People Relationship](#followupboss-create-people-relationship)
+- [Delete People Relationship](#followupboss-delete-people-relationship)
+- [Get People Relationship by ID](#followupboss-get-people-relationship-by-id)
+- [Get People Relationships](#followupboss-get-people-relationships)
+
+**Smart-Lists**
+
+- [Get Smart List by ID](#followupboss-get-smart-list-by-id)
+- [Get Smart Lists](#followupboss-get-smart-lists)
+
+**Stages**
+
+- [Create Stage](#followupboss-create-stage)
+- [Delete Stage](#followupboss-delete-stage)
+- [Get Stages](#followupboss-get-stages)
+
+**Tasks**
+
+- [Create Task](#followupboss-create-task)
+- [Delete Task](#followupboss-delete-task)
+- [Get Task by ID](#followupboss-get-task-by-id)
+- [Get Tasks](#followupboss-get-tasks)
+- [Update Task](#followupboss-update-task)
+
+**Teams**
+
+- [Delete Team](#followupboss-delete-team)
+- [Get Team Inboxes](#followupboss-get-team-inboxes)
+- [Get Team by ID](#followupboss-get-team-by-id)
+- [Update Team](#followupboss-update-team)
+
+**Templates**
+
+- [Create Template](#followupboss-create-template)
+- [Create Text Message Template](#followupboss-create-text-message-template)
+- [Delete Template](#followupboss-delete-template)
+- [Delete Text Message Template](#followupboss-delete-text-message-template)
+- [Get Template by ID](#followupboss-get-template-by-id)
+- [Get Templates](#followupboss-get-templates)
+- [Get Text Message Templates](#followupboss-get-text-message-templates)
+- [Merge Template](#followupboss-merge-template)
+- [Merge Text Message Template](#followupboss-merge-text-message-template)
+- [Update Template](#followupboss-update-template)
+
+**Text-Messages**
+
+- [Create Text Message](#followupboss-create-text-message)
+- [Get Text Message by ID](#followupboss-get-text-message-by-id)
+- [Get Text Messages](#followupboss-get-text-messages)
+
+**Users**
+
+- [Get Me](#followupboss-get-me)
+- [Get User by ID](#followupboss-get-user-by-id)
+- [Get Users](#followupboss-get-users)
+
+**Webhooks**
+
+- [Create Webhook](#followupboss-create-webhook)
+- [Delete Webhook](#followupboss-delete-webhook)
+- [Get Webhook Event by ID](#followupboss-get-webhook-event-by-id)
+- [Get Webhook by ID](#followupboss-get-webhook-by-id)
+- [Get Webhooks](#followupboss-get-webhooks)
+- [Update Webhook](#followupboss-update-webhook)
+
+## Examples
+
+<a id="followupboss-get-people"></a>
+#### Example 1: Follow Up Boss: Get People
+
+Retrieve a list of people with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-people-001",
+  "nodeParams": {
+    "action": "get_people",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "limit": 10,
+        "offset": 0,
+        "sort": "created"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-person"></a>
+#### Example 2: Follow Up Boss: Create Person
+
+Create a new person/contact
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-person-001",
+  "nodeParams": {
+    "action": "create_person",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "firstName": "John",
+        "lastName": "Doe",
+        "emails": [
+          {
+            "value": "john.doe@example.com",
+            "type": "home"
+          }
+        ],
+        "phones": [
+          {
+            "value": "(555) 555-1234",
+            "type": "mobile"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-events"></a>
+#### Example 3: Follow Up Boss: Get Events
+
+Retrieve events with optional filtering
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-events-001",
+  "nodeParams": {
+    "action": "get_events",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "limit": 10,
+        "type": "Property Inquiry"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-event"></a>
+#### Example 4: Follow Up Boss: Create Event
+
+Create a new event/lead
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-event-001",
+  "nodeParams": {
+    "action": "create_event",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "source": "Website",
+        "system": "MyWebsite",
+        "type": "Property Inquiry",
+        "message": "Interested in property at 123 Main St",
+        "person": {
+          "firstName": "Jane",
+          "lastName": "Smith",
+          "emails": [
+            {
+              "value": "jane.smith@example.com"
+            }
+          ],
+          "phones": [
+            {
+              "value": "(555) 555-5678"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-deals"></a>
+#### Example 5: Follow Up Boss: Get Deals
+
+Retrieve deals with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-deals-001",
+  "nodeParams": {
+    "action": "get_deals",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "limit": 10,
+        "sort": "created"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-deal"></a>
+#### Example 6: Follow Up Boss: Create Deal
+
+Create a new deal
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-deal-001",
+  "nodeParams": {
+    "action": "create_deal",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "personId": 123,
+        "propertyId": 456,
+        "price": 500000
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-tasks"></a>
+#### Example 7: Follow Up Boss: Get Tasks
+
+Retrieve tasks with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-tasks-001",
+  "nodeParams": {
+    "action": "get_tasks",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "limit": 10,
+        "personId": 123
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-task"></a>
+#### Example 8: Follow Up Boss: Create Task
+
+Create a new task
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-task-001",
+  "nodeParams": {
+    "action": "create_task",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "personId": 123,
+        "type": "Call",
+        "dueDate": "2024-12-31",
+        "description": "Follow up on property inquiry"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-event-by-id"></a>
+#### Example 9: Follow Up Boss: Get Event by ID
+
+Retrieve a specific event by its ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-event-by-id-001",
+  "nodeParams": {
+    "action": "get_event_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-person-by-id"></a>
+#### Example 10: Follow Up Boss: Get Person by ID
+
+Retrieve a specific person by their ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-person-by-id-001",
+  "nodeParams": {
+    "action": "get_person_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-update-person"></a>
+#### Example 11: Follow Up Boss: Update Person
+
+Update an existing person
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-update-person-001",
+  "nodeParams": {
+    "action": "update_person",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123,
+      "body": {
+        "firstName": "Jane",
+        "lastName": "Smith",
+        "emails": [
+          {
+            "value": "jane.smith@example.com",
+            "type": "home"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-delete-person"></a>
+#### Example 12: Follow Up Boss: Delete Person
+
+Delete a person by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-delete-person-001",
+  "nodeParams": {
+    "action": "delete_person",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-check-duplicate"></a>
+#### Example 13: Follow Up Boss: Check Duplicate
+
+Check for duplicate people
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-check-duplicate-001",
+  "nodeParams": {
+    "action": "check_duplicate",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "email": "john.doe@example.com"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-unclaimed"></a>
+#### Example 14: Follow Up Boss: Get Unclaimed
+
+Retrieve unclaimed people
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-unclaimed-001",
+  "nodeParams": {
+    "action": "get_unclaimed",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "limit": 10
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-claim-person"></a>
+#### Example 15: Follow Up Boss: Claim Person
+
+Claim an unclaimed person
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-claim-person-001",
+  "nodeParams": {
+    "action": "claim_person",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "personId": 123,
+        "userId": 456
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-ignore-unclaimed"></a>
+#### Example 16: Follow Up Boss: Ignore Unclaimed
+
+Ignore an unclaimed person
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-ignore-unclaimed-001",
+  "nodeParams": {
+    "action": "ignore_unclaimed",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "personId": 123
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-people-relationships"></a>
+#### Example 17: Follow Up Boss: Get People Relationships
+
+Retrieve people relationships
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-people-relationships-001",
+  "nodeParams": {
+    "action": "get_people_relationships",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "limit": 10
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-people-relationship-by-id"></a>
+#### Example 18: Follow Up Boss: Get People Relationship by ID
+
+Retrieve a specific relationship by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-people-relationship-by-id-001",
+  "nodeParams": {
+    "action": "get_people_relationship_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-people-relationship"></a>
+#### Example 19: Follow Up Boss: Create People Relationship
+
+Create a new people relationship
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-people-relationship-001",
+  "nodeParams": {
+    "action": "create_people_relationship",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "personId": 123,
+        "relatedPersonId": 456,
+        "type": "Spouse"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-update-people-relationship"></a>
+#### Example 20: Follow Up Boss: Update People Relationship
+
+Update an existing people relationship
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-update-people-relationship-001",
+  "nodeParams": {
+    "action": "update_people_relationship",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123,
+      "body": {
+        "type": "Partner"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-delete-people-relationship"></a>
+#### Example 21: Follow Up Boss: Delete People Relationship
+
+Delete a people relationship
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-delete-people-relationship-001",
+  "nodeParams": {
+    "action": "delete_people_relationship",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-person-attachment"></a>
+#### Example 22: Follow Up Boss: Create Person Attachment
+
+Create a new attachment for a person
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-person-attachment-001",
+  "nodeParams": {
+    "action": "create_person_attachment",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "personId": 123,
+        "name": "Document.pdf",
+        "url": "https://example.com/document.pdf"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-person-attachment-by-id"></a>
+#### Example 23: Follow Up Boss: Get Person Attachment by ID
+
+Retrieve a specific person attachment by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-person-attachment-by-id-001",
+  "nodeParams": {
+    "action": "get_person_attachment_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-update-person-attachment"></a>
+#### Example 24: Follow Up Boss: Update Person Attachment
+
+Update an existing person attachment
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-update-person-attachment-001",
+  "nodeParams": {
+    "action": "update_person_attachment",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123,
+      "body": {
+        "name": "Updated Document.pdf"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-delete-person-attachment"></a>
+#### Example 25: Follow Up Boss: Delete Person Attachment
+
+Delete a person attachment
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-delete-person-attachment-001",
+  "nodeParams": {
+    "action": "delete_person_attachment",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-note"></a>
+#### Example 26: Follow Up Boss: Create Note
+
+Create a new note for a person
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-note-001",
+  "nodeParams": {
+    "action": "create_note",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "personId": 123,
+        "body": "Follow up call completed"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-note-by-id"></a>
+#### Example 27: Follow Up Boss: Get Note by ID
+
+Retrieve a specific note by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-note-by-id-001",
+  "nodeParams": {
+    "action": "get_note_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-update-note"></a>
+#### Example 28: Follow Up Boss: Update Note
+
+Update an existing note
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-update-note-001",
+  "nodeParams": {
+    "action": "update_note",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123,
+      "body": {
+        "body": "Updated note content"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-delete-note"></a>
+#### Example 29: Follow Up Boss: Delete Note
+
+Delete a note
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-delete-note-001",
+  "nodeParams": {
+    "action": "delete_note",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-calls"></a>
+#### Example 30: Follow Up Boss: Get Calls
+
+Retrieve calls with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-calls-001",
+  "nodeParams": {
+    "action": "get_calls",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "limit": 10,
+        "personId": 123
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-call-by-id"></a>
+#### Example 31: Follow Up Boss: Get Call by ID
+
+Retrieve a specific call by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-call-by-id-001",
+  "nodeParams": {
+    "action": "get_call_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-call"></a>
+#### Example 32: Follow Up Boss: Create Call
+
+Create a new call record
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-call-001",
+  "nodeParams": {
+    "action": "create_call",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "personId": 123,
+        "duration": 300,
+        "direction": "outbound"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-update-call"></a>
+#### Example 33: Follow Up Boss: Update Call
+
+Update an existing call
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-update-call-001",
+  "nodeParams": {
+    "action": "update_call",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123,
+      "body": {
+        "duration": 450
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-text-messages"></a>
+#### Example 34: Follow Up Boss: Get Text Messages
+
+Retrieve text messages with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-text-messages-001",
+  "nodeParams": {
+    "action": "get_text_messages",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "limit": 10,
+        "personId": 123
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-text-message-by-id"></a>
+#### Example 35: Follow Up Boss: Get Text Message by ID
+
+Retrieve a specific text message by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-text-message-by-id-001",
+  "nodeParams": {
+    "action": "get_text_message_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-text-message"></a>
+#### Example 36: Follow Up Boss: Create Text Message
+
+Create a new text message
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-text-message-001",
+  "nodeParams": {
+    "action": "create_text_message",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "personId": 123,
+        "body": "Hello, this is a test message",
+        "direction": "outbound"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-users"></a>
+#### Example 37: Follow Up Boss: Get Users
+
+Retrieve users with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-users-001",
+  "nodeParams": {
+    "action": "get_users",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "limit": 10
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-user-by-id"></a>
+#### Example 38: Follow Up Boss: Get User by ID
+
+Retrieve a specific user by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-user-by-id-001",
+  "nodeParams": {
+    "action": "get_user_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-delete-user"></a>
+#### Example 39: Follow Up Boss: Delete User
+
+Delete a user by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-delete-user-001",
+  "nodeParams": {
+    "action": "delete_user",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-me"></a>
+#### Example 40: Follow Up Boss: Get Me
+
+Retrieve the current authenticated user information
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-me-001",
+  "nodeParams": {
+    "action": "get_me",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-smart-lists"></a>
+#### Example 41: Follow Up Boss: Get Smart Lists
+
+Retrieve smart lists with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-smart-lists-001",
+  "nodeParams": {
+    "action": "get_smart_lists",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "limit": 10
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-smart-list-by-id"></a>
+#### Example 42: Follow Up Boss: Get Smart List by ID
+
+Retrieve a specific smart list by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-smart-list-by-id-001",
+  "nodeParams": {
+    "action": "get_smart_list_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-action-plans"></a>
+#### Example 43: Follow Up Boss: Get Action Plans
+
+Retrieve action plans with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-action-plans-001",
+  "nodeParams": {
+    "action": "get_action_plans",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "limit": 10
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-action-plans-people"></a>
+#### Example 44: Follow Up Boss: Get Action Plans People
+
+Retrieve action plans for people
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-action-plans-people-001",
+  "nodeParams": {
+    "action": "get_action_plans_people",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "limit": 10
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-action-plan-person"></a>
+#### Example 45: Follow Up Boss: Create Action Plan Person
+
+Create an action plan for a person
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-action-plan-person-001",
+  "nodeParams": {
+    "action": "create_action_plan_person",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "personId": 123,
+        "actionPlanId": 456
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-update-action-plan-person"></a>
+#### Example 46: Follow Up Boss: Update Action Plan Person
+
+Update an existing action plan for a person
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-update-action-plan-person-001",
+  "nodeParams": {
+    "action": "update_action_plan_person",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123,
+      "body": {
+        "status": "completed"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-automations"></a>
+#### Example 47: Follow Up Boss: Get Automations
+
+Retrieve automations with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-automations-001",
+  "nodeParams": {
+    "action": "get_automations",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {}
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-automation-by-id"></a>
+#### Example 48: Follow Up Boss: Get Automation by ID
+
+Retrieve a specific automation by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-automation-by-id-001",
+  "nodeParams": {
+    "action": "get_automation_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-automations-people"></a>
+#### Example 49: Follow Up Boss: Get Automations People
+
+Retrieve automations for people
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-automations-people-001",
+  "nodeParams": {
+    "action": "get_automations_people",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "limit": 10
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-automation-person-by-id"></a>
+#### Example 50: Follow Up Boss: Get Automation Person by ID
+
+Retrieve a specific automation for a person by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-automation-person-by-id-001",
+  "nodeParams": {
+    "action": "get_automation_person_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-automation-person"></a>
+#### Example 51: Follow Up Boss: Create Automation Person
+
+Create an automation for a person
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-automation-person-001",
+  "nodeParams": {
+    "action": "create_automation_person",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "personId": 123,
+        "automationId": 456
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-update-automation-person"></a>
+#### Example 52: Follow Up Boss: Update Automation Person
+
+Update an existing automation for a person
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-update-automation-person-001",
+  "nodeParams": {
+    "action": "update_automation_person",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123,
+      "body": {
+        "status": "active"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-templates"></a>
+#### Example 53: Follow Up Boss: Get Templates
+
+Retrieve email templates with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-templates-001",
+  "nodeParams": {
+    "action": "get_templates",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-template"></a>
+#### Example 54: Follow Up Boss: Create Template
+
+Create a new email template
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-template-001",
+  "nodeParams": {
+    "action": "create_template",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "name": "Welcome Email",
+        "subject": "Welcome to our service",
+        "body": "Hello {{firstName}}, welcome!"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-template-by-id"></a>
+#### Example 55: Follow Up Boss: Get Template by ID
+
+Retrieve a specific template by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-template-by-id-001",
+  "nodeParams": {
+    "action": "get_template_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-update-template"></a>
+#### Example 56: Follow Up Boss: Update Template
+
+Update an existing email template
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-update-template-001",
+  "nodeParams": {
+    "action": "update_template",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123,
+      "body": {
+        "subject": "Updated Welcome Email"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-merge-template"></a>
+#### Example 57: Follow Up Boss: Merge Template
+
+Merge a template with person data
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-merge-template-001",
+  "nodeParams": {
+    "action": "merge_template",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "templateId": 123,
+        "personId": 456
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-delete-template"></a>
+#### Example 58: Follow Up Boss: Delete Template
+
+Delete an email template
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-delete-template-001",
+  "nodeParams": {
+    "action": "delete_template",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-text-message-templates"></a>
+#### Example 59: Follow Up Boss: Get Text Message Templates
+
+Retrieve text message templates with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-text-message-templates-001",
+  "nodeParams": {
+    "action": "get_text_message_templates",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "limit": 10
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-text-message-template"></a>
+#### Example 60: Follow Up Boss: Create Text Message Template
+
+Create a new text message template
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-text-message-template-001",
+  "nodeParams": {
+    "action": "create_text_message_template",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "name": "Welcome SMS",
+        "body": "Hello {{firstName}}, welcome!"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-text-message-template-by-id"></a>
+#### Example 61: Follow Up Boss: Get Text Message Template by ID
+
+Retrieve a specific text message template by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-text-message-template-by-id-001",
+  "nodeParams": {
+    "action": "get_text_message_template_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-update-text-message-template"></a>
+#### Example 62: Follow Up Boss: Update Text Message Template
+
+Update an existing text message template
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-update-text-message-template-001",
+  "nodeParams": {
+    "action": "update_text_message_template",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123,
+      "body": {
+        "body": "Updated welcome message"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-merge-text-message-template"></a>
+#### Example 63: Follow Up Boss: Merge Text Message Template
+
+Merge a text message template with person data
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-merge-text-message-template-001",
+  "nodeParams": {
+    "action": "merge_text_message_template",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "templateId": 123,
+        "personId": 456
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-delete-text-message-template"></a>
+#### Example 64: Follow Up Boss: Delete Text Message Template
+
+Delete a text message template
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-delete-text-message-template-001",
+  "nodeParams": {
+    "action": "delete_text_message_template",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-em-events"></a>
+#### Example 65: Follow Up Boss: Get EM Events
+
+Retrieve email marketing events with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-em-events-001",
+  "nodeParams": {
+    "action": "get_em_events",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "limit": 10
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-em-event"></a>
+#### Example 66: Follow Up Boss: Create EM Event
+
+Create a new email marketing event
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-em-event-001",
+  "nodeParams": {
+    "action": "create_em_event",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "personId": 123,
+        "campaignId": 456,
+        "event": "opened"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-em-campaigns"></a>
+#### Example 67: Follow Up Boss: Get EM Campaigns
+
+Retrieve email marketing campaigns with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-em-campaigns-001",
+  "nodeParams": {
+    "action": "get_em_campaigns",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "limit": 10
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-em-campaign"></a>
+#### Example 68: Follow Up Boss: Create EM Campaign
+
+Create a new email marketing campaign
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-em-campaign-001",
+  "nodeParams": {
+    "action": "create_em_campaign",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "name": "Welcome Campaign",
+        "templateId": 123
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-update-em-campaign"></a>
+#### Example 69: Follow Up Boss: Update EM Campaign
+
+Update an existing email marketing campaign
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-update-em-campaign-001",
+  "nodeParams": {
+    "action": "update_em_campaign",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123,
+      "body": {
+        "name": "Updated Welcome Campaign"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-custom-fields"></a>
+#### Example 70: Follow Up Boss: Get Custom Fields
+
+Retrieve custom fields with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-custom-fields-001",
+  "nodeParams": {
+    "action": "get_custom_fields",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-custom-field"></a>
+#### Example 71: Follow Up Boss: Create Custom Field
+
+Create a new custom field
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-custom-field-001",
+  "nodeParams": {
+    "action": "create_custom_field",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "name": "Custom Field",
+        "type": "text"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-custom-field-by-id"></a>
+#### Example 72: Follow Up Boss: Get Custom Field by ID
+
+Retrieve a specific custom field by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-custom-field-by-id-001",
+  "nodeParams": {
+    "action": "get_custom_field_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-update-custom-field"></a>
+#### Example 73: Follow Up Boss: Update Custom Field
+
+Update an existing custom field
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-update-custom-field-001",
+  "nodeParams": {
+    "action": "update_custom_field",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123,
+      "body": {
+        "name": "Updated Custom Field"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-delete-custom-field"></a>
+#### Example 74: Follow Up Boss: Delete Custom Field
+
+Delete a custom field
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-delete-custom-field-001",
+  "nodeParams": {
+    "action": "delete_custom_field",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-stages"></a>
+#### Example 75: Follow Up Boss: Get Stages
+
+Retrieve stages with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-stages-001",
+  "nodeParams": {
+    "action": "get_stages",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-stage"></a>
+#### Example 76: Follow Up Boss: Create Stage
+
+Create a new stage
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-stage-001",
+  "nodeParams": {
+    "action": "create_stage",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "name": "New Stage",
+        "pipelineId": 123
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-stage-by-id"></a>
+#### Example 77: Follow Up Boss: Get Stage by ID
+
+Retrieve a specific stage by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-stage-by-id-001",
+  "nodeParams": {
+    "action": "get_stage_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-update-stage"></a>
+#### Example 78: Follow Up Boss: Update Stage
+
+Update an existing stage
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-update-stage-001",
+  "nodeParams": {
+    "action": "update_stage",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123,
+      "body": {
+        "name": "Updated Stage"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-delete-stage"></a>
+#### Example 79: Follow Up Boss: Delete Stage
+
+Delete a stage
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-delete-stage-001",
+  "nodeParams": {
+    "action": "delete_stage",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-task-by-id"></a>
+#### Example 80: Follow Up Boss: Get Task by ID
+
+Retrieve a specific task by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-task-by-id-001",
+  "nodeParams": {
+    "action": "get_task_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-update-task"></a>
+#### Example 81: Follow Up Boss: Update Task
+
+Update an existing task
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-update-task-001",
+  "nodeParams": {
+    "action": "update_task",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123,
+      "body": {
+        "status": "completed"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-delete-task"></a>
+#### Example 82: Follow Up Boss: Delete Task
+
+Delete a task
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-delete-task-001",
+  "nodeParams": {
+    "action": "delete_task",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-appointments"></a>
+#### Example 83: Follow Up Boss: Get Appointments
+
+Retrieve appointments with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-appointments-001",
+  "nodeParams": {
+    "action": "get_appointments",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "limit": 10
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-appointment"></a>
+#### Example 84: Follow Up Boss: Create Appointment
+
+Create a new appointment
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-appointment-001",
+  "nodeParams": {
+    "action": "create_appointment",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "personId": 123,
+        "startDate": "2024-12-31T10:00:00Z",
+        "endDate": "2024-12-31T11:00:00Z"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-appointment-by-id"></a>
+#### Example 85: Follow Up Boss: Get Appointment by ID
+
+Retrieve a specific appointment by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-appointment-by-id-001",
+  "nodeParams": {
+    "action": "get_appointment_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-update-appointment"></a>
+#### Example 86: Follow Up Boss: Update Appointment
+
+Update an existing appointment
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-update-appointment-001",
+  "nodeParams": {
+    "action": "update_appointment",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123,
+      "body": {
+        "startDate": "2024-12-31T14:00:00Z"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-delete-appointment"></a>
+#### Example 87: Follow Up Boss: Delete Appointment
+
+Delete an appointment
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-delete-appointment-001",
+  "nodeParams": {
+    "action": "delete_appointment",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-appointment-types"></a>
+#### Example 88: Follow Up Boss: Get Appointment Types
+
+Retrieve appointment types with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-appointment-types-001",
+  "nodeParams": {
+    "action": "get_appointment_types",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "limit": 10
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-appointment-type"></a>
+#### Example 89: Follow Up Boss: Create Appointment Type
+
+Create a new appointment type
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-appointment-type-001",
+  "nodeParams": {
+    "action": "create_appointment_type",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "name": "Consultation",
+        "duration": 60
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-appointment-type-by-id"></a>
+#### Example 90: Follow Up Boss: Get Appointment Type by ID
+
+Retrieve a specific appointment type by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-appointment-type-by-id-001",
+  "nodeParams": {
+    "action": "get_appointment_type_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-update-appointment-type"></a>
+#### Example 91: Follow Up Boss: Update Appointment Type
+
+Update an existing appointment type
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-update-appointment-type-001",
+  "nodeParams": {
+    "action": "update_appointment_type",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123,
+      "body": {
+        "name": "Updated Consultation"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-delete-appointment-type"></a>
+#### Example 92: Follow Up Boss: Delete Appointment Type
+
+Delete an appointment type
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-delete-appointment-type-001",
+  "nodeParams": {
+    "action": "delete_appointment_type",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-appointment-outcomes"></a>
+#### Example 93: Follow Up Boss: Get Appointment Outcomes
+
+Retrieve appointment outcomes with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-appointment-outcomes-001",
+  "nodeParams": {
+    "action": "get_appointment_outcomes",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "limit": 10
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-appointment-outcome-by-id"></a>
+#### Example 94: Follow Up Boss: Get Appointment Outcome by ID
+
+Retrieve a specific appointment outcome by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-appointment-outcome-by-id-001",
+  "nodeParams": {
+    "action": "get_appointment_outcome_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-webhooks"></a>
+#### Example 95: Follow Up Boss: Get Webhooks
+
+Retrieve webhooks with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-webhooks-001",
+  "nodeParams": {
+    "action": "get_webhooks",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "limit": 10
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-webhook"></a>
+#### Example 96: Follow Up Boss: Create Webhook
+
+Create a new webhook
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-webhook-001",
+  "nodeParams": {
+    "action": "create_webhook",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "url": "https://example.com/webhook",
+        "events": [
+          "person.created"
+        ]
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-webhook-by-id"></a>
+#### Example 97: Follow Up Boss: Get Webhook by ID
+
+Retrieve a specific webhook by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-webhook-by-id-001",
+  "nodeParams": {
+    "action": "get_webhook_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-update-webhook"></a>
+#### Example 98: Follow Up Boss: Update Webhook
+
+Update an existing webhook
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-update-webhook-001",
+  "nodeParams": {
+    "action": "update_webhook",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123,
+      "body": {
+        "url": "https://example.com/webhook-updated"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-delete-webhook"></a>
+#### Example 99: Follow Up Boss: Delete Webhook
+
+Delete a webhook
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-delete-webhook-001",
+  "nodeParams": {
+    "action": "delete_webhook",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-webhook-event-by-id"></a>
+#### Example 100: Follow Up Boss: Get Webhook Event by ID
+
+Retrieve a specific webhook event by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-webhook-event-by-id-001",
+  "nodeParams": {
+    "action": "get_webhook_event_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-pipelines"></a>
+#### Example 101: Follow Up Boss: Get Pipelines
+
+Retrieve pipelines with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-pipelines-001",
+  "nodeParams": {
+    "action": "get_pipelines",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-pipeline"></a>
+#### Example 102: Follow Up Boss: Create Pipeline
+
+Create a new pipeline
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-pipeline-001",
+  "nodeParams": {
+    "action": "create_pipeline",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "name": "Sales Pipeline"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-pipeline-by-id"></a>
+#### Example 103: Follow Up Boss: Get Pipeline by ID
+
+Retrieve a specific pipeline by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-pipeline-by-id-001",
+  "nodeParams": {
+    "action": "get_pipeline_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-update-pipeline"></a>
+#### Example 104: Follow Up Boss: Update Pipeline
+
+Update an existing pipeline
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-update-pipeline-001",
+  "nodeParams": {
+    "action": "update_pipeline",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123,
+      "body": {
+        "name": "Updated Sales Pipeline"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-delete-pipeline"></a>
+#### Example 105: Follow Up Boss: Delete Pipeline
+
+Delete a pipeline
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-delete-pipeline-001",
+  "nodeParams": {
+    "action": "delete_pipeline",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-deal-by-id"></a>
+#### Example 106: Follow Up Boss: Get Deal by ID
+
+Retrieve a specific deal by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-deal-by-id-001",
+  "nodeParams": {
+    "action": "get_deal_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-update-deal"></a>
+#### Example 107: Follow Up Boss: Update Deal
+
+Update an existing deal
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-update-deal-001",
+  "nodeParams": {
+    "action": "update_deal",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123,
+      "body": {
+        "price": 550000
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-delete-deal"></a>
+#### Example 108: Follow Up Boss: Delete Deal
+
+Delete a deal
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-delete-deal-001",
+  "nodeParams": {
+    "action": "delete_deal",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-deal-attachment"></a>
+#### Example 109: Follow Up Boss: Create Deal Attachment
+
+Create a new attachment for a deal
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-deal-attachment-001",
+  "nodeParams": {
+    "action": "create_deal_attachment",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "dealId": 123,
+        "name": "Contract.pdf",
+        "url": "https://example.com/contract.pdf"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-deal-attachment-by-id"></a>
+#### Example 110: Follow Up Boss: Get Deal Attachment by ID
+
+Retrieve a specific deal attachment by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-deal-attachment-by-id-001",
+  "nodeParams": {
+    "action": "get_deal_attachment_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-update-deal-attachment"></a>
+#### Example 111: Follow Up Boss: Update Deal Attachment
+
+Update an existing deal attachment
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-update-deal-attachment-001",
+  "nodeParams": {
+    "action": "update_deal_attachment",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123,
+      "body": {
+        "name": "Updated Contract.pdf"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-delete-deal-attachment"></a>
+#### Example 112: Follow Up Boss: Delete Deal Attachment
+
+Delete a deal attachment
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-delete-deal-attachment-001",
+  "nodeParams": {
+    "action": "delete_deal_attachment",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-deal-custom-fields"></a>
+#### Example 113: Follow Up Boss: Get Deal Custom Fields
+
+Retrieve deal custom fields with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-deal-custom-fields-001",
+  "nodeParams": {
+    "action": "get_deal_custom_fields",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "limit": 10
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-deal-custom-field"></a>
+#### Example 114: Follow Up Boss: Create Deal Custom Field
+
+Create a new deal custom field
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-deal-custom-field-001",
+  "nodeParams": {
+    "action": "create_deal_custom_field",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "name": "Deal Custom Field",
+        "type": "text"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-deal-custom-field-by-id"></a>
+#### Example 115: Follow Up Boss: Get Deal Custom Field by ID
+
+Retrieve a specific deal custom field by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-deal-custom-field-by-id-001",
+  "nodeParams": {
+    "action": "get_deal_custom_field_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-update-deal-custom-field"></a>
+#### Example 116: Follow Up Boss: Update Deal Custom Field
+
+Update an existing deal custom field
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-update-deal-custom-field-001",
+  "nodeParams": {
+    "action": "update_deal_custom_field",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123,
+      "body": {
+        "name": "Updated Deal Custom Field"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-delete-deal-custom-field"></a>
+#### Example 117: Follow Up Boss: Delete Deal Custom Field
+
+Delete a deal custom field
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-delete-deal-custom-field-001",
+  "nodeParams": {
+    "action": "delete_deal_custom_field",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-groups"></a>
+#### Example 118: Follow Up Boss: Get Groups
+
+Retrieve groups with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-groups-001",
+  "nodeParams": {
+    "action": "get_groups",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "limit": 10
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-round-robin"></a>
+#### Example 119: Follow Up Boss: Get Round Robin
+
+Retrieve round robin configuration
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-round-robin-001",
+  "nodeParams": {
+    "action": "get_round_robin",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {}
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-group"></a>
+#### Example 120: Follow Up Boss: Create Group
+
+Create a new group
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-group-001",
+  "nodeParams": {
+    "action": "create_group",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "name": "Sales Team"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-group-by-id"></a>
+#### Example 121: Follow Up Boss: Get Group by ID
+
+Retrieve a specific group by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-group-by-id-001",
+  "nodeParams": {
+    "action": "get_group_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-update-group"></a>
+#### Example 122: Follow Up Boss: Update Group
+
+Update an existing group
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-update-group-001",
+  "nodeParams": {
+    "action": "update_group",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123,
+      "body": {
+        "name": "Updated Sales Team"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-delete-group"></a>
+#### Example 123: Follow Up Boss: Delete Group
+
+Delete a group
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-delete-group-001",
+  "nodeParams": {
+    "action": "delete_group",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-teams"></a>
+#### Example 124: Follow Up Boss: Get Teams
+
+Retrieve teams with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-teams-001",
+  "nodeParams": {
+    "action": "get_teams",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-team"></a>
+#### Example 125: Follow Up Boss: Create Team
+
+Create a new team
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-team-001",
+  "nodeParams": {
+    "action": "create_team",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "name": "Marketing Team"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-team-by-id"></a>
+#### Example 126: Follow Up Boss: Get Team by ID
+
+Retrieve a specific team by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-team-by-id-001",
+  "nodeParams": {
+    "action": "get_team_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-update-team"></a>
+#### Example 127: Follow Up Boss: Update Team
+
+Update an existing team
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-update-team-001",
+  "nodeParams": {
+    "action": "update_team",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123,
+      "body": {
+        "name": "Updated Marketing Team"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-delete-team"></a>
+#### Example 128: Follow Up Boss: Delete Team
+
+Delete a team
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-delete-team-001",
+  "nodeParams": {
+    "action": "delete_team",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-team-inboxes"></a>
+#### Example 129: Follow Up Boss: Get Team Inboxes
+
+Retrieve team inboxes with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-team-inboxes-001",
+  "nodeParams": {
+    "action": "get_team_inboxes",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "limit": 10
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-ponds"></a>
+#### Example 130: Follow Up Boss: Get Ponds
+
+Retrieve ponds with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-ponds-001",
+  "nodeParams": {
+    "action": "get_ponds",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "limit": 10
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-pond"></a>
+#### Example 131: Follow Up Boss: Create Pond
+
+Create a new pond
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-pond-001",
+  "nodeParams": {
+    "action": "create_pond",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "name": "Lead Pond"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-pond-by-id"></a>
+#### Example 132: Follow Up Boss: Get Pond by ID
+
+Retrieve a specific pond by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-pond-by-id-001",
+  "nodeParams": {
+    "action": "get_pond_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-update-pond"></a>
+#### Example 133: Follow Up Boss: Update Pond
+
+Update an existing pond
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-update-pond-001",
+  "nodeParams": {
+    "action": "update_pond",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123,
+      "body": {
+        "name": "Updated Lead Pond"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-delete-pond"></a>
+#### Example 134: Follow Up Boss: Delete Pond
+
+Delete a pond
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-delete-pond-001",
+  "nodeParams": {
+    "action": "delete_pond",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-add-message"></a>
+#### Example 135: Follow Up Boss: Add Message
+
+Add a message to an inbox app conversation
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-add-message-001",
+  "nodeParams": {
+    "action": "add_message",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "inboxAppId": "inbox-app-123",
+      "body": {
+        "extConversationId": "conv-456",
+        "body": "Hello, this is a test message"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-update-message"></a>
+#### Example 136: Follow Up Boss: Update Message
+
+Update a message in an inbox app conversation
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-update-message-001",
+  "nodeParams": {
+    "action": "update_message",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "inboxAppId": "inbox-app-123",
+      "body": {
+        "extMessageId": "msg-789",
+        "body": "Updated message content"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-add-note"></a>
+#### Example 137: Follow Up Boss: Add Note
+
+Add a note to an inbox app conversation
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-add-note-001",
+  "nodeParams": {
+    "action": "add_note",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "inboxAppId": "inbox-app-123",
+      "body": {
+        "extConversationId": "conv-456",
+        "body": "Internal note"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-update-conversation"></a>
+#### Example 138: Follow Up Boss: Update Conversation
+
+Update a conversation in an inbox app
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-update-conversation-001",
+  "nodeParams": {
+    "action": "update_conversation",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "inboxAppId": "inbox-app-123",
+      "extConversationId": "conv-456",
+      "body": {
+        "status": "closed"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-participants"></a>
+#### Example 139: Follow Up Boss: Get Participants
+
+Get participants in an inbox app conversation
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-participants-001",
+  "nodeParams": {
+    "action": "get_participants",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "inboxAppId": "inbox-app-123",
+      "extConversationId": "conv-456"
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-add-participant"></a>
+#### Example 140: Follow Up Boss: Add Participant
+
+Add a participant to an inbox app conversation
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-add-participant-001",
+  "nodeParams": {
+    "action": "add_participant",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "inboxAppId": "inbox-app-123",
+      "extConversationId": "conv-456",
+      "body": {
+        "extParticipantId": "participant-789",
+        "name": "John Doe"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-remove-participant"></a>
+#### Example 141: Follow Up Boss: Remove Participant
+
+Remove a participant from an inbox app conversation
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-remove-participant-001",
+  "nodeParams": {
+    "action": "remove_participant",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "inboxAppId": "inbox-app-123",
+      "extConversationId": "conv-456",
+      "participantId": "participant-789"
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-install-inbox-app"></a>
+#### Example 142: Follow Up Boss: Install Inbox App
+
+Install an inbox app
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-install-inbox-app-001",
+  "nodeParams": {
+    "action": "install_inbox_app",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "body": {
+        "publishedInboxAppId": "app-123"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-deactivate-inbox-app"></a>
+#### Example 143: Follow Up Boss: Deactivate Inbox App
+
+Deactivate an installed inbox app
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-deactivate-inbox-app-001",
+  "nodeParams": {
+    "action": "deactivate_inbox_app",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "publishedInboxAppId": "app-123"
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-installed-inbox-apps"></a>
+#### Example 144: Follow Up Boss: Get Installed Inbox Apps
+
+Retrieve installed inbox apps with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-installed-inbox-apps-001",
+  "nodeParams": {
+    "action": "get_installed_inbox_apps",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {
+        "limit": 10
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-reaction-by-id"></a>
+#### Example 145: Follow Up Boss: Get Reaction by ID
+
+Retrieve a specific reaction by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-reaction-by-id-001",
+  "nodeParams": {
+    "action": "get_reaction_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-create-reaction"></a>
+#### Example 146: Follow Up Boss: Create Reaction
+
+Create a new reaction
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-create-reaction-001",
+  "nodeParams": {
+    "action": "create_reaction",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "refType": "note",
+      "refId": 123,
+      "body": {
+        "type": "like"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-delete-reaction"></a>
+#### Example 147: Follow Up Boss: Delete Reaction
+
+Delete a reaction
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-delete-reaction-001",
+  "nodeParams": {
+    "action": "delete_reaction",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "refType": "note",
+      "refId": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-threaded-reply-by-id"></a>
+#### Example 148: Follow Up Boss: Get Threaded Reply by ID
+
+Retrieve a specific threaded reply by ID
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-threaded-reply-by-id-001",
+  "nodeParams": {
+    "action": "get_threaded_reply_by_id",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "id": 123
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-timeframes"></a>
+#### Example 149: Follow Up Boss: Get Timeframes
+
+Retrieve timeframes with optional query parameters
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-timeframes-001",
+  "nodeParams": {
+    "action": "get_timeframes",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY",
+      "query": {}
+    }
+  }
+}
+```
+
+---
+
+<a id="followupboss-get-identity"></a>
+#### Example 150: Follow Up Boss: Get Identity
+
+Retrieve identity information
+
+```json
+{
+  "automationType": "followupboss",
+  "nodeId": "followupboss-get-identity-001",
+  "nodeParams": {
+    "action": "get_identity",
+    "params": {
+      "apiKey": "YOUR_FOLLOWUPBOSS_API_KEY"
+    }
+  }
+}
+```
+
+## Third-Party Documentation
+
+- [https://docs.followupboss.com/reference/getting-started](https://docs.followupboss.com/reference/getting-started)

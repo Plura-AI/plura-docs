@@ -1,0 +1,310 @@
+---
+title: "PandaDoc"
+description: "Generate, send, and track proposals and contracts in PandaDoc"
+---
+
+## Overview
+
+Generate, send, and track proposals and contracts in PandaDoc. Call actions with `automationType`, `action`, and `params` from any workflow node that supports automations.
+
+## Authentication
+
+- PandaDoc API Key (Bearer) or OAuth 2.0.
+
+## Available Actions
+
+Click any action to jump to its example payload.
+
+
+**Api**
+
+- [API Call](#pandadoc-api-call)
+
+**Attachments**
+
+- Create Attachment
+- Delete Attachment
+- List Attachments
+
+**Catalog**
+
+- Create Catalog Item
+- Delete Catalog Item
+- List Catalog Items
+- Update Catalog Item
+
+**Contacts**
+
+- Delete Contact
+- List Contacts
+- Update Contact
+
+**Content-Library**
+
+- Create Content Library Item
+- Get Content Library Item
+- Get Content Library Item Details
+
+**Documents**
+
+- [Create Document](#pandadoc-create-document)
+- Create Document Session
+- Create Draft
+- Create Field
+- Delete Document
+- Download Document
+- Get Document Settings
+- List Document Audit Trail
+- [List Documents](#pandadoc-list-documents)
+- Move Document to Folder
+- Send Document Reminder
+- Update Auto Reminders
+- Update Document
+- Update Document Settings
+- Update Document Status
+
+**Folders**
+
+- Create Documents Folder
+- Create Templates Folder
+- List Templates Folders
+- Update Documents Folder
+
+**Forms**
+
+- List Forms
+
+**Linked-Objects**
+
+- Delete Linked Object
+- List Linked Objects
+
+**Logs**
+
+- List Logs
+
+**Members**
+
+- Create Member Token
+- Get Membership
+- List Current Member
+
+**Notarization**
+
+- Create Notarization Request
+
+**Quotes**
+
+- Update Quote
+
+**Recipients**
+
+- Add Recipient
+- Reassign Recipient
+- Update Recipient
+
+**Sections**
+
+- Create Document Section
+- Delete Section
+- Get Section Details
+
+**Sms**
+
+- List SMS Opt-Outs
+
+**Templates**
+
+- Create Template
+- Create Template Editing Session
+- Delete Template
+- Get Template Details
+- Get Template Settings
+- [List Templates](#pandadoc-list-templates)
+- Update Template
+- Update Template Settings
+
+**Users**
+
+- Create User
+
+**Webhooks**
+
+- Create Webhook Subscription
+- Get Webhook Event
+- Get Webhook Subscription
+- List Webhook Events
+- List Webhook Subscriptions
+- Update Shared Key
+- Update Webhook Subscription
+
+**Workspaces**
+
+- Create API Key
+- Create Member
+- Delete Membership
+- List Workspaces
+
+## Examples
+
+<a id="pandadoc-list-documents"></a>
+#### Example 1: PandaDoc: List Documents
+
+Get list of documents with optional filters
+
+```json
+{
+  "automationType": "pandadoc",
+  "nodeId": "pandadoc-list-docs-001",
+  "nodeParams": {
+    "action": "list_documents",
+    "params": {
+      "apiKey": "YOUR_PANDADOC_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="pandadoc-create-document"></a>
+#### Example 2: PandaDoc: Create Document
+
+Create a document from template or URL
+
+```json
+{
+  "automationType": "pandadoc",
+  "nodeId": "pandadoc-create-doc-001",
+  "nodeParams": {
+    "action": "create_document",
+    "params": {
+      "apiKey": "YOUR_PANDADOC_API_KEY",
+      "body": {
+        "name": "My Document",
+        "template_uuid": "TEMPLATE_UUID",
+        "recipients": [
+          {
+            "email": "recipient@example.com",
+            "first_name": "John",
+            "last_name": "Doe",
+            "role": "user"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="pandadoc-get-document"></a>
+#### Example 3: PandaDoc: Get Document
+
+Get document status and details
+
+```json
+{
+  "automationType": "pandadoc",
+  "nodeId": "pandadoc-get-doc-001",
+  "nodeParams": {
+    "action": "get_document",
+    "params": {
+      "apiKey": "YOUR_PANDADOC_API_KEY",
+      "documentId": "DOCUMENT_ID_HERE"
+    }
+  }
+}
+```
+
+---
+
+<a id="pandadoc-send-document"></a>
+#### Example 4: PandaDoc: Send Document
+
+Send document to recipients by email
+
+```json
+{
+  "automationType": "pandadoc",
+  "nodeId": "pandadoc-send-doc-001",
+  "nodeParams": {
+    "action": "send_document",
+    "params": {
+      "apiKey": "YOUR_PANDADOC_API_KEY",
+      "documentId": "DOCUMENT_ID_HERE",
+      "body": {
+        "message": "Please sign this document"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="pandadoc-list-templates"></a>
+#### Example 5: PandaDoc: List Templates
+
+Get list of templates
+
+```json
+{
+  "automationType": "pandadoc",
+  "nodeId": "pandadoc-list-templates-001",
+  "nodeParams": {
+    "action": "list_templates",
+    "params": {
+      "apiKey": "YOUR_PANDADOC_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="pandadoc-get-template"></a>
+#### Example 6: PandaDoc: Get Template
+
+Get template by ID
+
+```json
+{
+  "automationType": "pandadoc",
+  "nodeId": "pandadoc-get-template-001",
+  "nodeParams": {
+    "action": "get_template",
+    "params": {
+      "apiKey": "YOUR_PANDADOC_API_KEY",
+      "templateId": "TEMPLATE_ID_HERE"
+    }
+  }
+}
+```
+
+---
+
+<a id="pandadoc-api-call"></a>
+#### Example 7: PandaDoc: Generic API Call
+
+Make a custom API request to PandaDoc
+
+```json
+{
+  "automationType": "pandadoc",
+  "nodeId": "pandadoc-api-call-001",
+  "nodeParams": {
+    "action": "api_call",
+    "params": {
+      "apiKey": "YOUR_PANDADOC_API_KEY",
+      "method": "GET",
+      "path": "/public/v1/documents"
+    }
+  }
+}
+```
+
+## Third-Party Documentation
+
+- [https://developers.pandadoc.com/reference/about](https://developers.pandadoc.com/reference/about)

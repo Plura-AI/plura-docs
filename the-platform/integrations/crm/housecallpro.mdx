@@ -1,0 +1,1522 @@
+---
+title: "HouseCall Pro"
+description: "Manage customers, jobs, estimates, and invoices in HouseCall Pro"
+---
+
+## Overview
+
+Manage customers, jobs, estimates, and invoices in HouseCall Pro. Call actions with `automationType`, `action`, and `params` from any workflow node that supports automations.
+
+## Authentication
+
+- HouseCall Pro API Key (per-company).
+
+## Available Actions
+
+Click any action to jump to its example payload.
+
+
+**Application**
+
+- Disable Application
+- Enable Application
+
+**Checklists**
+
+- [List Checklists](#housecallpro-list-checklists)
+
+**Customer Addresses**
+
+- [Create Customer Address](#housecallpro-create-customer-address)
+- [Get Customer Address](#housecallpro-get-customer-address)
+- [List Customer Addresses](#housecallpro-list-customer-addresses)
+
+**Customers**
+
+- [Create Customer](#housecallpro-create-customer)
+- [List Customers](#housecallpro-list-customers)
+- [Update Customer](#housecallpro-update-customer)
+
+**Employees**
+
+- [List Employees](#housecallpro-list-employees)
+
+**Estimate Options**
+
+- Approve Estimate Options
+- Create Estimate Option Link
+- Create Estimate Option Note
+- Decline Estimate Options
+- Update Estimate Option Schedule
+
+**Estimates**
+
+- [Create Estimate](#housecallpro-create-estimate)
+
+**Events**
+
+- Get Event
+
+**Invoices**
+
+- Get Invoice
+- Get Invoice Preview
+- List Invoices
+
+**Job Appointments**
+
+- [Delete Job Appointment](#housecallpro-delete-job-appointment)
+- [List Job Appointments](#housecallpro-list-job-appointments)
+
+**Job Dispatch**
+
+- Update Job Dispatch
+
+**Job Input Materials**
+
+- Bulk Update Job Input Materials
+
+**Job Invoices**
+
+- [List Job Invoices](#housecallpro-list-job-invoices)
+
+**Job Line Items**
+
+- List Job Line Items
+
+**Job Links**
+
+- Create Job Link
+
+**Job Notes**
+
+- Delete Job Note
+
+**Job Schedule**
+
+- Delete Job Schedule
+
+**Job Tags**
+
+- Add Job Tag
+- Delete Job Tag
+
+**Job Types**
+
+- Update Job Type
+
+**Jobs**
+
+- [Create Job](#housecallpro-create-job)
+- Create Job Attachment
+- [List Jobs](#housecallpro-list-jobs)
+- Lock Job
+- Lock Jobs
+
+**Lead Sources**
+
+- Create Lead Source
+- [List Lead Sources](#housecallpro-list-lead-sources)
+- Update Lead Source
+
+**Leads**
+
+- Convert Lead
+- [Create Lead](#housecallpro-create-lead)
+- [Get Lead](#housecallpro-get-lead)
+- [List Leads](#housecallpro-list-leads)
+
+**Material Categories**
+
+- Delete Material Category
+- List Material Categories
+
+**Materials**
+
+- Create Material
+- Delete Material
+- List Materials
+
+**Price Book**
+
+- List Price Book Services
+
+**Price Forms**
+
+- Delete Price Form
+- Get Price Form
+- List Price Forms
+- Update Price Form
+
+**Schedule**
+
+- Get Company Schedule Availability
+- Update Company Schedule Availability
+
+**Tags**
+
+- [Update Tag](#housecallpro-update-tag)
+
+## Examples
+
+<a id="housecallpro-list-customers"></a>
+#### Example 1: Housecall Pro - List Customers
+
+List all customers with pagination
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-list-customers-001",
+  "nodeParams": {
+    "action": "list_customers",
+    "params": {
+      "apiKey": "your-api-key",
+      "page": 1,
+      "page_size": 50
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-create-customer"></a>
+#### Example 2: Housecall Pro - Create Customer
+
+Create a new customer with contact information
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-create-customer-001",
+  "nodeParams": {
+    "action": "create_customer",
+    "params": {
+      "apiKey": "your-api-key",
+      "first_name": "John",
+      "last_name": "Doe",
+      "email": "john.doe@example.com",
+      "mobile_number": "+15551234567",
+      "notifications_enabled": true
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-get-customer"></a>
+#### Example 3: Housecall Pro - Get Customer
+
+Retrieve customer details by ID
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-get-customer-001",
+  "nodeParams": {
+    "action": "get_customer",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "customer-123"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-update-customer"></a>
+#### Example 4: Housecall Pro - Update Customer
+
+Update customer information
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-update-customer-001",
+  "nodeParams": {
+    "action": "update_customer",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "customer-123",
+      "email": "newemail@example.com",
+      "mobile_number": "+15559876543"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-create-customer-address"></a>
+#### Example 5: Housecall Pro - Create Customer Address
+
+Add a new address for a customer
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-create-address-001",
+  "nodeParams": {
+    "action": "create_customer_address",
+    "params": {
+      "apiKey": "your-api-key",
+      "customer_id": "customer-123",
+      "street": "123 Main St",
+      "city": "San Francisco",
+      "state": "CA",
+      "zip": "94102",
+      "country": "USA"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-list-customer-addresses"></a>
+#### Example 6: Housecall Pro - List Customer Addresses
+
+List all addresses for a customer
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-list-addresses-001",
+  "nodeParams": {
+    "action": "list_customer_addresses",
+    "params": {
+      "apiKey": "your-api-key",
+      "customer_id": "customer-123"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-get-customer-address"></a>
+#### Example 7: Housecall Pro - Get Customer Address
+
+Get a specific address by ID
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-get-address-001",
+  "nodeParams": {
+    "action": "get_customer_address",
+    "params": {
+      "apiKey": "your-api-key",
+      "customer_id": "customer-123",
+      "address_id": "address-456"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-update-customer-address"></a>
+#### Example 8: Housecall Pro - Update Customer Address
+
+Update an existing customer address
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-update-address-001",
+  "nodeParams": {
+    "action": "update_customer_address",
+    "params": {
+      "apiKey": "your-api-key",
+      "customer_id": "customer-123",
+      "address_id": "address-456",
+      "street": "456 Oak Ave",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90001"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-delete-customer-address"></a>
+#### Example 9: Housecall Pro - Delete Customer Address
+
+Delete a customer address by ID
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-delete-address-001",
+  "nodeParams": {
+    "action": "delete_customer_address",
+    "params": {
+      "apiKey": "your-api-key",
+      "customer_id": "customer-123",
+      "address_id": "address-456"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-list-jobs"></a>
+#### Example 10: Housecall Pro - List Jobs
+
+List jobs with optional filters
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-list-jobs-001",
+  "nodeParams": {
+    "action": "list_jobs",
+    "params": {
+      "apiKey": "your-api-key",
+      "customer_id": "customer-123",
+      "page": 1,
+      "page_size": 25
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-create-job"></a>
+#### Example 11: Housecall Pro - Create Job
+
+Create a new job for a customer
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-create-job-001",
+  "nodeParams": {
+    "action": "create_job",
+    "params": {
+      "apiKey": "your-api-key",
+      "customer_id": "customer-123",
+      "address_id": "address-456",
+      "job_type_id": "job-type-789",
+      "description": "Fix leaking pipe in kitchen",
+      "schedule_start": "2025-01-15T09:00:00Z",
+      "schedule_end": "2025-01-15T11:00:00Z"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-get-job"></a>
+#### Example 12: Housecall Pro - Get Job
+
+Retrieve job details by ID
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-get-job-001",
+  "nodeParams": {
+    "action": "get_job",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "job-123"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-update-job"></a>
+#### Example 13: Housecall Pro - Update Job
+
+Update job details
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-update-job-001",
+  "nodeParams": {
+    "action": "update_job",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "job-123",
+      "description": "Updated description - Fixed pipe and checked water heater",
+      "schedule_end": "2025-01-15T12:00:00Z"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-list-employees"></a>
+#### Example 14: Housecall Pro - List Employees
+
+List all employees/technicians
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-list-employees-001",
+  "nodeParams": {
+    "action": "list_employees",
+    "params": {
+      "apiKey": "your-api-key",
+      "page": 1,
+      "page_size": 50
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-get-employee"></a>
+#### Example 15: Housecall Pro - Get Employee
+
+Get employee details by ID
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-get-employee-001",
+  "nodeParams": {
+    "action": "get_employee",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "employee-123"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-create-estimate"></a>
+#### Example 16: Housecall Pro - Create Estimate
+
+Create an estimate for a job
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-create-estimate-001",
+  "nodeParams": {
+    "action": "create_estimate",
+    "params": {
+      "apiKey": "your-api-key",
+      "job_id": "job-123",
+      "line_items": [
+        {
+          "name": "Pipe Repair",
+          "description": "Fix leaking kitchen pipe",
+          "quantity": 1,
+          "unit_price": 15000
+        },
+        {
+          "name": "Labor",
+          "description": "Plumber labor 2 hours",
+          "quantity": 2,
+          "unit_price": 7500
+        }
+      ]
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-get-estimate"></a>
+#### Example 17: Housecall Pro - Get Estimate
+
+Retrieve estimate details by ID
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-get-estimate-001",
+  "nodeParams": {
+    "action": "get_estimate",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "estimate-123"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-update-estimate"></a>
+#### Example 18: Housecall Pro - Update Estimate
+
+Update an existing estimate
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-update-estimate-001",
+  "nodeParams": {
+    "action": "update_estimate",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "estimate-123",
+      "line_items": [
+        {
+          "name": "Pipe Repair",
+          "quantity": 1,
+          "unit_price": 18000
+        }
+      ]
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-list-job-appointments"></a>
+#### Example 19: Housecall Pro - List Job Appointments
+
+List all job appointments with pagination
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-list-appointments-001",
+  "nodeParams": {
+    "action": "list_job_appointments",
+    "params": {
+      "apiKey": "your-api-key",
+      "page": 1,
+      "page_size": 25
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-create-job-appointment"></a>
+#### Example 20: Housecall Pro - Create Job Appointment
+
+Schedule an appointment for a job
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-create-appointment-001",
+  "nodeParams": {
+    "action": "create_job_appointment",
+    "params": {
+      "apiKey": "your-api-key",
+      "job_id": "job-123",
+      "start_time": "2025-01-15T09:00:00Z",
+      "end_time": "2025-01-15T11:00:00Z",
+      "employee_ids": [
+        "employee-123",
+        "employee-456"
+      ],
+      "notes": "Customer prefers morning appointments"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-get-job-appointment"></a>
+#### Example 21: Housecall Pro - Get Job Appointment
+
+Get appointment details by ID
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-get-appointment-001",
+  "nodeParams": {
+    "action": "get_job_appointment",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "appointment-123"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-update-job-appointment"></a>
+#### Example 22: Housecall Pro - Update Job Appointment
+
+Reschedule an appointment
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-update-appointment-001",
+  "nodeParams": {
+    "action": "update_job_appointment",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "appointment-123",
+      "start_time": "2025-01-15T14:00:00Z",
+      "end_time": "2025-01-15T16:00:00Z"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-delete-job-appointment"></a>
+#### Example 23: Housecall Pro - Delete Job Appointment
+
+Cancel and delete an appointment
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-delete-appointment-001",
+  "nodeParams": {
+    "action": "delete_job_appointment",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "appointment-123"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-create-job-invoice"></a>
+#### Example 24: Housecall Pro - Create Job Invoice
+
+Create an invoice for a completed job
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-create-invoice-001",
+  "nodeParams": {
+    "action": "create_job_invoice",
+    "params": {
+      "apiKey": "your-api-key",
+      "job_id": "job-123",
+      "line_items": [
+        {
+          "name": "Pipe Repair",
+          "quantity": 1,
+          "unit_price": 15000
+        },
+        {
+          "name": "Labor",
+          "quantity": 2,
+          "unit_price": 7500
+        }
+      ]
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-get-job-invoice"></a>
+#### Example 25: Housecall Pro - Get Job Invoice
+
+Retrieve invoice details by ID
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-get-invoice-001",
+  "nodeParams": {
+    "action": "get_job_invoice",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "invoice-123"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-update-job-invoice"></a>
+#### Example 26: Housecall Pro - Update Job Invoice
+
+Update an existing invoice
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-update-invoice-001",
+  "nodeParams": {
+    "action": "update_job_invoice",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "invoice-123",
+      "line_items": [
+        {
+          "name": "Pipe Repair",
+          "quantity": 1,
+          "unit_price": 18000
+        }
+      ]
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-send-job-invoice"></a>
+#### Example 27: Housecall Pro - Send Job Invoice
+
+Send invoice to customer via email
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-send-invoice-001",
+  "nodeParams": {
+    "action": "send_job_invoice",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "invoice-123"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-list-job-types"></a>
+#### Example 28: Housecall Pro - List Job Types
+
+List all available job types
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-list-job-types-001",
+  "nodeParams": {
+    "action": "list_job_types",
+    "params": {
+      "apiKey": "your-api-key"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-get-job-type"></a>
+#### Example 29: Housecall Pro - Get Job Type
+
+Get job type details by ID
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-get-job-type-001",
+  "nodeParams": {
+    "action": "get_job_type",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "job-type-789"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-list-leads"></a>
+#### Example 30: Housecall Pro - List Leads
+
+List all leads with pagination
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-list-leads-001",
+  "nodeParams": {
+    "action": "list_leads",
+    "params": {
+      "apiKey": "your-api-key",
+      "page": 1,
+      "page_size": 25
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-create-lead"></a>
+#### Example 31: Housecall Pro - Create Lead
+
+Create a new lead for follow-up
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-create-lead-001",
+  "nodeParams": {
+    "action": "create_lead",
+    "params": {
+      "apiKey": "your-api-key",
+      "first_name": "Jane",
+      "last_name": "Smith",
+      "email": "jane.smith@example.com",
+      "mobile_number": "+15551112222",
+      "notes": "Interested in HVAC service"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-get-lead"></a>
+#### Example 32: Housecall Pro - Get Lead
+
+Retrieve lead details by ID
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-get-lead-001",
+  "nodeParams": {
+    "action": "get_lead",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "lead-123"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-update-lead"></a>
+#### Example 33: Housecall Pro - Update Lead
+
+Update lead information
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-update-lead-001",
+  "nodeParams": {
+    "action": "update_lead",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "lead-123",
+      "notes": "Follow-up scheduled for next week"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-list-lead-sources"></a>
+#### Example 34: Housecall Pro - List Lead Sources
+
+List all lead sources for tracking
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-list-lead-sources-001",
+  "nodeParams": {
+    "action": "list_lead_sources",
+    "params": {
+      "apiKey": "your-api-key"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-get-lead-source"></a>
+#### Example 35: Housecall Pro - Get Lead Source
+
+Get lead source details by ID
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-get-lead-source-001",
+  "nodeParams": {
+    "action": "get_lead_source",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "lead-source-123"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-list-checklists"></a>
+#### Example 36: Housecall Pro - List Checklists
+
+List all checklists available
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-list-checklists-001",
+  "nodeParams": {
+    "action": "list_checklists",
+    "params": {
+      "apiKey": "your-api-key"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-get-checklist"></a>
+#### Example 37: Housecall Pro - Get Checklist
+
+Get checklist details by ID
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-get-checklist-001",
+  "nodeParams": {
+    "action": "get_checklist",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "checklist-123"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-list-estimates"></a>
+#### Example 38: Housecall Pro - List Estimates
+
+List all estimates with pagination
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-list-estimates-001",
+  "nodeParams": {
+    "action": "list_estimates",
+    "params": {
+      "apiKey": "your-api-key",
+      "page": 1,
+      "page_size": 25
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-list-job-invoices"></a>
+#### Example 39: Housecall Pro - List Invoices
+
+List all job invoices with pagination
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-list-invoices-001",
+  "nodeParams": {
+    "action": "list_job_invoices",
+    "params": {
+      "apiKey": "your-api-key",
+      "page": 1,
+      "page_size": 25
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-list-jobs"></a>
+#### Example 40: Housecall Pro - Filter Jobs by Date Range
+
+List jobs scheduled within a date range
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-filter-jobs-001",
+  "nodeParams": {
+    "action": "list_jobs",
+    "params": {
+      "apiKey": "your-api-key",
+      "schedule_start_min": "2025-01-01T00:00:00Z",
+      "schedule_start_max": "2025-01-31T23:59:59Z",
+      "page_size": 100
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-delete-customer"></a>
+#### Example 41: Housecall Pro - Delete Customer
+
+Delete a customer by ID
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-delete-customer-001",
+  "nodeParams": {
+    "action": "delete_customer",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "customer-123"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-delete-job"></a>
+#### Example 42: Housecall Pro - Delete Job
+
+Delete a job by ID
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-delete-job-001",
+  "nodeParams": {
+    "action": "delete_job",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "job-123"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-get-company"></a>
+#### Example 43: Housecall Pro - Get Company Info
+
+Retrieve authenticated company information
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-get-company-001",
+  "nodeParams": {
+    "action": "get_company",
+    "params": {
+      "apiKey": "your-api-key"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-list-expenses"></a>
+#### Example 44: Housecall Pro - List Expenses
+
+List all expenses with pagination
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-list-expenses-001",
+  "nodeParams": {
+    "action": "list_expenses",
+    "params": {
+      "apiKey": "your-api-key",
+      "page": 1,
+      "page_size": 25
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-create-expense"></a>
+#### Example 45: Housecall Pro - Create Expense
+
+Create a new expense for a job
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-create-expense-001",
+  "nodeParams": {
+    "action": "create_expense",
+    "params": {
+      "apiKey": "your-api-key",
+      "job_id": "job-123",
+      "amount": 5000,
+      "description": "Materials for job",
+      "expense_date": "2025-01-15",
+      "category": "materials"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-get-expense"></a>
+#### Example 46: Housecall Pro - Get Expense
+
+Retrieve expense details by ID
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-get-expense-001",
+  "nodeParams": {
+    "action": "get_expense",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "expense-123"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-update-expense"></a>
+#### Example 47: Housecall Pro - Update Expense
+
+Update an existing expense
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-update-expense-001",
+  "nodeParams": {
+    "action": "update_expense",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "expense-123",
+      "amount": 5500,
+      "description": "Updated materials cost"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-delete-expense"></a>
+#### Example 48: Housecall Pro - Delete Expense
+
+Delete an expense by ID
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-delete-expense-001",
+  "nodeParams": {
+    "action": "delete_expense",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "expense-123"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-list-tags"></a>
+#### Example 49: Housecall Pro - List Tags
+
+List all tags available
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-list-tags-001",
+  "nodeParams": {
+    "action": "list_tags",
+    "params": {
+      "apiKey": "your-api-key"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-create-tag"></a>
+#### Example 50: Housecall Pro - Create Tag
+
+Create a new tag for categorization
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-create-tag-001",
+  "nodeParams": {
+    "action": "create_tag",
+    "params": {
+      "apiKey": "your-api-key",
+      "name": "VIP Customer",
+      "color": "#FF5733"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-get-tag"></a>
+#### Example 51: Housecall Pro - Get Tag
+
+Get tag details by ID
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-get-tag-001",
+  "nodeParams": {
+    "action": "get_tag",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "tag-123"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-update-tag"></a>
+#### Example 52: Housecall Pro - Update Tag
+
+Update tag name or color
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-update-tag-001",
+  "nodeParams": {
+    "action": "update_tag",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "tag-123",
+      "name": "Premium VIP Customer",
+      "color": "#FFD700"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-delete-tag"></a>
+#### Example 53: Housecall Pro - Delete Tag
+
+Delete a tag by ID
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-delete-tag-001",
+  "nodeParams": {
+    "action": "delete_tag",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "tag-123"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-list-notes"></a>
+#### Example 54: Housecall Pro - List Notes
+
+List notes filtered by job or customer
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-list-notes-001",
+  "nodeParams": {
+    "action": "list_notes",
+    "params": {
+      "apiKey": "your-api-key",
+      "job_id": "job-123",
+      "page": 1,
+      "page_size": 25
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-create-note"></a>
+#### Example 55: Housecall Pro - Create Note
+
+Create a note for a job or customer
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-create-note-001",
+  "nodeParams": {
+    "action": "create_note",
+    "params": {
+      "apiKey": "your-api-key",
+      "job_id": "job-123",
+      "content": "Customer requested callback after 3pm"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-get-note"></a>
+#### Example 56: Housecall Pro - Get Note
+
+Get note details by ID
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-get-note-001",
+  "nodeParams": {
+    "action": "get_note",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "note-123"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-update-note"></a>
+#### Example 57: Housecall Pro - Update Note
+
+Update note content
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-update-note-001",
+  "nodeParams": {
+    "action": "update_note",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "note-123",
+      "content": "Customer callback completed at 3:30pm"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-delete-note"></a>
+#### Example 58: Housecall Pro - Delete Note
+
+Delete a note by ID
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-delete-note-001",
+  "nodeParams": {
+    "action": "delete_note",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "note-123"
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-list-payments"></a>
+#### Example 59: Housecall Pro - List Payments
+
+List payments filtered by job or customer
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-list-payments-001",
+  "nodeParams": {
+    "action": "list_payments",
+    "params": {
+      "apiKey": "your-api-key",
+      "customer_id": "customer-123",
+      "page": 1,
+      "page_size": 25
+    }
+  }
+}
+```
+
+---
+
+<a id="housecallpro-get-payment"></a>
+#### Example 60: Housecall Pro - Get Payment
+
+Get payment details by ID
+
+```json
+{
+  "automationType": "housecallpro",
+  "nodeId": "housecallpro-get-payment-001",
+  "nodeParams": {
+    "action": "get_payment",
+    "params": {
+      "apiKey": "your-api-key",
+      "id": "payment-123"
+    }
+  }
+}
+```
+
+## Third-Party Documentation
+
+- [https://docs.housecallpro.com/](https://docs.housecallpro.com/)

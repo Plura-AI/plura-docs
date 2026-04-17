@@ -1,0 +1,236 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Documentation",
+  "colors": {
+    "primary": "#2971FF",
+    "light": "#2971FF",
+    "dark": "#2971FF"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "anchors": [
+      {
+        "anchor": "Documentation",
+        "icon": "book-open",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "intro-to-plura",
+              "compliance"
+            ]
+          },
+          {
+            "group": "The Platform",
+            "pages": [
+              "the-platform/workspaces",
+              {
+                "group": "AI Agents",
+                "pages": [
+                  "the-platform/ai-agents/overview",
+                  "the-platform/ai-agents/configuration",
+                  "the-platform/ai-agents/voice-settings",
+                  "the-platform/ai-agents/analysis",
+                  "the-platform/ai-agents/advanced",
+                  "the-platform/ai-agents/deploy",
+                  "the-platform/ai-agents/calls"
+                ]
+              },
+              {
+                "group": "Workflows",
+                "pages": [
+                  "the-platform/workflows/overview",
+                  "the-platform/workflows/building-flows",
+                  {
+                    "group": "Nodes",
+                    "pages": [
+                      "the-platform/workflows/nodes/overview",
+                      "the-platform/workflows/nodes/ai-conversation-node",
+                      "the-platform/workflows/nodes/knowledge-base-node",
+                      "the-platform/workflows/nodes/end-call-node",
+                      "the-platform/workflows/nodes/transfer-call-node",
+                      "the-platform/workflows/nodes/api-call-node",
+                      {
+                        "group": "Media Processing Node",
+                        "pages": [
+                          "the-platform/workflows/nodes/media-processing-node",
+                          "the-platform/workflows/nodes/taxonomy-manager"
+                        ]
+                      }
+                    ]
+                  },
+                  "the-platform/workflows/decision-triggers",
+                  "the-platform/workflows/universal-prompts"
+                ]
+              },
+              {
+                "group": "Integrations",
+                "pages": [
+                  "the-platform/integrations/overview",
+                  {
+                    "group": "AI Services",
+                    "pages": [
+                      "the-platform/integrations/ai-services/ai-chat",
+                      "the-platform/integrations/ai-services/chat-gpt",
+                      "the-platform/integrations/ai-services/claude",
+                      "the-platform/integrations/ai-services/gemini",
+                      "the-platform/integrations/ai-services/grok"
+                    ]
+                  },
+                  {
+                    "group": "Attribution",
+                    "pages": [
+                      "the-platform/integrations/attribution/cometly",
+                      "the-platform/integrations/attribution/meta",
+                      "the-platform/integrations/attribution/retreaver",
+                      "the-platform/integrations/attribution/ringba"
+                    ]
+                  },
+                  {
+                    "group": "Automations",
+                    "pages": [
+                      "the-platform/integrations/automations/gohighlevel",
+                      "the-platform/integrations/automations/heygen",
+                      "the-platform/integrations/automations/hubspot",
+                      "the-platform/integrations/automations/make",
+                      "the-platform/integrations/automations/salesforce",
+                      "the-platform/integrations/automations/shopify",
+                      "the-platform/integrations/automations/skyvern",
+                      "the-platform/integrations/automations/zapier",
+                      "the-platform/integrations/automations/zoho"
+                    ]
+                  },
+                  {
+                    "group": "Calendars",
+                    "pages": [
+                      "the-platform/integrations/calendars/cal-com",
+                      "the-platform/integrations/calendars/calendly",
+                      "the-platform/integrations/calendars/google-calendar"
+                    ]
+                  },
+                  {
+                    "group": "CRM",
+                    "pages": [
+                      "the-platform/integrations/crm/checkoutchamp",
+                      "the-platform/integrations/crm/followupboss",
+                      "the-platform/integrations/crm/gohighlevel",
+                      "the-platform/integrations/crm/housecallpro",
+                      "the-platform/integrations/crm/hubspot",
+                      "the-platform/integrations/crm/salesforce",
+                      "the-platform/integrations/crm/servicebridge",
+                      "the-platform/integrations/crm/zoho"
+                    ]
+                  },
+                  {
+                    "group": "Data",
+                    "pages": [
+                      "the-platform/integrations/data/airtable",
+                      "the-platform/integrations/data/enformion",
+                      "the-platform/integrations/data/firecrawl-web-scraper",
+                      "the-platform/integrations/data/fullcontact",
+                      "the-platform/integrations/data/people-data-labs",
+                      "the-platform/integrations/data/proxy-api-request"
+                    ]
+                  },
+                  {
+                    "group": "Documents",
+                    "pages": [
+                      "the-platform/integrations/documents/docusign",
+                      "the-platform/integrations/documents/google-drive",
+                      "the-platform/integrations/documents/google-sheets",
+                      "the-platform/integrations/documents/pandadoc"
+                    ]
+                  },
+                  {
+                    "group": "Messaging",
+                    "pages": [
+                      "the-platform/integrations/messaging/klaviyo",
+                      "the-platform/integrations/messaging/microsoft-teams",
+                      "the-platform/integrations/messaging/slack"
+                    ]
+                  },
+                  {
+                    "group": "Payments",
+                    "pages": [
+                      "the-platform/integrations/payments/stripe"
+                    ]
+                  },
+                  {
+                    "group": "Real Estate",
+                    "pages": [
+                      "the-platform/integrations/real-estate/attom",
+                      "the-platform/integrations/real-estate/housecanary",
+                      "the-platform/integrations/real-estate/property-data-bundle",
+                      "the-platform/integrations/real-estate/rentcast",
+                      "the-platform/integrations/real-estate/simplyrets"
+                    ]
+                  },
+                  {
+                    "group": "Validation",
+                    "pages": [
+                      "the-platform/integrations/validation/blacklist-alliance",
+                      "the-platform/integrations/validation/ipqualityscore",
+                      "the-platform/integrations/validation/reassigned-numbers-db-rnd",
+                      "the-platform/integrations/validation/trestleiq"
+                    ]
+                  },
+                  {
+                    "group": "Team Management",
+                    "pages": [
+                      "the-platform/integrations/team-management/jira"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "global": {
+      "tabs": [
+        {
+          "tab": "API Reference",
+          "href": "https://start.plura.ai/plura-ai-api-documentation"
+        }
+      ],
+      "anchors": [
+        {
+          "anchor": "Community",
+          "href": "https://discord.gg/PcxWWwX9jN",
+          "icon": "discord"
+        },
+        {
+          "anchor": "Blog",
+          "href": "https://plura.ai/blog",
+          "icon": "newspaper"
+        }
+      ]
+    }
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "mailto:hi@plura.ai"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Dashboard",
+      "href": "https://app.plura.ai"
+    }
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/plura",
+      "github": "https://github.com/plura",
+      "linkedin": "https://www.linkedin.com/company/plura"
+    }
+  }
+}

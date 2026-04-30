@@ -1,56 +1,198 @@
 ---
-title: "Attom"
-description: "Real-time property data powering AI-driven conversations"
+title: "ATTOM"
+description: "Property data, AVMs, sales history, foreclosure, schools, hazards, and area analytics from ATTOM Data Solutions"
 ---
 
-### Description
+## Overview
 
-Real-time property data powering AI-driven conversations. Use this integration to get comprehensive property data including property details, AVM estimates, sales history, foreclosure information, neighborhood statistics, environmental risks, school information, and assessment data.
+ATTOM Data Solutions exposes a single `attom` automation type that fans out to every endpoint across the Property, Sale, Assessment, AVM, Valuation, Sales Comparables, All Events, Area, Community, POI, School, and DLP product families. Call any action with `automationType: "attom"`, an `action` name, and a `params` body.
 
-### Authentication
+## Authentication
 
-- ATTOM Data Solutions API Key.
+- ATTOM API Key — pass it as `params.apiKey` on every request.
 
-### Available Actions
+## Identifier schemes
 
-**Property Data:**
-- Property details (basic, expanded, with schools, mortgage, owner)
-- Property profiles (basic and expanded)
-- AVM details and Attomized AVM
-- Sale details and sales history
-- Assessment history
-- All events detail
+Most property-level actions accept a universal identifier set. **Provide exactly one** of the following schemes; paired schemes require both fields together.
 
-**Foreclosure:**
-- Check foreclosure by address
-- Get detailed foreclosure information
+- `attomid` — ATTOM property ID (most precise; you'll typically obtain it from a prior `property_id` or `property_address` lookup).
+- `address` — full single-line address (e.g. `"5500 Grand Lake Dr, San Antonio, TX, 78244"`).
+- `address1` + `address2` — paired (street on line 1, "City, State, Zip" on line 2).
+- `fips` + `apn` — paired (FIPS county code + assessor parcel number).
+- `latitude` + `longitude` — paired (decimal degrees).
 
-**Property History:**
-- Get property ownership and sales history
-- Get mortgage and loan details
+Partial pairs (e.g. only `address1` without `address2`) are rejected by the validator. The handler additionally enforces that at least one scheme is supplied.
 
-**Neighborhood:**
-- Get neighborhood market data
-- Get market statistics by zip code
+A few endpoints have their own identifier rules (called out per-action):
 
-**Environmental:**
-- Get environmental risk data
-- Get natural hazard information (flood, earthquake, etc.)
+- `avmhistory_detail` — same as universal except no single-line `address`.
+- `salescomparables_*` — DLP v2 endpoints that take URL path segments (`street`/`city`/`state`/`zip`, `apn`/`county`/`state`, or `attomid`).
+- `preforeclosure_details` — accepts `AttomID`, OR `apn`+`county`+`state` (triple), OR `combinedAddress`.
+- Area / Community / School / POI — geographic identifiers (`geoIdv4`, `geoIdV4`, lat/lon + radius, etc.).
 
-**Schools:**
-- School details
-- School district details
+## Available Actions
 
-### Examples
+**Property**
+- [Property ID](#attom-property-id)
+- [Property Address](#attom-property-address)
+- [Property Snapshot](#attom-property-snapshot)
+- [Property Detail](#attom-property-detail)
+- [Property Basic Profile](#attom-property-basicprofile)
+- [Property Expanded Profile](#attom-property-expandedprofile)
+- [Property Detail with Schools](#attom-property-detailwithschools)
+- [Property Detail Mortgage](#attom-property-detailmortgage)
+- [Property Detail Owner](#attom-property-detailowner)
+- [Property Detail Mortgage Owner](#attom-property-detailmortgageowner)
+- [Property Building Permits](#attom-property-buildingpermits)
 
-**Example 1: ATTOM - Property Detail**
+**Sale & Sales History**
+- [Sale Detail](#attom-sale-detail)
+- [Sale Snapshot](#attom-sale-snapshot)
+- [Sales History Detail](#attom-saleshistory-detail)
+- [Sales History Snapshot](#attom-saleshistory-snapshot)
+- [Sales History Basic](#attom-saleshistory-basichistory)
+- [Sales History Expanded](#attom-saleshistory-expandedhistory)
 
-Get property details based on ID or address. Returns basic property information including identifier, lot details, area, address, location, summary, utilities, and building characteristics.
+**Assessment**
+- [Assessment Detail](#attom-assessment-detail)
+- [Assessment Snapshot](#attom-assessment-snapshot)
+- [Assessment History Detail](#attom-assessmenthistory-detail)
+
+**AVM (Automated Valuation Model)**
+- [AVM Detail](#attom-avm-detail)
+- [AVM Snapshot](#attom-avm-snapshot)
+- [Attomized AVM Detail](#attom-attomavm-detail)
+- [AVM History Detail](#attom-avmhistory-detail)
+
+**Valuation**
+- [Home Equity](#attom-valuation-homeequity)
+- [Rental AVM](#attom-valuation-rentalavm)
+
+**Sales Comparables (DLP v2)**
+- [Comparables by Address](#attom-salescomparables-address)
+- [Comparables by APN](#attom-salescomparables-apn)
+- [Comparables by Property ID](#attom-salescomparables-propid)
+
+**All Events**
+- [All Events Detail](#attom-allevents-detail)
+- [All Events Snapshot](#attom-allevents-snapshot)
+
+**Enumerations**
+- [Enumerations Detail](#attom-enumerations-detail)
+
+**School**
+- [School Search](#attom-school-search)
+- [School Profile](#attom-school-profile)
+- [School District](#attom-school-district)
+
+**Specialty**
+- [Transportation Noise](#attom-transportation-noise)
+- [Sales Trend](#attom-salestrend)
+- [Preforeclosure Details](#attom-preforeclosure-details)
+
+**Area API**
+- [Area Boundary Detail](#attom-area-boundary-detail)
+- [Area Hierarchy Lookup](#attom-area-hierarchy-lookup)
+- [Area State Lookup](#attom-area-state-lookup)
+- [Area County Lookup](#attom-area-county-lookup)
+- [Area CBSA Lookup](#attom-area-cbsa-lookup)
+- [Area GeoID Lookup](#attom-area-geoid-lookup)
+- [Area GeoID Legacy Lookup](#attom-area-geoid-legacy-lookup)
+- [Area Location Lookup](#attom-area-location-lookup)
+
+**Community API**
+- [Community Neighborhood](#attom-community-neighborhood)
+- [Community Location Lookup](#attom-community-location-lookup)
+
+**POI (Points of Interest)**
+- [POI Search by Point](#attom-poi-search-by-point)
+- [POI Search by Address](#attom-poi-search-by-address)
+- [POI Category Lookup](#attom-poi-category-lookup)
+
+**Deprecated legacy aliases** — kept for backward compatibility, each forwards to a canonical action:
+- [School Detail (→ school_profile)](#attom-school-detail)
+- [School District Detail (→ school_district)](#attom-school-districtdetail)
+- [Foreclosure by Address (→ preforeclosure_details)](#attom-foreclosure-by-address)
+- [Foreclosure Details (→ preforeclosure_details)](#attom-foreclosure-details)
+- [Property History (→ allevents_detail)](#attom-property-history)
+- [Mortgage Details (→ allevents_detail)](#attom-mortgage-details)
+- [Neighborhood Market Data (→ salestrend)](#attom-neighborhood-market-data)
+- [Market Statistics (→ salestrend)](#attom-market-statistics)
+- [Environmental Data (→ transportation_noise)](#attom-environmental-data)
+- [Hazard Data (→ transportation_noise)](#attom-hazard-data)
+
+## Examples
+
+<a id="attom-property-id"></a>
+#### Example 1: Property ID
+
+Look up a property using any identifier scheme. Often used as the first call to obtain `attomid` for downstream actions.
 
 ```json
 {
   "automationType": "attom",
-  "nodeId": "test-node-id",
+  "nodeId": "example-node-001",
+  "nodeParams": {
+    "action": "property_id",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address1": "5500 Grand Lake Dr",
+      "address2": "San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-property-address"></a>
+#### Example 2: Property Address
+
+Address lookup returning core property fields.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "property_address",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-property-snapshot"></a>
+#### Example 3: Property Snapshot
+
+Summary property snapshot.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "property_snapshot",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "attomid": "2509607"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-property-detail"></a>
+#### Example 4: Property Detail
+
+Detailed property characteristics — identifier, lot, area, address, location, summary, utilities, building.
+
+```json
+{
+  "automationType": "attom",
   "nodeParams": {
     "action": "property_detail",
     "params": {
@@ -61,14 +203,16 @@ Get property details based on ID or address. Returns basic property information 
 }
 ```
 
-**Example 2: ATTOM - Property Basic Profile**
+---
 
-Get basic property information and most recent transaction and taxes. Requires a valid ATTOM ID (attomid) from a previous property lookup.
+<a id="attom-property-basicprofile"></a>
+#### Example 5: Property Basic Profile
+
+Basic property info plus the most recent transaction and taxes.
 
 ```json
 {
   "automationType": "attom",
-  "nodeId": "test-node-id",
   "nodeParams": {
     "action": "property_basicprofile",
     "params": {
@@ -79,14 +223,16 @@ Get basic property information and most recent transaction and taxes. Requires a
 }
 ```
 
-**Example 3: ATTOM - Property Expanded Profile**
+---
 
-Get detailed property information and most recent transaction and taxes. Includes sale information, assessment data, mortgage details, and owner information.
+<a id="attom-property-expandedprofile"></a>
+#### Example 6: Property Expanded Profile
+
+Detailed property info plus most recent transaction, assessment, mortgage, and owner data.
 
 ```json
 {
   "automationType": "attom",
-  "nodeId": "test-node-id",
   "nodeParams": {
     "action": "property_expandedprofile",
     "params": {
@@ -98,32 +244,36 @@ Get detailed property information and most recent transaction and taxes. Include
 }
 ```
 
-**Example 4: ATTOM - Property Detail with Schools**
+---
 
-Get property details with schools within attendance boundary. Requires a valid property ID from a previous property lookup.
+<a id="attom-property-detailwithschools"></a>
+#### Example 7: Property Detail with Schools
+
+Property detail plus schools within the attendance boundary.
 
 ```json
 {
   "automationType": "attom",
-  "nodeId": "test-node-id",
   "nodeParams": {
     "action": "property_detailwithschools",
     "params": {
       "apiKey": "YOUR_ATTOM_API_KEY",
-      "id": "2509607"
+      "attomid": "2509607"
     }
   }
 }
 ```
 
-**Example 5: ATTOM - Property Detail Mortgage**
+---
 
-Get property details with mortgage information including lender name, loan amount, loan type, term, and due date.
+<a id="attom-property-detailmortgage"></a>
+#### Example 8: Property Detail Mortgage
+
+Property detail with mortgage information (lender, loan amount, type, term, due date).
 
 ```json
 {
   "automationType": "attom",
-  "nodeId": "test-node-id",
   "nodeParams": {
     "action": "property_detailmortgage",
     "params": {
@@ -135,14 +285,16 @@ Get property details with mortgage information including lender name, loan amoun
 }
 ```
 
-**Example 6: ATTOM - Property Detail Owner**
+---
 
-Get property details with owner information including owner names, mailing address, and absentee owner status.
+<a id="attom-property-detailowner"></a>
+#### Example 9: Property Detail Owner
+
+Property detail with owner names, mailing address, and absentee-owner status.
 
 ```json
 {
   "automationType": "attom",
-  "nodeId": "test-node-id",
   "nodeParams": {
     "action": "property_detailowner",
     "params": {
@@ -154,14 +306,16 @@ Get property details with owner information including owner names, mailing addre
 }
 ```
 
-**Example 7: ATTOM - Property Detail Mortgage Owner**
+---
 
-Get property details with both mortgage and owner information in a single response.
+<a id="attom-property-detailmortgageowner"></a>
+#### Example 10: Property Detail Mortgage Owner
+
+Property detail combined with both mortgage and owner information.
 
 ```json
 {
   "automationType": "attom",
-  "nodeId": "test-node-id",
   "nodeParams": {
     "action": "property_detailmortgageowner",
     "params": {
@@ -173,52 +327,18 @@ Get property details with both mortgage and owner information in a single respon
 }
 ```
 
-**Example 8: ATTOM - School Detail**
+---
 
-Get details about a particular school. Requires a valid school ID from a previous property lookup.
+<a id="attom-property-buildingpermits"></a>
+#### Example 11: Property Building Permits
 
-```json
-{
-  "automationType": "attom",
-  "nodeId": "test-node-id",
-  "nodeParams": {
-    "action": "school_detail",
-    "params": {
-      "apiKey": "YOUR_ATTOM_API_KEY",
-      "id": "12345678"
-    }
-  }
-}
-```
-
-**Example 9: ATTOM - School District Detail**
-
-Get details about a particular school district. Requires a valid school district ID from a previous property lookup.
+Building permit history for a property.
 
 ```json
 {
   "automationType": "attom",
-  "nodeId": "test-node-id",
   "nodeParams": {
-    "action": "school_districtdetail",
-    "params": {
-      "apiKey": "YOUR_ATTOM_API_KEY",
-      "id": "12345678"
-    }
-  }
-}
-```
-
-**Example 10: ATTOM - AVM Detail**
-
-Get AVM (Automated Valuation Model) details for a property including value estimates, high/low ranges, condition-based values, and AVM change history.
-
-```json
-{
-  "automationType": "attom",
-  "nodeId": "test-node-id",
-  "nodeParams": {
-    "action": "avm_detail",
+    "action": "property_buildingpermits",
     "params": {
       "apiKey": "YOUR_ATTOM_API_KEY",
       "address1": "5500 Grand Lake Dr",
@@ -228,32 +348,16 @@ Get AVM (Automated Valuation Model) details for a property including value estim
 }
 ```
 
-**Example 11: ATTOM - Attomized AVM Detail**
+---
 
-Get the Attomized AVM and other property details. Requires a valid ATTOM ID (attomid) from a previous property lookup.
+<a id="attom-sale-detail"></a>
+#### Example 12: Sale Detail
 
-```json
-{
-  "automationType": "attom",
-  "nodeId": "test-node-id",
-  "nodeParams": {
-    "action": "attomavm_detail",
-    "params": {
-      "apiKey": "YOUR_ATTOM_API_KEY",
-      "attomid": "2509607"
-    }
-  }
-}
-```
-
-**Example 12: ATTOM - Sale Detail**
-
-Get sale information for a property including sale amount, sale date, sale type, buyer/seller information, and price calculations.
+Detailed information about a property's most recent sale (amount, date, type, buyer/seller, price calcs).
 
 ```json
 {
   "automationType": "attom",
-  "nodeId": "test-node-id",
   "nodeParams": {
     "action": "sale_detail",
     "params": {
@@ -265,52 +369,36 @@ Get sale information for a property including sale amount, sale date, sale type,
 }
 ```
 
-**Example 13: ATTOM - Sales History Basic**
+---
 
-Get basic transaction and loan history on a property. Returns a chronological list of sales, mortgages, and transfers with buyer/seller names and mortgage details.
+<a id="attom-sale-snapshot"></a>
+#### Example 13: Sale Snapshot
+
+Summary of the most recent sale.
 
 ```json
 {
   "automationType": "attom",
-  "nodeId": "test-node-id",
   "nodeParams": {
-    "action": "saleshistory_basichistory",
+    "action": "sale_snapshot",
     "params": {
       "apiKey": "YOUR_ATTOM_API_KEY",
-      "address1": "5500 Grand Lake Dr",
-      "address2": "San Antonio, TX, 78244"
+      "attomid": "2509607"
     }
   }
 }
 ```
 
-**Example 14: ATTOM - Sales History Expanded**
+---
 
-Get detailed transaction, pre-foreclosure and loan history on a property. Includes foreclosure information, detailed sale history with title company and deed types, and comprehensive mortgage details.
+<a id="attom-saleshistory-detail"></a>
+#### Example 14: Sales History Detail
 
-```json
-{
-  "automationType": "attom",
-  "nodeId": "test-node-id",
-  "nodeParams": {
-    "action": "saleshistory_expandedhistory",
-    "params": {
-      "apiKey": "YOUR_ATTOM_API_KEY",
-      "address1": "5500 Grand Lake Dr",
-      "address2": "San Antonio, TX, 78244"
-    }
-  }
-}
-```
-
-**Example 15: ATTOM - Sales History Detail**
-
-Get sales history for a property. Returns a simplified list of sales transactions with amounts and dates.
+Sales history with transfer details.
 
 ```json
 {
   "automationType": "attom",
-  "nodeId": "test-node-id",
   "nodeParams": {
     "action": "saleshistory_detail",
     "params": {
@@ -322,14 +410,324 @@ Get sales history for a property. Returns a simplified list of sales transaction
 }
 ```
 
-**Example 16: ATTOM - All Events Detail**
+---
 
-Get all events that have occurred on a specific address. Returns comprehensive data including AVM, sale, and assessment information in a single response.
+<a id="attom-saleshistory-snapshot"></a>
+#### Example 15: Sales History Snapshot
+
+Summary sales history.
 
 ```json
 {
   "automationType": "attom",
-  "nodeId": "test-node-id",
+  "nodeParams": {
+    "action": "saleshistory_snapshot",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "attomid": "2509607"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-saleshistory-basichistory"></a>
+#### Example 16: Sales History Basic
+
+Basic chronological list of sales, mortgages, and transfers with buyer/seller and mortgage details.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "saleshistory_basichistory",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address1": "5500 Grand Lake Dr",
+      "address2": "San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-saleshistory-expandedhistory"></a>
+#### Example 17: Sales History Expanded
+
+Detailed transaction, pre-foreclosure, and loan history with title company, deed types, and full mortgage detail.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "saleshistory_expandedhistory",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address1": "5500 Grand Lake Dr",
+      "address2": "San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-assessment-detail"></a>
+#### Example 18: Assessment Detail
+
+Detailed assessment data including tax amounts.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "assessment_detail",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address1": "5500 Grand Lake Dr",
+      "address2": "San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-assessment-snapshot"></a>
+#### Example 19: Assessment Snapshot
+
+Summary assessment data.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "assessment_snapshot",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "attomid": "2509607"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-assessmenthistory-detail"></a>
+#### Example 20: Assessment History Detail
+
+Historical assessment records for a property.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "assessmenthistory_detail",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "attomid": "2509607"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-avm-detail"></a>
+#### Example 21: AVM Detail
+
+Legacy AVM endpoint with value estimates and ranges.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "avm_detail",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address1": "5500 Grand Lake Dr",
+      "address2": "San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-avm-snapshot"></a>
+#### Example 22: AVM Snapshot
+
+Summary AVM.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "avm_snapshot",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "attomid": "2509607"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-attomavm-detail"></a>
+#### Example 23: Attomized AVM Detail
+
+Canonical AVM endpoint — market values, value range, and confidence scores.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "attomavm_detail",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "attomid": "2509607"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-avmhistory-detail"></a>
+#### Example 24: AVM History Detail
+
+Historical AVM valuations. Identifier rules differ slightly: no single-line `address` — use `attomid`, `address1`+`address2`, or `fips`+`apn`.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "avmhistory_detail",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "attomid": "2509607"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-valuation-homeequity"></a>
+#### Example 25: Valuation Home Equity
+
+Direct home equity estimate. Typically requires the Home Equity add-on tier on the ATTOM contract.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "valuation_homeequity",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address1": "5500 Grand Lake Dr",
+      "address2": "San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-valuation-rentalavm"></a>
+#### Example 26: Valuation Rental AVM
+
+Automated valuation model for rental properties.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "valuation_rentalavm",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address1": "5500 Grand Lake Dr",
+      "address2": "San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-salescomparables-address"></a>
+#### Example 27: Sales Comparables by Address
+
+DLP v2 endpoint — identifiers passed as URL path segments. Use `"-"` for unknown county.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "salescomparables_address",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "street": "222 sirius ave",
+      "city": "anaheim",
+      "county": "-",
+      "state": "ca",
+      "zip": "92802"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-salescomparables-apn"></a>
+#### Example 28: Sales Comparables by APN
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "salescomparables_apn",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "apn": "127-471-49",
+      "county": "orange",
+      "state": "ca"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-salescomparables-propid"></a>
+#### Example 29: Sales Comparables by Property ID
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "salescomparables_propid",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "attomid": "2509607"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-allevents-detail"></a>
+#### Example 30: All Events Detail
+
+Combined timeline of assessments, AVM updates, and sales for a property.
+
+```json
+{
+  "automationType": "attom",
   "nodeParams": {
     "action": "allevents_detail",
     "params": {
@@ -341,133 +739,613 @@ Get all events that have occurred on a specific address. Returns comprehensive d
 }
 ```
 
-**Example 17: ATTOM - Assessment History Detail**
+---
 
-Get assessment history and property details. Requires a valid property ID from a previous property lookup.
+<a id="attom-allevents-snapshot"></a>
+#### Example 31: All Events Snapshot
+
+Summary of all property events.
 
 ```json
 {
   "automationType": "attom",
-  "nodeId": "test-node-id",
   "nodeParams": {
-    "action": "assessmenthistory_detail",
+    "action": "allevents_snapshot",
     "params": {
       "apiKey": "YOUR_ATTOM_API_KEY",
-      "id": "2509607"
+      "attomid": "2509607"
     }
   }
 }
 ```
 
-**Example 18: ATTOM - Foreclosure by Address**
+---
 
-Check if a property is in foreclosure.
+<a id="attom-enumerations-detail"></a>
+#### Example 32: Enumerations Detail
+
+Returns enumerated values used elsewhere in the API. Omit `fieldnames` to retrieve the full set.
 
 ```json
 {
-  "automationType": "attom_foreclosure",
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "enumerations_detail",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "fieldnames": "PropertyType,DeedType"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-school-search"></a>
+#### Example 33: School Search
+
+Search for schools by `latitude` + `longitude` + `radius`, OR by `geoIdv4`. Lat/lon must be paired.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "school_search",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "latitude": "29.4719",
+      "longitude": "-98.5247",
+      "radius": "5"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-school-profile"></a>
+#### Example 34: School Profile
+
+Detailed profile for a single school by `geoIdv4`.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "school_profile",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "geoIdv4": "9c1d09c5e1a9b8a6f3e7c0d4b2a1e8f9"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-school-district"></a>
+#### Example 35: School District
+
+Detailed profile for a school district by `geoIdv4`.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "school_district",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "geoIdv4": "0a2b1c4d3e5f6789a0b1c2d3e4f56789"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-transportation-noise"></a>
+#### Example 36: Transportation Noise
+
+Transportation noise data for a property.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "transportation_noise",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-salestrend"></a>
+#### Example 37: Sales Trend
+
+Two years of average / median sale prices and counts within a geographic area. Common `interval` values: `monthly`, `quarterly`, `yearly`.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "salestrend",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "geoIdv4": "31bd5b21fc8f1aa1f7a35936a7ce4d5e",
+      "interval": "yearly",
+      "startyear": "2022",
+      "endyear": "2024"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-preforeclosure-details"></a>
+#### Example 38: Preforeclosure Details
+
+Pre-foreclosure detail. Provide exactly one of: `AttomID`, `apn`+`county`+`state` (all three required together), or `combinedAddress`.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "preforeclosure_details",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "combinedAddress": "5709 W NANCY ST, SIOUX FALLS, SD 57106"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-area-boundary-detail"></a>
+#### Example 39: Area Boundary Detail
+
+Boundary data for an area by `geoIdV4` or `areaId`.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "area_boundary_detail",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "geoIdV4": "31bd5b21fc8f1aa1f7a35936a7ce4d5e",
+      "format": "geojson"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-area-hierarchy-lookup"></a>
+#### Example 40: Area Hierarchy Lookup
+
+Area hierarchy lookup by `latitude`+`longitude` (paired) or by `wktstring` + `geoType`.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "area_hierarchy_lookup",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "latitude": "29.4719",
+      "longitude": "-98.5247"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-area-state-lookup"></a>
+#### Example 41: Area State Lookup
+
+State-level area lookup.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "area_state_lookup",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "stateId": "TX"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-area-county-lookup"></a>
+#### Example 42: Area County Lookup
+
+County lookup within a state.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "area_county_lookup",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "stateId": "TX"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-area-cbsa-lookup"></a>
+#### Example 43: Area CBSA Lookup
+
+Metropolitan Statistical Area lookup.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "area_cbsa_lookup",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "stateId": "TX"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-area-geoid-lookup"></a>
+#### Example 44: Area GeoID Lookup
+
+GeoID lookup with type. Common `geoType` codes: `ND` (neighborhood), `ZI` (zip), `CO` (county).
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "area_geoid_lookup",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "geoIdV4": "31bd5b21fc8f1aa1f7a35936a7ce4d5e",
+      "geoType": "ZI"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-area-geoid-legacy-lookup"></a>
+#### Example 45: Area GeoID Legacy Lookup
+
+Convert a legacy `geoId` to a v4 identifier.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "area_geoid_legacy_lookup",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "geoId": "ZI78244"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-area-location-lookup"></a>
+#### Example 46: Area Location Lookup
+
+`/v4/location/lookup` — find a location by name and geographic type.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "area_location_lookup",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "name": "San Antonio",
+      "geographyTypeAbbreviation": "CO"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-community-neighborhood"></a>
+#### Example 47: Community Neighborhood
+
+Community / demographic profile by neighborhood `geoIdv4`.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "community_neighborhood",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "geoIdv4": "9c1d09c5e1a9b8a6f3e7c0d4b2a1e8f9"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-community-location-lookup"></a>
+#### Example 48: Community Location Lookup
+
+Community-context wrapper around `/v4/location/lookup`.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "community_location_lookup",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "name": "San Antonio",
+      "geographyTypeAbbreviation": "CO"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-poi-search-by-point"></a>
+#### Example 49: POI Search by Point
+
+Points of interest search by WKT POINT.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "poi_search_by_point",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "point": "POINT(-98.5247 29.4719)",
+      "radius": "1",
+      "categoryName": "RESTAURANT"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-poi-search-by-address"></a>
+#### Example 50: POI Search by Address
+
+Points of interest search by address.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "poi_search_by_address",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244",
+      "radius": "1"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-poi-category-lookup"></a>
+#### Example 51: POI Category Lookup
+
+Look up POI categories, lines of business, and industries.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "poi_category_lookup",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "category": "RESTAURANT"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-school-detail"></a>
+#### Example 52: School Detail (legacy)
+
+**Deprecated** — forwards to `school_profile`. Kept for backward compatibility with the legacy `school_detail` action.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "school_detail",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "geoIdv4": "9c1d09c5e1a9b8a6f3e7c0d4b2a1e8f9"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-school-districtdetail"></a>
+#### Example 53: School District Detail (legacy)
+
+**Deprecated** — forwards to `school_district`.
+
+```json
+{
+  "automationType": "attom",
+  "nodeParams": {
+    "action": "school_districtdetail",
+    "params": {
+      "apiKey": "YOUR_ATTOM_API_KEY",
+      "geoIdv4": "0a2b1c4d3e5f6789a0b1c2d3e4f56789"
+    }
+  }
+}
+```
+
+---
+
+<a id="attom-foreclosure-by-address"></a>
+#### Example 54: Foreclosure by Address (legacy)
+
+**Deprecated** — forwards to `preforeclosure_details` (combinedAddress form).
+
+```json
+{
+  "automationType": "attom",
   "nodeParams": {
     "action": "foreclosure_by_address",
     "params": {
       "apiKey": "YOUR_ATTOM_API_KEY",
-      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244"
+      "combinedAddress": "5709 W NANCY ST, SIOUX FALLS, SD 57106"
     }
   }
 }
 ```
 
-**Example 19: ATTOM - Foreclosure Details**
+---
 
-Get detailed foreclosure information for a property.
+<a id="attom-foreclosure-details"></a>
+#### Example 55: Foreclosure Details (legacy)
+
+**Deprecated** — forwards to `preforeclosure_details`.
 
 ```json
 {
-  "automationType": "attom_foreclosure",
+  "automationType": "attom",
   "nodeParams": {
     "action": "foreclosure_details",
     "params": {
       "apiKey": "YOUR_ATTOM_API_KEY",
-      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244"
+      "combinedAddress": "5709 W NANCY ST, SIOUX FALLS, SD 57106"
     }
   }
 }
 ```
 
-**Example 20: ATTOM - Property History**
+---
 
-Get property ownership and sales history.
+<a id="attom-property-history"></a>
+#### Example 56: Property History (legacy)
+
+**Deprecated** — forwards to `allevents_detail`.
 
 ```json
 {
-  "automationType": "attom_property_history",
+  "automationType": "attom",
   "nodeParams": {
     "action": "property_history",
     "params": {
       "apiKey": "YOUR_ATTOM_API_KEY",
-      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244"
+      "address1": "5500 Grand Lake Dr",
+      "address2": "San Antonio, TX, 78244"
     }
   }
 }
 ```
 
-**Example 21: ATTOM - Mortgage Details**
+---
 
-Get mortgage and loan information for a property.
+<a id="attom-mortgage-details"></a>
+#### Example 57: Mortgage Details (legacy)
+
+**Deprecated** — forwards to `allevents_detail`.
 
 ```json
 {
-  "automationType": "attom_property_history",
+  "automationType": "attom",
   "nodeParams": {
     "action": "mortgage_details",
     "params": {
       "apiKey": "YOUR_ATTOM_API_KEY",
-      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244"
+      "address1": "5500 Grand Lake Dr",
+      "address2": "San Antonio, TX, 78244"
     }
   }
 }
 ```
 
-**Example 22: ATTOM - Neighborhood Market Data**
+---
 
-Get neighborhood market trends and statistics.
+<a id="attom-neighborhood-market-data"></a>
+#### Example 58: Neighborhood Market Data (legacy)
+
+**Deprecated** — forwards to `salestrend`.
 
 ```json
 {
-  "automationType": "attom_neighborhood",
+  "automationType": "attom",
   "nodeParams": {
     "action": "neighborhood_market_data",
     "params": {
       "apiKey": "YOUR_ATTOM_API_KEY",
-      "address": "5500 Grand Lake Dr, San Antonio, TX, 78244"
+      "geoIdv4": "31bd5b21fc8f1aa1f7a35936a7ce4d5e",
+      "interval": "yearly"
     }
   }
 }
 ```
 
-**Example 23: ATTOM - Market Statistics**
+---
 
-Get market statistics by zip code.
+<a id="attom-market-statistics"></a>
+#### Example 59: Market Statistics (legacy)
+
+**Deprecated** — forwards to `salestrend`.
 
 ```json
 {
-  "automationType": "attom_neighborhood",
+  "automationType": "attom",
   "nodeParams": {
     "action": "market_statistics",
     "params": {
       "apiKey": "YOUR_ATTOM_API_KEY",
-      "zipCode": "78244"
+      "geoIdv4": "31bd5b21fc8f1aa1f7a35936a7ce4d5e",
+      "interval": "monthly"
     }
   }
 }
 ```
 
-**Example 24: ATTOM - Environmental Data**
+---
 
-Get environmental risk factors for a property.
+<a id="attom-environmental-data"></a>
+#### Example 60: Environmental Data (legacy)
+
+**Deprecated** — forwards to `transportation_noise`.
 
 ```json
 {
-  "automationType": "attom_environmental",
+  "automationType": "attom",
   "nodeParams": {
     "action": "environmental_data",
     "params": {
@@ -478,13 +1356,16 @@ Get environmental risk factors for a property.
 }
 ```
 
-**Example 25: ATTOM - Hazard Data**
+---
 
-Get natural hazard information (flood, earthquake, etc.).
+<a id="attom-hazard-data"></a>
+#### Example 61: Hazard Data (legacy)
+
+**Deprecated** — forwards to `transportation_noise`.
 
 ```json
 {
-  "automationType": "attom_environmental",
+  "automationType": "attom",
   "nodeParams": {
     "action": "hazard_data",
     "params": {
@@ -495,6 +1376,7 @@ Get natural hazard information (flood, earthquake, etc.).
 }
 ```
 
-### Third-Party Documentation
+## Third-Party Documentation
 
-- [https://api.developer.attomdata.com/](https://api.developer.attomdata.com/)
+- ATTOM Developer Portal: [https://api.developer.attomdata.com/](https://api.developer.attomdata.com/)
+- ATTOM API specs (OpenAPI / Swagger): browse the developer portal under each product family (Property, Sale, Assessment, AVM, Valuation, DLP v2/v3, Area, Community, POI, School).

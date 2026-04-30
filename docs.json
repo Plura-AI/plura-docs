@@ -119,6 +119,7 @@
                       "the-platform/integrations/crm/hubspot",
                       "the-platform/integrations/crm/salesforce",
                       "the-platform/integrations/crm/servicebridge",
+                      "the-platform/integrations/crm/zenoti",
                       "the-platform/integrations/crm/zoho"
                     ]
                   },

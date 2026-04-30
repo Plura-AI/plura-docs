@@ -1,0 +1,3464 @@
+---
+title: "Zenoti"
+description: "Salon, spa, medspa, and fitness business management — guests, appointments, invoices, memberships, classes, gift cards, and more"
+---
+
+## Overview
+
+Zenoti is a unified CRM and operations platform for salons, spas, medspas, and fitness studios. The `zenoti` automation type fans out to ~160 actions across reference data, centers, services, employees, guests, memberships, bookings, appointments, invoices, payments, gift cards, opportunities, reports, inventory, classes, blockouts, organizations, and a generic raw-request escape hatch.
+
+Every action is invoked the same way — `automationType: "zenoti"`, an `action` name, and a `params` object whose shape depends on the action. Most actions follow a consistent pattern:
+
+- `apiKey` — always at the top level of `params`.
+- Path IDs (`centerId`, `guestId`, `appointmentId`, `invoiceId`, `roomId`, `employeeId`, `membershipId`, …) — top level.
+- `query` — nested object with query-string filters (pagination, dates, etc.).
+- `body` — nested object with the POST/PUT request body.
+
+## Authentication
+
+- Zenoti API key — generate it in **Admin → Configuration → Apps**. The integration sends it as `Authorization: apikey <key>`.
+
+## Common parameters
+
+- `apiKey` (required for every action).
+- `centerId` (required for center-scoped actions; the Zenoti location UUID).
+- Pagination: most list endpoints accept `query.page` (1-based) and `query.size` (default 10, max 100).
+- Dates: ISO-8601 (`YYYY-MM-DD` or full timestamp depending on the endpoint).
+
+## Available Actions
+
+**Reference**
+- [List Countries](#zenoti-list-countries)
+- [List States](#zenoti-list-states)
+- [List Reasons](#zenoti-list-reasons)
+- [List Gift Card Occasions](#zenoti-list-gift-card-occasions)
+- [List Vendors](#zenoti-list-vendors)
+
+**Centers**
+- [List Centers](#zenoti-list-centers)
+- [Get Center](#zenoti-get-center)
+- [List Center Rooms](#zenoti-list-center-rooms)
+- [List Center Categories](#zenoti-list-center-categories)
+- [List Center Therapists](#zenoti-list-center-therapists)
+- [List Center Products](#zenoti-list-center-products)
+- [List Center Packages](#zenoti-list-center-packages)
+- [Get Center Attendance](#zenoti-get-center-attendance)
+- [Get Center Category](#zenoti-get-center-category)
+- [Get Center Room](#zenoti-get-center-room)
+- [List Center Blockouts](#zenoti-list-center-blockouts)
+- [List Center Memberships](#zenoti-list-center-memberships)
+- [Get Center Members](#zenoti-get-center-members)
+
+**Services**
+- [List Services](#zenoti-list-services)
+- [Get Service](#zenoti-get-service)
+- [Get Service Pricing](#zenoti-get-service-pricing)
+
+**Employees**
+- [List Employees](#zenoti-list-employees)
+- [Get Employee](#zenoti-get-employee)
+- [Create Employee](#zenoti-create-employee)
+- [Update Employee](#zenoti-update-employee)
+- [Employee Check-in](#zenoti-employee-checkin)
+- [Employee Check-out](#zenoti-employee-checkout)
+- [Get Employee Attendance](#zenoti-get-employee-attendance)
+
+**Guests**
+- [Search Guests](#zenoti-search-guests)
+- [List Guests](#zenoti-list-guests)
+- [Get Guest](#zenoti-get-guest)
+- [Create Guest](#zenoti-create-guest)
+- [Update Guest](#zenoti-update-guest)
+- [List Guest Appointments](#zenoti-list-guest-appointments)
+- [List Guest Products](#zenoti-list-guest-products)
+- [List Guest Saved Cards](#zenoti-list-guest-saved-cards)
+- [Add Guest Card](#zenoti-add-guest-card)
+- [Delete Guest Saved Card](#zenoti-delete-guest-saved-card)
+- [Create Guest Note](#zenoti-create-guest-note)
+- [List Guest Notes](#zenoti-list-guest-notes)
+- [Update Guest Note](#zenoti-update-guest-note)
+- [Delete Guest Note](#zenoti-delete-guest-note)
+- [List Guest Gift Cards](#zenoti-list-guest-gift-cards)
+- [List Guest Packages](#zenoti-list-guest-packages)
+- [List Guest Loyalty Points](#zenoti-list-guest-loyalty-points)
+- [Get Guest Loyalty Points History](#zenoti-get-guest-loyalty-points-history)
+- [Add / Remove Loyalty Points](#zenoti-add-remove-loyalty-points)
+- [List Guest Relationships](#zenoti-list-guest-relationships)
+- [Guest Reset Password](#zenoti-guest-reset-password)
+- [Update Guest Password](#zenoti-update-guest-password)
+- [Update Billing Address](#zenoti-update-billing-address)
+- [Create Guest Form](#zenoti-create-guest-form)
+- [Get Guest Form](#zenoti-get-guest-form)
+- [Update Guest Form](#zenoti-update-guest-form)
+
+**Guest Memberships**
+- [List Guest Memberships](#zenoti-list-guest-memberships)
+- [Get Guest Pending Collection](#zenoti-get-guest-pending-collection)
+- [Cancel Membership](#zenoti-cancel-membership)
+- [Freeze Membership](#zenoti-freeze-membership)
+- [Unfreeze Membership](#zenoti-unfreeze-membership)
+- [Change Membership Renewal](#zenoti-change-membership-renewal)
+
+**Bookings**
+- [Create Booking](#zenoti-create-booking)
+- [Get Booking Slots](#zenoti-get-booking-slots)
+- [Reserve Slot](#zenoti-reserve-slot)
+- [Confirm Slot](#zenoti-confirm-slot)
+
+**Appointments**
+- [List Appointments](#zenoti-list-appointments)
+- [Get Appointment](#zenoti-get-appointment)
+- [Mark Appointment No-Show](#zenoti-mark-appointment-no-show)
+- [Appointment Check-in](#zenoti-appointment-check-in)
+- [Undo Appointment Check-in](#zenoti-undo-appointment-check-in)
+- [List Appointment Forms](#zenoti-list-appointment-forms)
+- [Get Appointment Form](#zenoti-get-appointment-form)
+
+**Invoices**
+- [Create Invoice](#zenoti-create-invoice)
+- [Get Invoice](#zenoti-get-invoice)
+- [Close Invoice](#zenoti-close-invoice)
+- [Cancel Invoice](#zenoti-cancel-invoice)
+- [Email Invoice](#zenoti-email-invoice)
+- [Add Invoice Membership](#zenoti-add-invoice-membership)
+- [Add Invoice Product](#zenoti-add-invoice-product)
+- [Remove Invoice Product](#zenoti-remove-invoice-product)
+- [Remove Invoice Membership](#zenoti-remove-invoice-membership)
+- [Pay Invoice — Saved Card](#zenoti-pay-invoice-saved-card)
+- [Pay Invoice — Gift Card](#zenoti-pay-invoice-gift-card)
+- [Pay Invoice — Custom](#zenoti-pay-invoice-custom)
+- [Pay Invoice — Tip](#zenoti-pay-invoice-tip)
+- [Pay Invoice — New Card](#zenoti-pay-invoice-new-card)
+- [Email Invoice Gift Card](#zenoti-email-invoice-gift-card)
+- [Apply Campaign Offer](#zenoti-apply-campaign-offer)
+- [Redeem Loyalty Points (Invoice)](#zenoti-redeem-loyalty-points-invoice)
+- [Sell Package](#zenoti-sell-package)
+- [Redeem Package](#zenoti-redeem-package)
+- [Create Product Invoice](#zenoti-create-product-invoice)
+- [Create Group Invoice](#zenoti-create-group-invoice)
+- [Get Group Invoice](#zenoti-get-group-invoice)
+- [Email Group Invoice](#zenoti-email-group-invoice)
+
+**Gift Cards**
+- [Create Gift Card Invoice](#zenoti-create-gift-card-invoice)
+- [Get Gift Card Balance](#zenoti-get-gift-card-balance)
+- [Create Custom Amount GC Template](#zenoti-create-custom-amount-gc-template)
+- [Create Service GC Template](#zenoti-create-service-gc-template)
+- [List Gift Card Templates](#zenoti-list-gift-card-templates)
+- [List Center Gift Card Templates](#zenoti-list-center-gift-card-templates)
+
+**Opportunities**
+- [Create Opportunity](#zenoti-create-opportunity)
+- [List Opportunities](#zenoti-list-opportunities)
+- [Get Opportunity](#zenoti-get-opportunity)
+- [Update Opportunity](#zenoti-update-opportunity)
+- [Get Opportunity Metadata](#zenoti-get-opportunity-metadata)
+- [Create Opportunity Note](#zenoti-create-opportunity-note)
+- [List Opportunity Notes](#zenoti-list-opportunity-notes)
+
+**Reports**
+- [Get Center Collections Report](#zenoti-get-center-collections-report)
+- [Get Center Sales Report](#zenoti-get-center-sales-report)
+
+**Inventory**
+- [Get Inventory Stock](#zenoti-get-inventory-stock)
+- [Get Inventory Consumption](#zenoti-get-inventory-consumption)
+- [List Purchase Orders](#zenoti-list-purchase-orders)
+- [Get Purchase Order](#zenoti-get-purchase-order)
+- [List Transfer Orders](#zenoti-list-transfer-orders)
+- [Get Transfer Order](#zenoti-get-transfer-order)
+
+**Classes**
+- [List Class Registrations](#zenoti-list-class-registrations)
+- [Register Guest to Class](#zenoti-register-guest-to-class)
+- [Register via Gympass](#zenoti-register-via-gympass)
+- [Cancel Class Registration](#zenoti-cancel-class-registration)
+- [Cancel Workshop Registration](#zenoti-cancel-workshop-registration)
+- [Admin Enroll Class](#zenoti-admin-enroll-class)
+- [List Guest Class Sessions](#zenoti-list-guest-class-sessions)
+- [Cancel Class Session Registrations](#zenoti-cancel-class-session-registrations)
+- [Create Class Membership Invoice](#zenoti-create-class-membership-invoice)
+- [Create Series Package Invoice](#zenoti-create-series-package-invoice)
+- [Book Class Session](#zenoti-book-class-session)
+- [Close Series Invoice](#zenoti-close-series-invoice)
+- [Close Membership Invoice](#zenoti-close-membership-invoice)
+- [Pay Class Booking — Saved Card](#zenoti-pay-class-booking-saved-card)
+- [List Class Booking Payment Methods](#zenoti-list-class-booking-payment-methods)
+- [List Class Memberships](#zenoti-list-class-memberships)
+- [List Class Packages](#zenoti-list-class-packages)
+- [List Class Sessions](#zenoti-list-class-sessions)
+
+**Blockouts**
+- [Create Room Blockout](#zenoti-create-room-blockout)
+- [Create Recurring Room Blockout](#zenoti-create-recurring-room-blockout)
+- [List Room Blockouts](#zenoti-list-room-blockouts)
+- [Get Room Blockout](#zenoti-get-room-blockout)
+- [Update Room Blockout](#zenoti-update-room-blockout)
+- [Delete Room Blockout](#zenoti-delete-room-blockout)
+- [Create Employee Blockout](#zenoti-create-employee-blockout)
+- [Create Recurring Employee Blockout](#zenoti-create-recurring-employee-blockout)
+- [List Employee Blockouts](#zenoti-list-employee-blockouts)
+- [Get Employee Blockout](#zenoti-get-employee-blockout)
+- [Update Employee Blockout](#zenoti-update-employee-blockout)
+- [Delete Employee Blockout](#zenoti-delete-employee-blockout)
+- [List Blockout Time Types](#zenoti-list-blockout-time-types)
+
+**Organizations**
+- [Get Security Profiles](#zenoti-get-security-profiles)
+- [List Org Blockout Time Types](#zenoti-list-blockout-times-types-org)
+- [Get Security Roles](#zenoti-get-security-roles)
+
+**Miscellaneous**
+- [Generate Shopify Multipass URL](#zenoti-generate-shopify-multipass-url)
+- [Raw Request](#zenoti-raw-request)
+
+## Examples
+
+<a id="zenoti-list-countries"></a>
+#### Example 1: List Countries
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_countries",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "query": { "page": 1, "size": 100 }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-states"></a>
+#### Example 2: List States
+
+States within a country.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_states",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "countryId": "225",
+      "query": { "page": 1, "size": 100 }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-reasons"></a>
+#### Example 3: List Reasons
+
+Standard reasons (cancellation, freeze, etc.).
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_reasons",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-gift-card-occasions"></a>
+#### Example 4: List Gift Card Occasions
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_gift_card_occasions",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-vendors"></a>
+#### Example 5: List Vendors
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_vendors",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-centers"></a>
+#### Example 6: List Centers
+
+All centers in the org.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_centers",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "query": { "page": 1, "size": 50, "catalog_enabled": true }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-center"></a>
+#### Example 7: Get Center
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_center",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "centerId": "00000000-0000-0000-0000-000000000000"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-center-rooms"></a>
+#### Example 8: List Center Rooms
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_center_rooms",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "centerId": "00000000-0000-0000-0000-000000000000",
+      "query": { "page": 1, "size": 50 }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-center-categories"></a>
+#### Example 9: List Center Categories
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_center_categories",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "centerId": "00000000-0000-0000-0000-000000000000",
+      "query": { "page": 1, "size": 50, "type": "service" }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-center-therapists"></a>
+#### Example 10: List Center Therapists
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_center_therapists",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "centerId": "00000000-0000-0000-0000-000000000000",
+      "query": { "page": 1, "size": 50, "service_id": "service-uuid" }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-center-products"></a>
+#### Example 11: List Center Products
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_center_products",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "centerId": "00000000-0000-0000-0000-000000000000",
+      "query": { "page": 1, "size": 50 }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-center-packages"></a>
+#### Example 12: List Center Packages
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_center_packages",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "centerId": "00000000-0000-0000-0000-000000000000",
+      "query": { "page": 1, "size": 50 }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-center-attendance"></a>
+#### Example 13: Get Center Attendance
+
+Daily attendance roster for a center.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_center_attendance",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "centerId": "00000000-0000-0000-0000-000000000000",
+      "query": { "date": "2026-04-30" }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-center-category"></a>
+#### Example 14: Get Center Category
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_center_category",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "centerId": "00000000-0000-0000-0000-000000000000",
+      "categoryId": "category-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-center-room"></a>
+#### Example 15: Get Center Room
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_center_room",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "centerId": "00000000-0000-0000-0000-000000000000",
+      "roomId": "room-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-center-blockouts"></a>
+#### Example 16: List Center Blockouts
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_center_blockouts",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "centerId": "00000000-0000-0000-0000-000000000000",
+      "query": { "start_date": "2026-04-01", "end_date": "2026-04-30" }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-center-memberships"></a>
+#### Example 17: List Center Memberships
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_center_memberships",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "centerId": "00000000-0000-0000-0000-000000000000",
+      "query": { "page": 1, "size": 50, "status": "active" }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-center-members"></a>
+#### Example 18: Get Center Members
+
+Active membership holders at a center.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_center_members",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "centerId": "00000000-0000-0000-0000-000000000000",
+      "query": { "status": "active", "page": 1, "size": 50 }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-services"></a>
+#### Example 19: List Services
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_services",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "centerId": "00000000-0000-0000-0000-000000000000",
+      "query": { "page": 1, "size": 50, "show_in_catalog": true }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-service"></a>
+#### Example 20: Get Service
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_service",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "centerId": "00000000-0000-0000-0000-000000000000",
+      "serviceId": "service-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-service-pricing"></a>
+#### Example 21: Get Service Pricing
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_service_pricing",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "centerId": "00000000-0000-0000-0000-000000000000",
+      "serviceId": "service-uuid",
+      "query": { "therapist_id": "therapist-uuid", "gender": "female" }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-employees"></a>
+#### Example 22: List Employees
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_employees",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "centerId": "00000000-0000-0000-0000-000000000000",
+      "query": { "page": 1, "size": 50 }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-employee"></a>
+#### Example 23: Get Employee
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_employee",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "employeeId": "employee-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-create-employee"></a>
+#### Example 24: Create Employee
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "create_employee",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "body": {
+        "personal_info": {
+          "first_name": "Jane",
+          "last_name": "Doe",
+          "email": "jane.doe@example.com",
+          "mobile_phone": { "country_code": 225, "number": "5551234567" }
+        },
+        "job_info": {
+          "center_id": "00000000-0000-0000-0000-000000000000",
+          "job_id": "job-uuid"
+        }
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-update-employee"></a>
+#### Example 25: Update Employee
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "update_employee",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "employeeId": "employee-uuid",
+      "body": {
+        "personal_info": { "email": "new.email@example.com" }
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-employee-checkin"></a>
+#### Example 26: Employee Check-in
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "employee_checkin",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "employeeId": "employee-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-employee-checkout"></a>
+#### Example 27: Employee Check-out
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "employee_checkout",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "employeeId": "employee-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-employee-attendance"></a>
+#### Example 28: Get Employee Attendance
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_employee_attendance",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "employeeId": "employee-uuid",
+      "query": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "start_date": "2026-04-01",
+        "end_date": "2026-04-30"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-search-guests"></a>
+#### Example 29: Search Guests
+
+Search by any combination of email, phone, name, code. `center_id` is required.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "search_guests",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "query": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "email": "guest@example.com"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-guests"></a>
+#### Example 30: List Guests
+
+Bulk list guests at a center.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_guests",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "query": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "page": 1,
+        "size": 50
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-guest"></a>
+#### Example 31: Get Guest
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_guest",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-create-guest"></a>
+#### Example 32: Create Guest
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "create_guest",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "body": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "personal_info": {
+          "first_name": "Alex",
+          "last_name": "Smith",
+          "gender": -1,
+          "email": "alex.smith@example.com",
+          "mobile_phone": { "country_code": 225, "number": "5551234567" }
+        }
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-update-guest"></a>
+#### Example 33: Update Guest
+
+Full replace — pass any subset of the create body that you want to overwrite.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "update_guest",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "body": {
+        "personal_info": { "email": "new.email@example.com" }
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-guest-appointments"></a>
+#### Example 34: List Guest Appointments
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_guest_appointments",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "query": { "page": 1, "size": 50 }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-guest-products"></a>
+#### Example 35: List Guest Products
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_guest_products",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "query": { "page": 1, "size": 50 }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-guest-saved-cards"></a>
+#### Example 36: List Guest Saved Cards
+
+⚠️ Tenant-config dependent. Only available on tenants with a PCI-compliant payment processor wired up. **Note the capital `I` in `center_Id`.**
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_guest_saved_cards",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "query": {
+        "center_Id": "00000000-0000-0000-0000-000000000000",
+        "get_shared_cards": false,
+        "get_expired_cards": false
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-add-guest-card"></a>
+#### Example 37: Add Guest Card
+
+Returns a hosted-payment-page redirect URL for the guest to enter card details (PCI compliant).
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "add_guest_card",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "body": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "redirect_uri": "https://example.com/return",
+        "share_cards_to_web": true
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-delete-guest-saved-card"></a>
+#### Example 38: Delete Guest Saved Card
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "delete_guest_saved_card",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "cardId": "card-token-id"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-create-guest-note"></a>
+#### Example 39: Create Guest Note
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "create_guest_note",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "body": {
+        "notes": "VIP guest — prefers afternoon appointments.",
+        "note_type": 1,
+        "center": { "id": "00000000-0000-0000-0000-000000000000" },
+        "is_private": false,
+        "alert": false
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-guest-notes"></a>
+#### Example 40: List Guest Notes
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_guest_notes",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "query": { "page": 1, "size": 50 }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-update-guest-note"></a>
+#### Example 41: Update Guest Note
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "update_guest_note",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "noteId": "note-uuid",
+      "body": {
+        "notes": "Updated note text",
+        "note_type": 1,
+        "center": { "id": "00000000-0000-0000-0000-000000000000" }
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-delete-guest-note"></a>
+#### Example 42: Delete Guest Note
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "delete_guest_note",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "noteId": "note-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-guest-gift-cards"></a>
+#### Example 43: List Guest Gift Cards
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_guest_gift_cards",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "query": { "page": 1, "size": 50 }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-guest-packages"></a>
+#### Example 44: List Guest Packages
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_guest_packages",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "query": { "page": 1, "size": 50 }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-guest-loyalty-points"></a>
+#### Example 45: List Guest Loyalty Points
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_guest_loyalty_points",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-guest-loyalty-points-history"></a>
+#### Example 46: Get Guest Loyalty Points History
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_guest_loyalty_points_history",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "query": { "page": 1, "size": 50 }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-add-remove-loyalty-points"></a>
+#### Example 47: Add / Remove Loyalty Points
+
+`Points` is positive to add, negative to remove. Note PascalCase fields.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "add_remove_loyalty_points",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "body": {
+        "GuestId": "guest-uuid",
+        "CenterId": "00000000-0000-0000-0000-000000000000",
+        "Points": 100,
+        "Comments": "Promotional bonus"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-guest-relationships"></a>
+#### Example 48: List Guest Relationships
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_guest_relationships",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-guest-reset-password"></a>
+#### Example 49: Guest Reset Password
+
+Triggers a password reset email/SMS for the guest.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "guest_reset_password",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "body": {
+        "email_or_phone": "guest@example.com",
+        "first_name": "Alex"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-update-guest-password"></a>
+#### Example 50: Update Guest Password
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "update_guest_password",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "body": {
+        "new_password": "NewSecurePassword123!",
+        "old_password": "OldPassword"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-update-billing-address"></a>
+#### Example 51: Update Billing Address
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "update_billing_address",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "cardId": "card-token-id",
+      "body": {
+        "address1": "123 Main St",
+        "city": "San Antonio",
+        "state_id": "1",
+        "country_id": "225",
+        "zip_code": "78244"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-create-guest-form"></a>
+#### Example 52: Create Guest Form
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "create_guest_form",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "body": {
+        "form_id": "form-uuid",
+        "data": "{\"q1\":\"answer\"}",
+        "is_form_submitted": true
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-guest-form"></a>
+#### Example 53: Get Guest Form
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_guest_form",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "versionNo": "1"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-update-guest-form"></a>
+#### Example 54: Update Guest Form
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "update_guest_form",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "body": {
+        "form_id": "form-uuid",
+        "data": "{\"q1\":\"updated\"}"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-guest-memberships"></a>
+#### Example 55: List Guest Memberships
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_guest_memberships",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "query": { "center_id": "00000000-0000-0000-0000-000000000000" }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-guest-pending-collection"></a>
+#### Example 56: Get Guest Pending Collection
+
+Outstanding balance owed on a membership.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_guest_pending_collection",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "membershipId": "membership-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-cancel-membership"></a>
+#### Example 57: Cancel Membership
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "cancel_membership",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "membershipId": "membership-uuid",
+      "body": {
+        "cancellation_date": "2026-04-30",
+        "termination_date": "null"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-freeze-membership"></a>
+#### Example 58: Freeze Membership
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "freeze_membership",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "membershipId": "membership-uuid",
+      "body": {
+        "start_date": "2026-05-01",
+        "end_date": "2026-05-31"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-unfreeze-membership"></a>
+#### Example 59: Unfreeze Membership
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "unfreeze_membership",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "membershipId": "membership-uuid",
+      "body": { "reason": "Guest returned early" }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-change-membership-renewal"></a>
+#### Example 60: Change Membership Renewal
+
+Toggle auto-renewal on/off.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "change_membership_renewal",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "membershipId": "membership-uuid",
+      "body": { "auto_renew": false, "reason": "Guest request" }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-create-booking"></a>
+#### Example 61: Create Booking
+
+A "booking" is a holding container for one or more service slots before they are confirmed as appointments.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "create_booking",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "body": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "date": "2026-05-01",
+        "guests": [
+          {
+            "id": "guest-uuid",
+            "items": [{ "item": { "id": "service-uuid" } }]
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-booking-slots"></a>
+#### Example 62: Get Booking Slots
+
+Available time slots for a booking.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_booking_slots",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "bookingId": "booking-uuid",
+      "query": { "check_future_day_availability": true }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-reserve-slot"></a>
+#### Example 63: Reserve Slot
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "reserve_slot",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "bookingId": "booking-uuid",
+      "body": {
+        "slot_time": "2026-05-01T10:00:00",
+        "create_invoice": true
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-confirm-slot"></a>
+#### Example 64: Confirm Slot
+
+Converts the reserved slot into a confirmed appointment.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "confirm_slot",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "bookingId": "booking-uuid",
+      "body": { "notes": "Booked via website" }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-appointments"></a>
+#### Example 65: List Appointments
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_appointments",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "query": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "start_date": "2026-04-30",
+        "end_date": "2026-04-30",
+        "include_no_show_cancel": false
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-appointment"></a>
+#### Example 66: Get Appointment
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_appointment",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "appointmentId": "appointment-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-mark-appointment-no-show"></a>
+#### Example 67: Mark Appointment No-Show
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "mark_appointment_no_show",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "appointmentId": "appointment-uuid",
+      "body": { "comments": "Guest didn't arrive within 15 min" }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-appointment-check-in"></a>
+#### Example 68: Appointment Check-in
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "appointment_check_in",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "appointmentId": "appointment-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-undo-appointment-check-in"></a>
+#### Example 69: Undo Appointment Check-in
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "undo_appointment_check_in",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "appointmentId": "appointment-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-appointment-forms"></a>
+#### Example 70: List Appointment Forms
+
+Forms attached to an appointment (intake, consent, etc.).
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_appointment_forms",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "appointmentId": "appointment-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-appointment-form"></a>
+#### Example 71: Get Appointment Form
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_appointment_form",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "appointmentId": "appointment-uuid",
+      "formId": "form-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-create-invoice"></a>
+#### Example 72: Create Invoice
+
+Creates an open product invoice.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "create_invoice",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "body": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "guest_id": "guest-uuid",
+        "products": [
+          { "id": "product-uuid", "quantity": 1 }
+        ],
+        "notes": "Walk-in retail purchase"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-invoice"></a>
+#### Example 73: Get Invoice
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_invoice",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "invoiceId": "invoice-uuid",
+      "query": { "expand": "items,payments" }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-close-invoice"></a>
+#### Example 74: Close Invoice
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "close_invoice",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "invoiceId": "invoice-uuid",
+      "body": { "is_invoice_closed": true, "status": 2 }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-cancel-invoice"></a>
+#### Example 75: Cancel Invoice
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "cancel_invoice",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "invoiceId": "invoice-uuid",
+      "body": { "comments": "Guest cancelled before service" }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-email-invoice"></a>
+#### Example 76: Email Invoice
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "email_invoice",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "invoiceId": "invoice-uuid",
+      "body": { "email": "guest@example.com" }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-add-invoice-membership"></a>
+#### Example 77: Add Invoice Membership
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "add_invoice_membership",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "invoiceId": "invoice-uuid",
+      "body": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "user_id": "guest-uuid",
+        "membership_ids": ["membership-template-uuid"]
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-add-invoice-product"></a>
+#### Example 78: Add Invoice Product
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "add_invoice_product",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "invoiceId": "invoice-uuid",
+      "body": {
+        "products": [{ "id": "product-uuid", "quantity": 2 }]
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-remove-invoice-product"></a>
+#### Example 79: Remove Invoice Product
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "remove_invoice_product",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "invoiceId": "invoice-uuid",
+      "productId": "product-line-item-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-remove-invoice-membership"></a>
+#### Example 80: Remove Invoice Membership
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "remove_invoice_membership",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "invoiceId": "invoice-uuid",
+      "membershipId": "membership-line-item-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-pay-invoice-saved-card"></a>
+#### Example 81: Pay Invoice — Saved Card
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "pay_invoice_saved_card",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "invoiceId": "invoice-uuid",
+      "body": {
+        "account_id": "card-token-id",
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "redirect_uri": "https://example.com/return",
+        "source": 0,
+        "tip_amount": 5
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-pay-invoice-gift-card"></a>
+#### Example 82: Pay Invoice — Gift Card
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "pay_invoice_gift_card",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "invoiceId": "invoice-uuid",
+      "body": {
+        "card_number": "GC123456",
+        "amount": 100,
+        "tip_amount": 0
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-pay-invoice-custom"></a>
+#### Example 83: Pay Invoice — Custom
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "pay_invoice_custom",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "invoiceId": "invoice-uuid",
+      "body": {
+        "amount": 100,
+        "cash_register_id": "register-uuid",
+        "custom_payment_id": "custom-payment-method-uuid"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-pay-invoice-tip"></a>
+#### Example 84: Pay Invoice — Tip
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "pay_invoice_tip",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "invoiceId": "invoice-uuid",
+      "body": {
+        "account_id": "card-token-id",
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "tip_amount": 10
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-pay-invoice-new-card"></a>
+#### Example 85: Pay Invoice — New Card
+
+⚠️ PCI-gated. Only enabled on tenants whose payment processor supports server-side card capture.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "pay_invoice_new_card",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "invoiceId": "invoice-uuid",
+      "body": {
+        "allow_new_card": true,
+        "amount": 100,
+        "card": {
+          "number": "4111111111111111",
+          "cvv": "123",
+          "expiry_month": 12,
+          "expiry_year": 2030
+        },
+        "save_card": false
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-email-invoice-gift-card"></a>
+#### Example 86: Email Invoice Gift Card
+
+Send an e-gift-card email to the recipient associated with an invoice.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "email_invoice_gift_card",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "invoiceId": "invoice-uuid",
+      "body": {
+        "recipient_email": "recipient@example.com",
+        "recipient_name": "Sam",
+        "message": "Happy birthday!"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-apply-campaign-offer"></a>
+#### Example 87: Apply Campaign Offer
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "apply_campaign_offer",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "invoiceId": "invoice-uuid",
+      "body": {
+        "offer_code": "SPRING25",
+        "center_id": "00000000-0000-0000-0000-000000000000"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-redeem-loyalty-points-invoice"></a>
+#### Example 88: Redeem Loyalty Points (Invoice)
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "redeem_loyalty_points_invoice",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "invoiceId": "invoice-uuid",
+      "body": {
+        "points": 500,
+        "center_id": "00000000-0000-0000-0000-000000000000"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-sell-package"></a>
+#### Example 89: Sell Package
+
+Creates a package-sale invoice for a guest.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "sell_package",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "body": {
+        "guest_id": "guest-uuid",
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "package_details": [{ "package_id": "package-uuid", "quantity": 1 }]
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-redeem-package"></a>
+#### Example 90: Redeem Package
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "redeem_package",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "invoiceId": "invoice-uuid",
+      "body": {
+        "package_user_ids": ["package-user-uuid"]
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-create-product-invoice"></a>
+#### Example 91: Create Product Invoice
+
+Same shape as `create_invoice` — explicit alias.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "create_product_invoice",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "body": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "guest_id": "guest-uuid",
+        "products": [{ "id": "product-uuid", "quantity": 1 }]
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-create-group-invoice"></a>
+#### Example 92: Create Group Invoice
+
+Roll up multiple individual invoices under a single group billing.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "create_group_invoice",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "body": {
+        "group_name": "Bridal party — Smith",
+        "invoice_ids": ["invoice-uuid-1", "invoice-uuid-2"]
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-group-invoice"></a>
+#### Example 93: Get Group Invoice
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_group_invoice",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "groupId": "group-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-email-group-invoice"></a>
+#### Example 94: Email Group Invoice
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "email_group_invoice",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "groupId": "group-uuid",
+      "body": {
+        "guest_details": [
+          { "guest_id": "guest-uuid", "email": "guest@example.com" }
+        ]
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-create-gift-card-invoice"></a>
+#### Example 95: Create Gift Card Invoice
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "create_gift_card_invoice",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "body": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "guest_id": "guest-uuid",
+        "giftcards": [
+          { "template_id": "gc-template-uuid", "amount": 100 }
+        ]
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-gift-card-balance"></a>
+#### Example 96: Get Gift Card Balance
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_gift_card_balance",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "giftCardId": "gift-card-id"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-create-custom-amount-gc-template"></a>
+#### Example 97: Create Custom Amount GC Template
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "create_custom_amount_gc_template",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "body": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "custom_amount": { "amount": 50, "validity": 365 }
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-create-service-gc-template"></a>
+#### Example 98: Create Service GC Template
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "create_service_gc_template",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "body": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "services": [{ "service_id": "service-uuid", "quantity": 1 }]
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-gift-card-templates"></a>
+#### Example 99: List Gift Card Templates
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_gift_card_templates",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "query": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "page": 1,
+        "size": 50
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-center-gift-card-templates"></a>
+#### Example 100: List Center Gift Card Templates
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_center_gift_card_templates",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "centerId": "00000000-0000-0000-0000-000000000000",
+      "query": { "page": 1, "size": 50 }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-create-opportunity"></a>
+#### Example 101: Create Opportunity
+
+CRM lead/opportunity — Zenoti's sales pipeline.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "create_opportunity",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "body": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "opportunity_title": "Annual membership",
+        "opportunity_owner_id": "owner-uuid",
+        "guest_id": "guest-uuid",
+        "expected_close_date": "2026-06-01",
+        "offered_amount": 1200
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-opportunities"></a>
+#### Example 102: List Opportunities
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_opportunities",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "query": {
+        "view_id": "view-uuid",
+        "page_num": 1,
+        "records": 50
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-opportunity"></a>
+#### Example 103: Get Opportunity
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_opportunity",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "opportunityId": "opportunity-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-update-opportunity"></a>
+#### Example 104: Update Opportunity
+
+Body shape mirrors `create_opportunity`.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "update_opportunity",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "opportunityId": "opportunity-uuid",
+      "body": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "opportunity_title": "Annual membership — discounted",
+        "opportunity_owner_id": "owner-uuid",
+        "guest_id": "guest-uuid",
+        "offered_amount": 1100
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-opportunity-metadata"></a>
+#### Example 105: Get Opportunity Metadata
+
+Returns priority types, statuses, dispositions, custom fields, etc.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_opportunity_metadata",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-create-opportunity-note"></a>
+#### Example 106: Create Opportunity Note
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "create_opportunity_note",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "opportunityId": "opportunity-uuid",
+      "body": { "notes": "Left voicemail" }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-opportunity-notes"></a>
+#### Example 107: List Opportunity Notes
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_opportunity_notes",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "opportunityId": "opportunity-uuid",
+      "query": { "page": 1, "size": 50 }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-center-collections-report"></a>
+#### Example 108: Get Center Collections Report
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_center_collections_report",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "centerId": "00000000-0000-0000-0000-000000000000",
+      "query": {
+        "start_date": "2026-04-01",
+        "end_date": "2026-04-30",
+        "include_transactions": true,
+        "include_employee_tips": true
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-center-sales-report"></a>
+#### Example 109: Get Center Sales Report
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_center_sales_report",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "centerId": "00000000-0000-0000-0000-000000000000",
+      "query": {
+        "start_date": "2026-04-01",
+        "end_date": "2026-04-30"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-inventory-stock"></a>
+#### Example 110: Get Inventory Stock
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_inventory_stock",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "query": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "inventory_date": "2026-04-30"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-inventory-consumption"></a>
+#### Example 111: Get Inventory Consumption
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_inventory_consumption",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "query": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "start_date": "2026-04-01",
+        "end_date": "2026-04-30"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-purchase-orders"></a>
+#### Example 112: List Purchase Orders
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_purchase_orders",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "query": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "start_date": "2026-04-01",
+        "end_date": "2026-04-30"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-purchase-order"></a>
+#### Example 113: Get Purchase Order
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_purchase_order",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "poId": "purchase-order-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-transfer-orders"></a>
+#### Example 114: List Transfer Orders
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_transfer_orders",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "query": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "start_date": "2026-04-01",
+        "end_date": "2026-04-30"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-transfer-order"></a>
+#### Example 115: Get Transfer Order
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_transfer_order",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "toId": "transfer-order-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-class-registrations"></a>
+#### Example 116: List Class Registrations
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_class_registrations",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "classId": "class-uuid",
+      "query": {
+        "session_id": "session-uuid",
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "page": 1,
+        "size": 50
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-register-guest-to-class"></a>
+#### Example 117: Register Guest to Class
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "register_guest_to_class",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "classId": "class-uuid",
+      "body": {
+        "guest_id": "guest-uuid",
+        "session_id": "session-uuid",
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "waitlist": false,
+        "add_to_all": false
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-register-via-gympass"></a>
+#### Example 118: Register via Gympass
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "register_via_gympass",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "body": {
+        "provider_registration_id": "gympass-id",
+        "account_name": "GymPass",
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "schedule_id": "session-uuid",
+        "user": {
+          "personal_info": {
+            "first_name": "Alex",
+            "last_name": "Smith",
+            "email": "alex@example.com"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-cancel-class-registration"></a>
+#### Example 119: Cancel Class Registration
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "cancel_class_registration",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "classId": "class-uuid",
+      "registrationId": "registration-uuid",
+      "body": { "waive_fee": true }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-cancel-workshop-registration"></a>
+#### Example 120: Cancel Workshop Registration
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "cancel_workshop_registration",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "workshopId": "workshop-uuid",
+      "registrationId": "registration-uuid",
+      "body": { "waive_fee": false }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-admin-enroll-class"></a>
+#### Example 121: Admin Enroll Class
+
+Admin-only enrollment that bypasses the standard guest-side flow.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "admin_enroll_class",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "sessionId": "session-uuid",
+      "body": {
+        "SessionId": 12345,
+        "GuestId": "guest-uuid",
+        "Notes": "Comp enrollment"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-guest-class-sessions"></a>
+#### Example 122: List Guest Class Sessions
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_guest_class_sessions",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "guestId": "guest-uuid",
+      "query": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "start_date": "2026-04-01",
+        "end_date": "2026-04-30"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-cancel-class-session-registrations"></a>
+#### Example 123: Cancel Class Session Registrations
+
+Cancels every registration on a session.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "cancel_class_session_registrations",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "sessionId": "session-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-create-class-membership-invoice"></a>
+#### Example 124: Create Class Membership Invoice
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "create_class_membership_invoice",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "body": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "user_id": "guest-uuid",
+        "membership_version_ids": ["membership-version-uuid"]
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-create-series-package-invoice"></a>
+#### Example 125: Create Series Package Invoice
+
+Note the mixed PascalCase / camelCase Zenoti uses here.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "create_series_package_invoice",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "body": {
+        "CenterId": "00000000-0000-0000-0000-000000000000",
+        "userId": "guest-uuid",
+        "packageIds": ["series-package-uuid"]
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-book-class-session"></a>
+#### Example 126: Book Class Session
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "book_class_session",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "sessionId": "session-uuid",
+      "body": {
+        "BookingSource": 1,
+        "sessionId": "session-uuid"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-close-series-invoice"></a>
+#### Example 127: Close Series Invoice
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "close_series_invoice",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "invoiceId": "invoice-uuid",
+      "body": { "is_invoice_closed": true }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-close-membership-invoice"></a>
+#### Example 128: Close Membership Invoice
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "close_membership_invoice",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "invoiceId": "invoice-uuid",
+      "body": { "is_invoice_closed": true }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-pay-class-booking-saved-card"></a>
+#### Example 129: Pay Class Booking — Saved Card
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "pay_class_booking_saved_card",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "bookingId": "booking-uuid",
+      "body": {
+        "transactionDetails": {
+          "PaymentaccountID": "card-token-id",
+          "Source": 0,
+          "transactionType": 1
+        }
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-class-booking-payment-methods"></a>
+#### Example 130: List Class Booking Payment Methods
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_class_booking_payment_methods",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-class-memberships"></a>
+#### Example 131: List Class Memberships
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_class_memberships",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "query": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "page": 1,
+        "size": 50
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-class-packages"></a>
+#### Example 132: List Class Packages
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_class_packages",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "query": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "page": 1,
+        "size": 50
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-class-sessions"></a>
+#### Example 133: List Class Sessions
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_class_sessions",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "query": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "start_date": "2026-04-01",
+        "end_date": "2026-04-30"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-create-room-blockout"></a>
+#### Example 134: Create Room Blockout
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "create_room_blockout",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "roomId": "room-uuid",
+      "body": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "block_out_time_type_id": "blockout-type-uuid",
+        "start_time": "2026-05-01T09:00:00",
+        "end_time": "2026-05-01T17:00:00",
+        "notes": "Maintenance"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-create-recurring-room-blockout"></a>
+#### Example 135: Create Recurring Room Blockout
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "create_recurring_room_blockout",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "roomId": "room-uuid",
+      "body": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "block_out_time_type_id": "blockout-type-uuid",
+        "start_time": "2026-05-01T09:00:00",
+        "end_time": "2026-05-01T10:00:00",
+        "recurring_block_out_time": {
+          "frequency": "weekly",
+          "until": "2026-08-01"
+        }
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-room-blockouts"></a>
+#### Example 136: List Room Blockouts
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_room_blockouts",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "roomId": "room-uuid",
+      "query": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "start_date": "2026-04-01",
+        "end_date": "2026-04-30"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-room-blockout"></a>
+#### Example 137: Get Room Blockout
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_room_blockout",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "roomId": "room-uuid",
+      "blockoutId": "blockout-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-update-room-blockout"></a>
+#### Example 138: Update Room Blockout
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "update_room_blockout",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "roomId": "room-uuid",
+      "blockoutId": "blockout-uuid",
+      "body": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "block_out_time_type_id": "blockout-type-uuid",
+        "start_time": "2026-05-01T09:00:00",
+        "end_time": "2026-05-01T18:00:00"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-delete-room-blockout"></a>
+#### Example 139: Delete Room Blockout
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "delete_room_blockout",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "roomId": "room-uuid",
+      "blockoutId": "blockout-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-create-employee-blockout"></a>
+#### Example 140: Create Employee Blockout
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "create_employee_blockout",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "employeeId": "employee-uuid",
+      "body": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "block_out_time_type_id": "blockout-type-uuid",
+        "start_time": "2026-05-01T09:00:00",
+        "end_time": "2026-05-01T17:00:00",
+        "notes": "Vacation"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-create-recurring-employee-blockout"></a>
+#### Example 141: Create Recurring Employee Blockout
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "create_recurring_employee_blockout",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "employeeId": "employee-uuid",
+      "body": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "block_out_time_type_id": "blockout-type-uuid",
+        "start_time": "2026-05-01T12:00:00",
+        "end_time": "2026-05-01T13:00:00",
+        "recurring_block_out_time": {
+          "frequency": "daily",
+          "until": "2026-06-01"
+        }
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-employee-blockouts"></a>
+#### Example 142: List Employee Blockouts
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_employee_blockouts",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "employeeId": "employee-uuid",
+      "query": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "start_date": "2026-04-01",
+        "end_date": "2026-04-30"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-employee-blockout"></a>
+#### Example 143: Get Employee Blockout
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_employee_blockout",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "employeeId": "employee-uuid",
+      "blockoutId": "blockout-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-update-employee-blockout"></a>
+#### Example 144: Update Employee Blockout
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "update_employee_blockout",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "employeeId": "employee-uuid",
+      "blockoutId": "blockout-uuid",
+      "body": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "block_out_time_type_id": "blockout-type-uuid",
+        "start_time": "2026-05-01T09:00:00",
+        "end_time": "2026-05-01T18:00:00"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-delete-employee-blockout"></a>
+#### Example 145: Delete Employee Blockout
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "delete_employee_blockout",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "employeeId": "employee-uuid",
+      "blockoutId": "blockout-uuid"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-blockout-time-types"></a>
+#### Example 146: List Blockout Time Types
+
+Blockout categories (vacation, training, maintenance, etc.) at the center level.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_blockout_time_types",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-security-profiles"></a>
+#### Example 147: Get Security Profiles
+
+Org-level security profiles.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_security_profiles",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-list-blockout-times-types-org"></a>
+#### Example 148: List Org Blockout Time Types
+
+Blockout categories at the org level (vs. per-center).
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "list_blockout_times_types_org",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-get-security-roles"></a>
+#### Example 149: Get Security Roles
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "get_security_roles",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY"
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-generate-shopify-multipass-url"></a>
+#### Example 150: Generate Shopify Multipass URL
+
+Single-sign-on URL into a linked Shopify storefront.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "generate_shopify_multipass_url",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "query": {
+        "guest_id": "guest-uuid",
+        "return_to": "/products/all"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="zenoti-raw-request"></a>
+#### Example 151: Raw Request
+
+Escape hatch for any Zenoti endpoint not yet first-classed in the integration. The `path` is appended to the Zenoti regional base URL; the `apiKey` header is added automatically.
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "raw_request",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "method": "GET",
+      "path": "/v1/centers",
+      "query": { "page": 1, "size": 10 }
+    }
+  }
+}
+```
+
+```json
+{
+  "automationType": "zenoti",
+  "nodeParams": {
+    "action": "raw_request",
+    "params": {
+      "apiKey": "YOUR_ZENOTI_API_KEY",
+      "method": "POST",
+      "path": "/v1/guests",
+      "body": {
+        "center_id": "00000000-0000-0000-0000-000000000000",
+        "personal_info": { "first_name": "Alex", "last_name": "Smith", "gender": -1 }
+      }
+    }
+  }
+}
+```
+
+## Notes & Caveats
+
+- **PCI-gated endpoints.** `list_guest_saved_cards`, `delete_guest_saved_card`, `add_guest_card`, and `pay_invoice_new_card` only work on Zenoti tenants whose payment processor supports the corresponding flow. Sandboxes (including iFlex) typically return a regional 404 HTML page rather than the API response — ask Zenoti support to enable the payment-processor integration if you see that.
+- **Mixed casing.** Zenoti's API is inconsistent about field casing — some endpoints use `snake_case`, some `camelCase`, some `PascalCase`, and a few mix all three within one body (`center_Id` vs `center_id`, `SessionId` + `userId` + `packageIds`). Examples above mirror what Zenoti accepts.
+- **Center scoping.** Most operational endpoints (services, employees, appointments, invoices, memberships, classes, …) require a `centerId` (or `center_id` inside `query`/`body`). Reference and org-level endpoints don't.
+- **Pagination.** `query.page` is 1-based; `query.size` defaults to 10 with a server cap of 100.
+
+## Third-Party Documentation
+
+- Zenoti Developer Portal: [https://docs.zenoti.com/](https://docs.zenoti.com/)
+- Zenoti API reference: [https://apidocs.zenoti.com/reference/introduction-to-zenoti-apis](https://apidocs.zenoti.com/reference/introduction-to-zenoti-apis)

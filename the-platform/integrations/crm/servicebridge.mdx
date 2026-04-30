@@ -1,563 +1,3250 @@
 ---
-title: "Salesforce"
-description: "AI-powered conversations synced to managed contacts and pipelines"
+title: "ServiceBridge"
+description: "Field-service operations, estimates, and work orders in ServiceBridge"
 ---
 
-### Description
+## Overview
 
-AI-powered conversations synced to managed contacts and pipelines. Use this integration to query data with SOQL/SOSL, manage contacts, accounts, leads, opportunities, tasks, notes, cases, and events.
+Field-service operations, estimates, and work orders in ServiceBridge. Call actions with `automationType`, `action`, and `params` from any workflow node that supports automations.
 
-### Authentication
+## Authentication
 
-- OAuth 2.0 or Salesforce Access Token with instance URL.
+- ServiceBridge Login action returns a session key used by subsequent requests.
 
-### Available Actions
+## Available Actions
 
-- SOQL query (standard, paginated, and queryAll)
-- SOSL search
-- Find contacts by email
-- Find accounts by name
-- Search/get tasks
-- Get notes
-- Find events
-- Find/create/update cases
-- Create events
-- Get/delete/upsert sObjects
-- Create/update contacts, accounts, leads, opportunities
-- Associate opportunities with contacts
-- Create tasks and notes
+Click any action to jump to its example payload.
 
-### Examples
 
-**Example 1: Salesforce - SOQL Query**
+**Accounting**
 
-Run a SOQL query using OAuth token or apiKey override.
+- [List Accounting Accounts](#servicebridge-list-accounting-accounts)
+
+**Activity-Notes**
+
+- [Create Activity Note](#servicebridge-create-activity-note)
+- [Delete Activity Note](#servicebridge-delete-activity-note)
+- [Get Activity Note](#servicebridge-get-activity-note)
+
+**Assets**
+
+- [List Assets](#servicebridge-list-assets)
+
+**Authentication**
+
+- [Login](#servicebridge-login)
+- [Logout](#servicebridge-logout)
+
+**Branches**
+
+- [Create Branch](#servicebridge-create-branch)
+- [Get Branch](#servicebridge-get-branch)
+- [List Branches](#servicebridge-list-branches)
+
+**Companies**
+
+- [Get Company](#servicebridge-get-company)
+
+**Contacts**
+
+- [Delete Contact](#servicebridge-delete-contact)
+- [Get Contact](#servicebridge-get-contact)
+- [List Contacts](#servicebridge-list-contacts)
+- [Update Contact](#servicebridge-update-contact)
+
+**Custom-Fields**
+
+- [Create Custom Field](#servicebridge-create-custom-field)
+- [Get Custom Field](#servicebridge-get-custom-field)
+- [List Custom Field Groups](#servicebridge-list-custom-field-groups)
+- [List Custom Fields](#servicebridge-list-custom-fields)
+
+**Customers**
+
+- [Create Customer](#servicebridge-create-customer)
+- [Create Customer Category](#servicebridge-create-customer-category)
+- [Delete Customer](#servicebridge-delete-customer)
+- [Get Customer Bank Accounts](#servicebridge-get-customer-payment-bank-accounts)
+- [Get Customer Payment Cards](#servicebridge-get-customer-payment-cards)
+- [List Customers](#servicebridge-list-customers)
+- [Update Customer](#servicebridge-update-customer)
+
+**Estimates**
+
+- [Create Estimate](#servicebridge-create-estimate)
+- [Delete Estimate](#servicebridge-delete-estimate)
+- [Get Estimate Document](#servicebridge-get-estimate-document)
+- [List Estimates](#servicebridge-list-estimates)
+- [Reopen Estimate](#servicebridge-reopen-estimate)
+- [Update Estimate](#servicebridge-update-estimate)
+- [Win Estimate](#servicebridge-win-estimate)
+
+**Inventory**
+
+- [Create Charge Type](#servicebridge-create-charge-type)
+- [Create Inventory Group](#servicebridge-create-inventory-group)
+- [Create Product](#servicebridge-create-product)
+- [Create Service Item](#servicebridge-create-inventory-service)
+- [Delete Charge Type](#servicebridge-delete-charge-type)
+- [Delete Inventory Group](#servicebridge-delete-inventory-group)
+- [Delete Inventory Item](#servicebridge-delete-inventory-item)
+- [Delete Unit](#servicebridge-delete-unit)
+- [List Charge Types](#servicebridge-list-charge-types)
+- [List Inventory](#servicebridge-list-inventory)
+- [List Inventory Groups](#servicebridge-list-inventory-groups)
+- [List Units](#servicebridge-list-units)
+- [Update Charge Type](#servicebridge-update-charge-type)
+- [Update Inventory Group](#servicebridge-update-inventory-group)
+- [Update Product](#servicebridge-update-product)
+- [Update Service Item](#servicebridge-update-inventory-service)
+- [Update Unit](#servicebridge-update-unit)
+
+**Invoices**
+
+- [List Invoices](#servicebridge-list-invoices)
+
+**Jobs**
+
+- [Delete Job Category](#servicebridge-delete-job-category)
+- [Get Job Category](#servicebridge-get-job-category)
+- [Get Job Template](#servicebridge-get-job-template)
+- [List Job Templates](#servicebridge-list-job-templates)
+- [Update Job Category](#servicebridge-update-job-category)
+
+**Leads**
+
+- [Create Lead](#servicebridge-create-lead)
+- [List Leads](#servicebridge-list-leads)
+
+**Locations**
+
+- [Get Location](#servicebridge-get-location)
+- [List Location Contacts](#servicebridge-list-location-contacts)
+- [Update Location Contact](#servicebridge-update-location-contact)
+
+**Marketing**
+
+- [Delete Marketing Campaign](#servicebridge-delete-marketing-campaign)
+- [Delete Marketing Category](#servicebridge-delete-marketing-category)
+- [Get Marketing Campaign](#servicebridge-get-marketing-campaign)
+- [List Marketing Campaigns](#servicebridge-list-marketing-campaigns)
+- [List Marketing Categories](#servicebridge-list-marketing-categories)
+- [Update Marketing Campaign](#servicebridge-update-marketing-campaign)
+- [Update Marketing Category](#servicebridge-update-marketing-category)
+
+**Payments**
+
+- [Create Payment](#servicebridge-create-payment)
+- [Delete Payment](#servicebridge-delete-payment)
+- [Get Payment](#servicebridge-get-payment)
+- [List Payment Methods](#servicebridge-list-payment-methods)
+- [List Payments](#servicebridge-list-payments)
+
+**Personnel**
+
+- [Get Personnel](#servicebridge-get-personnel)
+- [List Personnel](#servicebridge-list-personnel)
+
+**Sales**
+
+- [List Sales Representatives](#servicebridge-list-sales-representatives)
+
+**Service-Agreements**
+
+- [Create Service Agreement](#servicebridge-create-service-agreement)
+- [Delete Service Agreement](#servicebridge-delete-service-agreement)
+- [Get Service Agreement](#servicebridge-get-service-agreement)
+- [List Service Agreements](#servicebridge-list-service-agreements)
+- [Update Service Agreement](#servicebridge-update-service-agreement)
+
+**Service-Plans**
+
+- [Create Service Plan](#servicebridge-create-service-plan)
+- [Delete Service Plan](#servicebridge-delete-service-plan)
+- [Get Service Plan](#servicebridge-get-service-plan)
+- [List Service Plans](#servicebridge-list-service-plans)
+- [Update Service Plan](#servicebridge-update-service-plan)
+
+**Statistics**
+
+- [Get Company Statistics](#servicebridge-get-company-statistics)
+- [Get Invoice Statistics](#servicebridge-get-invoice-statistics)
+- [Get Job Statistics](#servicebridge-get-job-statistics)
+- [Get Payment Statistics](#servicebridge-get-payment-statistics)
+
+**Tasks**
+
+- [Create Task](#servicebridge-create-task)
+- [List Tasks](#servicebridge-list-tasks)
+- [Update Task](#servicebridge-update-task)
+
+**Taxes**
+
+- [List Taxes](#servicebridge-list-taxes)
+
+**Teams**
+
+- [Get Team](#servicebridge-get-team)
+- [List Teams](#servicebridge-list-teams)
+
+**Terms**
+
+- [List Terms](#servicebridge-list-terms)
+
+**Users**
+
+- [Get Active Users History](#servicebridge-get-active-users-history)
+
+**Work-Orders**
+
+- [Create Work Order](#servicebridge-create-work-order)
+- [Delete Work Order](#servicebridge-delete-work-order)
+- [Get Work Order](#servicebridge-get-work-order)
+- [Get Work Order Document](#servicebridge-get-work-order-document)
+- [Get Work Order Documents](#servicebridge-get-work-order-documents)
+- [Get Work Order Photos](#servicebridge-get-work-order-photos)
+- [Get Work Order Review](#servicebridge-get-work-order-review)
+- [List Work Order Reviews](#servicebridge-list-work-order-reviews)
+- [List Work Orders](#servicebridge-list-work-orders)
+- [Update Work Order](#servicebridge-update-work-order)
+
+## Examples
+
+<a id="servicebridge-login"></a>
+#### Example 1: ServiceBridge - Login to ServiceBridge
+
+Authenticate and obtain a session key
 
 ```json
 {
-  "automationType": "salesforce",
-  "nodeId": "salesforce-soql-001",
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-login",
   "nodeParams": {
-    "action": "soql_query",
+    "action": "login",
     "params": {
-      "soql": "SELECT Id, Name, Email FROM Contact WHERE Email LIKE '%@example.com' LIMIT 5",
-      "apiKey": "SF_ACCESS_TOKEN",
-      "instanceUrl": "https://your-instance.my.salesforce.com"
+      "userId": "your-api-user-id",
+      "password": "your-password"
     }
   }
 }
 ```
 
-**Example 2: Salesforce - SOQL Query (Paginated)**
+---
 
-Run a SOQL query and auto-follow nextRecordsUrl up to pageLimit.
+<a id="servicebridge-logout"></a>
+#### Example 2: ServiceBridge - Logout from ServiceBridge
+
+Invalidate the current session
 
 ```json
 {
-  "automationType": "salesforce",
-  "nodeId": "salesforce-soql-paginated-001",
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-logout",
   "nodeParams": {
-    "action": "soql_query_paginated",
+    "action": "logout",
+    "params": {}
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-customers"></a>
+#### Example 3: ServiceBridge - List Customers
+
+Get a paginated list of customers
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-customers",
+  "nodeParams": {
+    "action": "list_customers",
     "params": {
-      "soql": "SELECT Id, Name FROM Account WHERE Name LIKE 'A%'",
-      "pageLimit": 5
+      "page": 1,
+      "pageSize": 50
     }
   }
 }
 ```
 
-**Example 3: Salesforce - SOQL QueryAll**
+---
 
-Run a SOQL query using /queryAll to include archived/deleted as applicable.
+<a id="servicebridge-get-customer"></a>
+#### Example 4: ServiceBridge - Get Customer by ID
+
+Retrieve a specific customer
 
 ```json
 {
-  "automationType": "salesforce",
-  "nodeId": "salesforce-soql-all-001",
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-customer",
   "nodeParams": {
-    "action": "soql_query_all",
+    "action": "get_customer",
     "params": {
-      "soql": "SELECT Id, IsDeleted, Name FROM Account WHERE IsDeleted = true LIMIT 5"
+      "customerId": "123"
     }
   }
 }
 ```
 
-**Example 4: Salesforce - SOSL Search**
+---
 
-Run a SOSL FIND query across objects.
+<a id="servicebridge-create-customer"></a>
+#### Example 5: ServiceBridge - Create Customer
 
-```json
-{
-  "automationType": "salesforce",
-  "nodeId": "salesforce-sosl-001",
-  "nodeParams": {
-    "action": "sosl_search",
-    "params": {
-      "search": "FIND 'Acme*' IN ALL FIELDS RETURNING Account(Id,Name), Contact(Id,FirstName,LastName)"
-    }
-  }
-}
-```
-
-**Example 5: Salesforce - Find Contact by Email**
-
-Helper to search Contact by exact email.
+Create a new customer (lead)
 
 ```json
 {
-  "automationType": "salesforce",
-  "nodeId": "salesforce-find-contact-001",
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-create-customer",
   "nodeParams": {
-    "action": "find_contact_by_email",
+    "action": "create_customer",
     "params": {
-      "email": "jane@example.com"
-    }
-  }
-}
-```
-
-**Example 6: Salesforce - Find Account by Name**
-
-Helper to search Account by name (LIKE %name%).
-
-```json
-{
-  "automationType": "salesforce",
-  "nodeId": "salesforce-find-account-001",
-  "nodeParams": {
-    "action": "find_account_by_name",
-    "params": {
-      "name": "Acme"
-    }
-  }
-}
-```
-
-**Example 7: Salesforce - Search Tasks (SOSL)**
-
-Search tasks by text using SOSL.
-
-```json
-{
-  "automationType": "salesforce",
-  "nodeId": "salesforce-search-tasks-001",
-  "nodeParams": {
-    "action": "search_tasks",
-    "params": {
-      "search": "Follow*"
-    }
-  }
-}
-```
-
-**Example 8: Salesforce - Get Tasks**
-
-List tasks by filters (WhoId/WhatId/Status/SubjectLike).
-
-```json
-{
-  "automationType": "salesforce",
-  "nodeId": "salesforce-get-tasks-001",
-  "nodeParams": {
-    "action": "get_tasks",
-    "params": {
-      "Status": "Not Started",
-      "SubjectLike": "Follow",
-      "limit": 25
-    }
-  }
-}
-```
-
-**Example 9: Salesforce - Get Notes**
-
-List Notes for a given ParentId.
-
-```json
-{
-  "automationType": "salesforce",
-  "nodeId": "salesforce-get-notes-001",
-  "nodeParams": {
-    "action": "get_notes",
-    "params": {
-      "ParentId": "003xx000004T123AAC",
-      "limit": 20
-    }
-  }
-}
-```
-
-**Example 10: Salesforce - Find Events**
-
-Find Events by WhoId/WhatId/SubjectLike/time window.
-
-```json
-{
-  "automationType": "salesforce",
-  "nodeId": "salesforce-find-events-001",
-  "nodeParams": {
-    "action": "find_events",
-    "params": {
-      "SubjectLike": "Follow",
-      "start": "2025-10-01T00:00:00.000Z",
-      "end": "2025-11-01T00:00:00.000Z",
-      "limit": 25
-    }
-  }
-}
-```
-
-**Example 11: Salesforce - Find Cases**
-
-Find Cases by AccountId/ContactId/Status/SubjectLike.
-
-```json
-{
-  "automationType": "salesforce",
-  "nodeId": "salesforce-find-cases-001",
-  "nodeParams": {
-    "action": "find_cases",
-    "params": {
-      "Status": "New",
-      "SubjectLike": "Support",
-      "limit": 25
-    }
-  }
-}
-```
-
-**Example 12: Salesforce - Create Case**
-
-Create a Case record.
-
-```json
-{
-  "automationType": "salesforce",
-  "nodeId": "salesforce-create-case-001",
-  "nodeParams": {
-    "action": "create_case",
-    "params": {
-      "Subject": "Support needed",
-      "Origin": "Phone"
-    }
-  }
-}
-```
-
-**Example 13: Salesforce - Update Case**
-
-Update a Case record.
-
-```json
-{
-  "automationType": "salesforce",
-  "nodeId": "salesforce-update-case-001",
-  "nodeParams": {
-    "action": "update_case",
-    "params": {
-      "id": "500xx000002X123AAC",
-      "Status": "Working",
-      "Priority": "High"
-    }
-  }
-}
-```
-
-**Example 14: Salesforce - Create Event**
-
-Create an Event (calendar activity).
-
-```json
-{
-  "automationType": "salesforce",
-  "nodeId": "salesforce-create-event-001",
-  "nodeParams": {
-    "action": "create_event",
-    "params": {
-      "Subject": "Follow-up Meeting",
-      "StartDateTime": "2025-11-01T10:00:00.000Z",
-      "EndDateTime": "2025-11-01T10:30:00.000Z",
-      "WhoId": "003xx000004T123AAC"
-    }
-  }
-}
-```
-
-**Example 15: Salesforce - Get sObject**
-
-Retrieve a record by sObject API name and Id.
-
-```json
-{
-  "automationType": "salesforce",
-  "nodeId": "salesforce-get-sobject-001",
-  "nodeParams": {
-    "action": "get_sobject",
-    "params": {
-      "sobject": "Account",
-      "id": "001xx000003F123AAC"
-    }
-  }
-}
-```
-
-**Example 16: Salesforce - Delete sObject**
-
-Delete a record by sObject API name and Id.
-
-```json
-{
-  "automationType": "salesforce",
-  "nodeId": "salesforce-delete-sobject-001",
-  "nodeParams": {
-    "action": "delete_sobject",
-    "params": {
-      "sobject": "Contact",
-      "id": "003xx000004T123AAC"
-    }
-  }
-}
-```
-
-**Example 17: Salesforce - Upsert sObject by External ID**
-
-PATCH via externalIdField/externalIdValue.
-
-```json
-{
-  "automationType": "salesforce",
-  "nodeId": "salesforce-upsert-sobject-001",
-  "nodeParams": {
-    "action": "upsert_sobject",
-    "params": {
-      "sobject": "Contact",
-      "externalIdField": "External_Id__c",
-      "externalIdValue": "C-12345",
-      "fields": {
-        "FirstName": "Jane",
-        "LastName": "Doe",
-        "Email": "jane@example.com"
+      "input": {
+        "DisplayName": "John Doe",
+        "CustomerType": "Residential",
+        "DefaultServiceLocation": {
+          "LocationName": "Home",
+          "PrimaryContact": {
+            "FirstName": "John",
+            "LastName": "Doe",
+            "PhoneNumber": "555-123-4567",
+            "Email": "john@example.com"
+          },
+          "AddressLine1": "123 Main St",
+          "City": "Columbus",
+          "State": "OH",
+          "PostalCode": "43215"
+        }
       }
     }
   }
 }
 ```
 
-**Example 18: Salesforce - Upsert Lead by Email**
+---
 
-Create or update a Lead by email with explicit required fields.
+<a id="servicebridge-update-customer"></a>
+#### Example 6: ServiceBridge - Update Customer
 
-```json
-{
-  "automationType": "salesforce",
-  "nodeId": "salesforce-upsert-lead-001",
-  "nodeParams": {
-    "action": "upsert_lead_by_email",
-    "params": {
-      "email": "john.doe@example.com",
-      "Company": "Example Corp",
-      "LastName": "Doe",
-      "FirstName": "John"
-    }
-  }
-}
-```
-
-**Example 19: Salesforce - Create Opportunity**
-
-Create an Opportunity and optionally associate a primary Contact.
+Update an existing customer (sparse update)
 
 ```json
 {
-  "automationType": "salesforce",
-  "nodeId": "salesforce-create-opp-001",
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-update-customer",
   "nodeParams": {
-    "action": "create_opportunity",
+    "action": "update_customer",
     "params": {
-      "Name": "API Demo",
-      "StageName": "Prospecting",
-      "CloseDate": "2025-10-31",
-      "associations": {
-        "contactId": "003xx000004T123AAC"
+      "customerId": "123",
+      "input": {
+        "SparseUpdate": true,
+        "Version": 1,
+        "DisplayName": "John Doe Updated",
+        "UpdateDisplayName": true
       }
     }
   }
 }
 ```
 
-**Example 20: Salesforce - Associate Opportunity with Contact**
+---
 
-Create an OpportunityContactRole (primary by default).
+<a id="servicebridge-delete-customer"></a>
+#### Example 7: ServiceBridge - Delete Customer
+
+Delete a customer
 
 ```json
 {
-  "automationType": "salesforce",
-  "nodeId": "salesforce-assoc-opp-contact-001",
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-delete-customer",
   "nodeParams": {
-    "action": "associate_opportunity_contact",
+    "action": "delete_customer",
     "params": {
-      "opportunityId": "006xx000003G123AAC",
-      "contactId": "003xx000004T123AAC",
-      "isPrimary": true
+      "customerId": "123"
     }
   }
 }
 ```
 
-**Example 21: Salesforce - Create Contact**
+---
 
-Create a Contact record.
+<a id="servicebridge-make-customer-active"></a>
+#### Example 8: ServiceBridge - Activate Customer
+
+Mark a customer as active
 
 ```json
 {
-  "automationType": "salesforce",
-  "nodeId": "salesforce-create-contact-001",
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-make-customer-active",
+  "nodeParams": {
+    "action": "make_customer_active",
+    "params": {
+      "customerId": "123"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-customer-payment-bank-accounts"></a>
+#### Example 9: ServiceBridge - Get Customer Bank Accounts
+
+Get saved bank accounts for a customer
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-customer-payment-bank-accounts",
+  "nodeParams": {
+    "action": "get_customer_payment_bank_accounts",
+    "params": {
+      "customerId": "123"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-customer-payment-cards"></a>
+#### Example 10: ServiceBridge - Get Customer Payment Cards
+
+Get saved payment cards for a customer
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-customer-payment-cards",
+  "nodeParams": {
+    "action": "get_customer_payment_cards",
+    "params": {
+      "customerId": "123"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-create-customer-category"></a>
+#### Example 11: ServiceBridge - Create Customer Category
+
+Create a new customer category
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-create-customer-category",
+  "nodeParams": {
+    "action": "create_customer_category",
+    "params": {
+      "input": {
+        "Name": "VIP Customers"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-contacts"></a>
+#### Example 12: ServiceBridge - List Contacts
+
+Get contacts for a customer
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-contacts",
+  "nodeParams": {
+    "action": "list_contacts",
+    "params": {
+      "customerId": "123",
+      "page": 1,
+      "pageSize": 50
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-contact"></a>
+#### Example 13: ServiceBridge - Get Contact
+
+Get a specific contact
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-contact",
+  "nodeParams": {
+    "action": "get_contact",
+    "params": {
+      "contactId": "456"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-create-contact"></a>
+#### Example 14: ServiceBridge - Create Contact
+
+Create a new contact for a customer
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-create-contact",
   "nodeParams": {
     "action": "create_contact",
     "params": {
-      "LastName": "Doe",
-      "FirstName": "Jane",
-      "Email": "jane@example.com"
+      "customerId": "123",
+      "input": {
+        "FirstName": "Jane",
+        "LastName": "Smith",
+        "Email": "jane@example.com",
+        "PhoneNumber": "555-987-6543"
+      }
     }
   }
 }
 ```
 
-**Example 22: Salesforce - Update Contact**
+---
 
-Update an existing Contact.
+<a id="servicebridge-update-contact"></a>
+#### Example 15: ServiceBridge - Update Contact
+
+Update an existing contact
 
 ```json
 {
-  "automationType": "salesforce",
-  "nodeId": "salesforce-update-contact-001",
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-update-contact",
   "nodeParams": {
     "action": "update_contact",
     "params": {
-      "id": "003xx000004T123AAC",
-      "Phone": "+1-555-000-1111"
+      "contactId": "456",
+      "input": {
+        "SparseUpdate": true,
+        "Version": 1,
+        "Email": "newemail@example.com",
+        "UpdateEmail": true
+      }
     }
   }
 }
 ```
 
-**Example 23: Salesforce - Create Account**
+---
 
-Create an Account record.
+<a id="servicebridge-delete-contact"></a>
+#### Example 16: ServiceBridge - Delete Contact
+
+Delete a contact
 
 ```json
 {
-  "automationType": "salesforce",
-  "nodeId": "salesforce-create-account-001",
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-delete-contact",
   "nodeParams": {
-    "action": "create_account",
+    "action": "delete_contact",
     "params": {
-      "Name": "Acme Corporation"
+      "contactId": "456"
     }
   }
 }
 ```
 
-**Example 24: Salesforce - Update Account**
+---
 
-Update an Account record by Id.
+<a id="servicebridge-list-locations"></a>
+#### Example 17: ServiceBridge - List Locations
+
+Get a paginated list of service locations
 
 ```json
 {
-  "automationType": "salesforce",
-  "nodeId": "salesforce-update-account-001",
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-locations",
   "nodeParams": {
-    "action": "update_account",
+    "action": "list_locations",
     "params": {
-      "id": "001xx000003F123AAC",
-      "Industry": "Technology"
+      "page": 1,
+      "pageSize": 50
     }
   }
 }
 ```
 
-**Example 25: Salesforce - Create Task**
+---
 
-Create a Task record related to another record (e.g., Contact).
+<a id="servicebridge-get-location"></a>
+#### Example 18: ServiceBridge - Get Location
+
+Get a specific location
 
 ```json
 {
-  "automationType": "salesforce",
-  "nodeId": "salesforce-create-task-001",
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-location",
+  "nodeParams": {
+    "action": "get_location",
+    "params": {
+      "locationId": "789"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-location-contacts"></a>
+#### Example 19: ServiceBridge - List Location Contacts
+
+Get contacts at a location
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-location-contacts",
+  "nodeParams": {
+    "action": "list_location_contacts",
+    "params": {
+      "locationId": "789",
+      "page": 1,
+      "pageSize": 50
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-update-location-contact"></a>
+#### Example 20: ServiceBridge - Update Location Contact
+
+Update a contact at a location
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-update-location-contact",
+  "nodeParams": {
+    "action": "update_location_contact",
+    "params": {
+      "locationId": "789",
+      "contactId": "456",
+      "input": {}
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-delete-location-contact"></a>
+#### Example 21: ServiceBridge - Delete Location Contact
+
+Remove a contact from a location
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-delete-location-contact",
+  "nodeParams": {
+    "action": "delete_location_contact",
+    "params": {
+      "locationId": "789",
+      "contactId": "456"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-estimates"></a>
+#### Example 22: ServiceBridge - List Estimates
+
+Get a paginated list of estimates
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-estimates",
+  "nodeParams": {
+    "action": "list_estimates",
+    "params": {
+      "page": 1,
+      "pageSize": 50
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-estimate"></a>
+#### Example 23: ServiceBridge - Get Estimate
+
+Get a specific estimate
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-estimate",
+  "nodeParams": {
+    "action": "get_estimate",
+    "params": {
+      "estimateId": "100"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-create-estimate"></a>
+#### Example 24: ServiceBridge - Create Estimate
+
+Create a new estimate (free inspection)
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-create-estimate",
+  "nodeParams": {
+    "action": "create_estimate",
+    "params": {
+      "input": {
+        "Customer": {
+          "Id": 123
+        },
+        "Description": "Free Home Insulation Inspection",
+        "ScheduledStartDate": "2026-01-25T10:00:00Z",
+        "Duration": 60
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-update-estimate"></a>
+#### Example 25: ServiceBridge - Update Estimate
+
+Update an existing estimate
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-update-estimate",
+  "nodeParams": {
+    "action": "update_estimate",
+    "params": {
+      "estimateId": "100",
+      "input": {
+        "SparseUpdate": true,
+        "Version": 1,
+        "Status": "Assigned",
+        "UpdateStatus": true
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-delete-estimate"></a>
+#### Example 26: ServiceBridge - Delete Estimate
+
+Delete an estimate
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-delete-estimate",
+  "nodeParams": {
+    "action": "delete_estimate",
+    "params": {
+      "estimateId": "100"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-duplicate-estimate"></a>
+#### Example 27: ServiceBridge - Duplicate Estimate
+
+Create a copy of an estimate
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-duplicate-estimate",
+  "nodeParams": {
+    "action": "duplicate_estimate",
+    "params": {
+      "estimateId": "100"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-win-estimate"></a>
+#### Example 28: ServiceBridge - Win Estimate
+
+Mark estimate as won
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-win-estimate",
+  "nodeParams": {
+    "action": "win_estimate",
+    "params": {
+      "estimateId": "100"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-lose-estimate"></a>
+#### Example 29: ServiceBridge - Lose Estimate
+
+Mark estimate as lost
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-lose-estimate",
+  "nodeParams": {
+    "action": "lose_estimate",
+    "params": {
+      "estimateId": "100"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-reopen-estimate"></a>
+#### Example 30: ServiceBridge - Reopen Estimate
+
+Reopen a closed estimate
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-reopen-estimate",
+  "nodeParams": {
+    "action": "reopen_estimate",
+    "params": {
+      "estimateId": "100"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-estimate-documents"></a>
+#### Example 31: ServiceBridge - Get Estimate Documents
+
+List documents for an estimate
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-estimate-documents",
+  "nodeParams": {
+    "action": "get_estimate_documents",
+    "params": {
+      "estimateId": "100"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-estimate-document"></a>
+#### Example 32: ServiceBridge - Get Estimate Document
+
+Get a specific document
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-estimate-document",
+  "nodeParams": {
+    "action": "get_estimate_document",
+    "params": {
+      "estimateId": "100",
+      "documentId": "200"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-estimate-photos"></a>
+#### Example 33: ServiceBridge - Get Estimate Photos
+
+List photos for an estimate
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-estimate-photos",
+  "nodeParams": {
+    "action": "get_estimate_photos",
+    "params": {
+      "estimateId": "100"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-work-orders"></a>
+#### Example 34: ServiceBridge - List Work Orders
+
+Get a paginated list of work orders
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-work-orders",
+  "nodeParams": {
+    "action": "list_work_orders",
+    "params": {
+      "page": 1,
+      "pageSize": 50
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-work-order"></a>
+#### Example 35: ServiceBridge - Get Work Order
+
+Get a specific work order
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-work-order",
+  "nodeParams": {
+    "action": "get_work_order",
+    "params": {
+      "workOrderId": "300"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-create-work-order"></a>
+#### Example 36: ServiceBridge - Create Work Order
+
+Create a new work order (installation job)
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-create-work-order",
+  "nodeParams": {
+    "action": "create_work_order",
+    "params": {
+      "input": {
+        "Customer": {
+          "Id": 123
+        },
+        "Description": "Attic Insulation Installation",
+        "ScheduledStartDate": "2026-02-01T09:00:00Z",
+        "Duration": 240
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-update-work-order"></a>
+#### Example 37: ServiceBridge - Update Work Order
+
+Update an existing work order
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-update-work-order",
+  "nodeParams": {
+    "action": "update_work_order",
+    "params": {
+      "workOrderId": "300",
+      "input": {
+        "SparseUpdate": true,
+        "Version": 1,
+        "Status": "InProgress",
+        "UpdateStatus": true
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-delete-work-order"></a>
+#### Example 38: ServiceBridge - Delete Work Order
+
+Delete a work order
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-delete-work-order",
+  "nodeParams": {
+    "action": "delete_work_order",
+    "params": {
+      "workOrderId": "300"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-work-order-documents"></a>
+#### Example 39: ServiceBridge - Get Work Order Documents
+
+List documents for a work order
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-work-order-documents",
+  "nodeParams": {
+    "action": "get_work_order_documents",
+    "params": {
+      "workOrderId": "300"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-work-order-document"></a>
+#### Example 40: ServiceBridge - Get Work Order Document
+
+Get a specific document
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-work-order-document",
+  "nodeParams": {
+    "action": "get_work_order_document",
+    "params": {
+      "workOrderId": "300",
+      "documentId": "400"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-work-order-photos"></a>
+#### Example 41: ServiceBridge - Get Work Order Photos
+
+List photos for a work order
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-work-order-photos",
+  "nodeParams": {
+    "action": "get_work_order_photos",
+    "params": {
+      "workOrderId": "300"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-work-order-review"></a>
+#### Example 42: ServiceBridge - Get Work Order Review
+
+Get the review for a work order
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-work-order-review",
+  "nodeParams": {
+    "action": "get_work_order_review",
+    "params": {
+      "workOrderId": "300"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-work-order-reviews"></a>
+#### Example 43: ServiceBridge - List Work Order Reviews
+
+Get a list of all work order reviews
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-work-order-reviews",
+  "nodeParams": {
+    "action": "list_work_order_reviews",
+    "params": {
+      "page": 1,
+      "pageSize": 50
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-teams"></a>
+#### Example 44: ServiceBridge - List Teams
+
+Get a list of all teams
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-teams",
+  "nodeParams": {
+    "action": "list_teams",
+    "params": {
+      "page": 1,
+      "pageSize": 50
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-team"></a>
+#### Example 45: ServiceBridge - Get Team
+
+Get a specific team
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-team",
+  "nodeParams": {
+    "action": "get_team",
+    "params": {
+      "teamId": "500"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-personnel"></a>
+#### Example 46: ServiceBridge - List Personnel
+
+Get a list of all employees
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-personnel",
+  "nodeParams": {
+    "action": "list_personnel",
+    "params": {
+      "page": 1,
+      "pageSize": 50
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-personnel"></a>
+#### Example 47: ServiceBridge - Get Personnel
+
+Get a specific employee
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-personnel",
+  "nodeParams": {
+    "action": "get_personnel",
+    "params": {
+      "personnelId": "600"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-inventory"></a>
+#### Example 48: ServiceBridge - List Inventory
+
+Get a paginated list of inventory items
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-inventory",
+  "nodeParams": {
+    "action": "list_inventory",
+    "params": {
+      "page": 1,
+      "pageSize": 50
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-inventory-item"></a>
+#### Example 49: ServiceBridge - Get Inventory Item
+
+Get a specific inventory item
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-inventory-item",
+  "nodeParams": {
+    "action": "get_inventory_item",
+    "params": {
+      "inventoryId": "700"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-delete-inventory-item"></a>
+#### Example 50: ServiceBridge - Delete Inventory Item
+
+Delete an inventory item
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-delete-inventory-item",
+  "nodeParams": {
+    "action": "delete_inventory_item",
+    "params": {
+      "inventoryId": "700"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-create-product"></a>
+#### Example 51: ServiceBridge - Create Product
+
+Create a new product
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-create-product",
+  "nodeParams": {
+    "action": "create_product",
+    "params": {
+      "input": {
+        "Name": "Insulation Roll",
+        "Price": 49.99,
+        "Type": "Product"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-update-product"></a>
+#### Example 52: ServiceBridge - Update Product
+
+Update an existing product
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-update-product",
+  "nodeParams": {
+    "action": "update_product",
+    "params": {
+      "productId": "700",
+      "input": {
+        "SparseUpdate": true,
+        "Version": 1,
+        "Price": 54.99,
+        "UpdatePrice": true
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-create-inventory-service"></a>
+#### Example 53: ServiceBridge - Create Service Item
+
+Create a new service item
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-create-inventory-service",
+  "nodeParams": {
+    "action": "create_inventory_service",
+    "params": {
+      "input": {
+        "Name": "Installation Labor",
+        "Price": 85,
+        "Type": "Service"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-update-inventory-service"></a>
+#### Example 54: ServiceBridge - Update Service Item
+
+Update an existing service item
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-update-inventory-service",
+  "nodeParams": {
+    "action": "update_inventory_service",
+    "params": {
+      "serviceId": "800",
+      "input": {
+        "SparseUpdate": true,
+        "Version": 1
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-inventory-groups"></a>
+#### Example 55: ServiceBridge - List Inventory Groups
+
+Get all inventory groups
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-inventory-groups",
+  "nodeParams": {
+    "action": "list_inventory_groups",
+    "params": {}
+  }
+}
+```
+
+---
+
+<a id="servicebridge-create-inventory-group"></a>
+#### Example 56: ServiceBridge - Create Inventory Group
+
+Create a new inventory group
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-create-inventory-group",
+  "nodeParams": {
+    "action": "create_inventory_group",
+    "params": {
+      "input": {
+        "Name": "Insulation Materials"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-update-inventory-group"></a>
+#### Example 57: ServiceBridge - Update Inventory Group
+
+Update an inventory group
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-update-inventory-group",
+  "nodeParams": {
+    "action": "update_inventory_group",
+    "params": {
+      "groupId": "900",
+      "input": {
+        "SparseUpdate": true,
+        "Version": 1,
+        "Name": "Updated Group Name",
+        "UpdateName": true
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-delete-inventory-group"></a>
+#### Example 58: ServiceBridge - Delete Inventory Group
+
+Delete an inventory group
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-delete-inventory-group",
+  "nodeParams": {
+    "action": "delete_inventory_group",
+    "params": {
+      "groupId": "900"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-charge-types"></a>
+#### Example 59: ServiceBridge - List Charge Types
+
+Get all charge types
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-charge-types",
+  "nodeParams": {
+    "action": "list_charge_types",
+    "params": {}
+  }
+}
+```
+
+---
+
+<a id="servicebridge-create-charge-type"></a>
+#### Example 60: ServiceBridge - Create Charge Type
+
+Create a new charge type
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-create-charge-type",
+  "nodeParams": {
+    "action": "create_charge_type",
+    "params": {
+      "input": {
+        "Name": "Expedited Service"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-update-charge-type"></a>
+#### Example 61: ServiceBridge - Update Charge Type
+
+Update a charge type
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-update-charge-type",
+  "nodeParams": {
+    "action": "update_charge_type",
+    "params": {
+      "chargeTypeId": "1000",
+      "input": {
+        "SparseUpdate": true,
+        "Version": 1
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-delete-charge-type"></a>
+#### Example 62: ServiceBridge - Delete Charge Type
+
+Delete a charge type
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-delete-charge-type",
+  "nodeParams": {
+    "action": "delete_charge_type",
+    "params": {
+      "chargeTypeId": "1000"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-units"></a>
+#### Example 63: ServiceBridge - List Units
+
+Get all measurement units
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-units",
+  "nodeParams": {
+    "action": "list_units",
+    "params": {}
+  }
+}
+```
+
+---
+
+<a id="servicebridge-create-unit"></a>
+#### Example 64: ServiceBridge - Create Unit
+
+Create a new measurement unit
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-create-unit",
+  "nodeParams": {
+    "action": "create_unit",
+    "params": {
+      "input": {
+        "Name": "Square Foot",
+        "Abbreviation": "sq ft"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-update-unit"></a>
+#### Example 65: ServiceBridge - Update Unit
+
+Update a measurement unit
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-update-unit",
+  "nodeParams": {
+    "action": "update_unit",
+    "params": {
+      "unitId": "1100",
+      "input": {
+        "SparseUpdate": true,
+        "Version": 1
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-delete-unit"></a>
+#### Example 66: ServiceBridge - Delete Unit
+
+Delete a measurement unit
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-delete-unit",
+  "nodeParams": {
+    "action": "delete_unit",
+    "params": {
+      "unitId": "1100"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-invoices"></a>
+#### Example 67: ServiceBridge - List Invoices
+
+Get a paginated list of invoices
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-invoices",
+  "nodeParams": {
+    "action": "list_invoices",
+    "params": {
+      "page": 1,
+      "pageSize": 50
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-invoice"></a>
+#### Example 68: ServiceBridge - Get Invoice
+
+Get a specific invoice
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-invoice",
+  "nodeParams": {
+    "action": "get_invoice",
+    "params": {
+      "invoiceId": "1200"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-payments"></a>
+#### Example 69: ServiceBridge - List Payments
+
+Get a paginated list of payments
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-payments",
+  "nodeParams": {
+    "action": "list_payments",
+    "params": {
+      "page": 1,
+      "pageSize": 50
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-payment"></a>
+#### Example 70: ServiceBridge - Get Payment
+
+Get a specific payment
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-payment",
+  "nodeParams": {
+    "action": "get_payment",
+    "params": {
+      "paymentId": "1300"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-create-payment"></a>
+#### Example 71: ServiceBridge - Create Payment
+
+Record a new payment
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-create-payment",
+  "nodeParams": {
+    "action": "create_payment",
+    "params": {
+      "input": {
+        "Amount": 500,
+        "InvoiceId": 1200,
+        "PaymentMethodId": 1
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-update-payment"></a>
+#### Example 72: ServiceBridge - Update Payment
+
+Update a payment record
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-update-payment",
+  "nodeParams": {
+    "action": "update_payment",
+    "params": {
+      "paymentId": "1300",
+      "input": {
+        "SparseUpdate": true,
+        "Version": 1
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-delete-payment"></a>
+#### Example 73: ServiceBridge - Delete Payment
+
+Delete a payment record
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-delete-payment",
+  "nodeParams": {
+    "action": "delete_payment",
+    "params": {
+      "paymentId": "1300"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-payment-methods"></a>
+#### Example 74: ServiceBridge - List Payment Methods
+
+Get available payment methods
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-payment-methods",
+  "nodeParams": {
+    "action": "list_payment_methods",
+    "params": {}
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-branches"></a>
+#### Example 75: ServiceBridge - List Branches
+
+Get all branches/locations
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-branches",
+  "nodeParams": {
+    "action": "list_branches",
+    "params": {
+      "page": 1,
+      "pageSize": 50
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-branch"></a>
+#### Example 76: ServiceBridge - Get Branch
+
+Get a specific branch
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-branch",
+  "nodeParams": {
+    "action": "get_branch",
+    "params": {
+      "branchId": "1400"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-create-branch"></a>
+#### Example 77: ServiceBridge - Create Branch
+
+Create a new branch
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-create-branch",
+  "nodeParams": {
+    "action": "create_branch",
+    "params": {
+      "input": {
+        "Name": "Columbus Office",
+        "AddressLine1": "456 Oak Ave",
+        "City": "Columbus",
+        "State": "OH"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-update-branch"></a>
+#### Example 78: ServiceBridge - Update Branch
+
+Update a branch
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-update-branch",
+  "nodeParams": {
+    "action": "update_branch",
+    "params": {
+      "branchId": "1400",
+      "input": {
+        "SparseUpdate": true,
+        "Version": 1
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-delete-branch"></a>
+#### Example 79: ServiceBridge - Delete Branch
+
+Delete a branch
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-delete-branch",
+  "nodeParams": {
+    "action": "delete_branch",
+    "params": {
+      "branchId": "1400"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-companies"></a>
+#### Example 80: ServiceBridge - List Companies
+
+Get all companies in hierarchy
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-companies",
+  "nodeParams": {
+    "action": "list_companies",
+    "params": {}
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-company"></a>
+#### Example 81: ServiceBridge - Get Company
+
+Get company details
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-company",
+  "nodeParams": {
+    "action": "get_company",
+    "params": {
+      "companyId": "1500"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-marketing-campaigns"></a>
+#### Example 82: ServiceBridge - List Marketing Campaigns
+
+Get all marketing campaigns
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-marketing-campaigns",
+  "nodeParams": {
+    "action": "list_marketing_campaigns",
+    "params": {
+      "page": 1,
+      "pageSize": 50
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-marketing-campaign"></a>
+#### Example 83: ServiceBridge - Get Marketing Campaign
+
+Get a specific campaign
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-marketing-campaign",
+  "nodeParams": {
+    "action": "get_marketing_campaign",
+    "params": {
+      "campaignId": "1600"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-create-marketing-campaign"></a>
+#### Example 84: ServiceBridge - Create Marketing Campaign
+
+Create a new campaign
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-create-marketing-campaign",
+  "nodeParams": {
+    "action": "create_marketing_campaign",
+    "params": {
+      "input": {
+        "Name": "Winter Special 2026",
+        "Description": "20% off insulation"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-update-marketing-campaign"></a>
+#### Example 85: ServiceBridge - Update Marketing Campaign
+
+Update a campaign
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-update-marketing-campaign",
+  "nodeParams": {
+    "action": "update_marketing_campaign",
+    "params": {
+      "campaignId": "1600",
+      "input": {
+        "SparseUpdate": true,
+        "Version": 1
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-delete-marketing-campaign"></a>
+#### Example 86: ServiceBridge - Delete Marketing Campaign
+
+Delete a campaign
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-delete-marketing-campaign",
+  "nodeParams": {
+    "action": "delete_marketing_campaign",
+    "params": {
+      "campaignId": "1600"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-active-marketing-campaigns"></a>
+#### Example 87: ServiceBridge - Get Active Campaigns
+
+Get currently active campaigns
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-active-marketing-campaigns",
+  "nodeParams": {
+    "action": "get_active_marketing_campaigns",
+    "params": {}
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-marketing-categories"></a>
+#### Example 88: ServiceBridge - List Marketing Categories
+
+Get all marketing categories
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-marketing-categories",
+  "nodeParams": {
+    "action": "list_marketing_categories",
+    "params": {
+      "page": 1,
+      "pageSize": 50
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-marketing-category"></a>
+#### Example 89: ServiceBridge - Get Marketing Category
+
+Get a specific category
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-marketing-category",
+  "nodeParams": {
+    "action": "get_marketing_category",
+    "params": {
+      "categoryId": "1700"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-create-marketing-category"></a>
+#### Example 90: ServiceBridge - Create Marketing Category
+
+Create a new category
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-create-marketing-category",
+  "nodeParams": {
+    "action": "create_marketing_category",
+    "params": {
+      "input": {
+        "Name": "Digital Marketing"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-update-marketing-category"></a>
+#### Example 91: ServiceBridge - Update Marketing Category
+
+Update a category
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-update-marketing-category",
+  "nodeParams": {
+    "action": "update_marketing_category",
+    "params": {
+      "categoryId": "1700",
+      "input": {
+        "SparseUpdate": true,
+        "Version": 1
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-delete-marketing-category"></a>
+#### Example 92: ServiceBridge - Delete Marketing Category
+
+Delete a category
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-delete-marketing-category",
+  "nodeParams": {
+    "action": "delete_marketing_category",
+    "params": {
+      "categoryId": "1700"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-job-categories"></a>
+#### Example 93: ServiceBridge - List Job Categories
+
+Get all job categories
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-job-categories",
+  "nodeParams": {
+    "action": "list_job_categories",
+    "params": {
+      "page": 1,
+      "pageSize": 50
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-job-category"></a>
+#### Example 94: ServiceBridge - Get Job Category
+
+Get a specific job category
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-job-category",
+  "nodeParams": {
+    "action": "get_job_category",
+    "params": {
+      "categoryId": "1800"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-create-job-category"></a>
+#### Example 95: ServiceBridge - Create Job Category
+
+Create a new job category
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-create-job-category",
+  "nodeParams": {
+    "action": "create_job_category",
+    "params": {
+      "input": {
+        "Name": "Insulation",
+        "Description": "Insulation installation jobs"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-update-job-category"></a>
+#### Example 96: ServiceBridge - Update Job Category
+
+Update a job category
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-update-job-category",
+  "nodeParams": {
+    "action": "update_job_category",
+    "params": {
+      "categoryId": "1800",
+      "input": {
+        "SparseUpdate": true,
+        "Version": 1
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-delete-job-category"></a>
+#### Example 97: ServiceBridge - Delete Job Category
+
+Delete a job category
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-delete-job-category",
+  "nodeParams": {
+    "action": "delete_job_category",
+    "params": {
+      "categoryId": "1800"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-job-templates"></a>
+#### Example 98: ServiceBridge - List Job Templates
+
+Get all job templates
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-job-templates",
+  "nodeParams": {
+    "action": "list_job_templates",
+    "params": {
+      "page": 1,
+      "pageSize": 50
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-job-template"></a>
+#### Example 99: ServiceBridge - Get Job Template
+
+Get a specific job template
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-job-template",
+  "nodeParams": {
+    "action": "get_job_template",
+    "params": {
+      "templateId": "1900"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-leads"></a>
+#### Example 100: ServiceBridge - List Leads
+
+Get a paginated list of leads
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-leads",
+  "nodeParams": {
+    "action": "list_leads",
+    "params": {
+      "page": 1,
+      "pageSize": 50
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-lead"></a>
+#### Example 101: ServiceBridge - Get Lead
+
+Get a specific lead
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-lead",
+  "nodeParams": {
+    "action": "get_lead",
+    "params": {
+      "leadId": "2000"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-create-lead"></a>
+#### Example 102: ServiceBridge - Create Lead
+
+Create a new lead
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-create-lead",
+  "nodeParams": {
+    "action": "create_lead",
+    "params": {
+      "input": {
+        "Name": "New Prospect",
+        "PhoneNumber": "555-444-3333"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-service-agreements"></a>
+#### Example 103: ServiceBridge - List Service Agreements
+
+Get all service agreements
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-service-agreements",
+  "nodeParams": {
+    "action": "list_service_agreements",
+    "params": {
+      "page": 1,
+      "pageSize": 50
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-service-agreement"></a>
+#### Example 104: ServiceBridge - Get Service Agreement
+
+Get a specific agreement
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-service-agreement",
+  "nodeParams": {
+    "action": "get_service_agreement",
+    "params": {
+      "agreementId": "2100"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-create-service-agreement"></a>
+#### Example 105: ServiceBridge - Create Service Agreement
+
+Create a new agreement
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-create-service-agreement",
+  "nodeParams": {
+    "action": "create_service_agreement",
+    "params": {
+      "input": {
+        "Name": "Annual Maintenance",
+        "CustomerId": 123
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-update-service-agreement"></a>
+#### Example 106: ServiceBridge - Update Service Agreement
+
+Update an agreement
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-update-service-agreement",
+  "nodeParams": {
+    "action": "update_service_agreement",
+    "params": {
+      "agreementId": "2100",
+      "input": {
+        "SparseUpdate": true,
+        "Version": 1
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-delete-service-agreement"></a>
+#### Example 107: ServiceBridge - Delete Service Agreement
+
+Delete an agreement
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-delete-service-agreement",
+  "nodeParams": {
+    "action": "delete_service_agreement",
+    "params": {
+      "agreementId": "2100"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-service-plans"></a>
+#### Example 108: ServiceBridge - List Service Plans
+
+Get all service plans
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-service-plans",
+  "nodeParams": {
+    "action": "list_service_plans",
+    "params": {
+      "page": 1,
+      "pageSize": 50
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-service-plan"></a>
+#### Example 109: ServiceBridge - Get Service Plan
+
+Get a specific plan
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-service-plan",
+  "nodeParams": {
+    "action": "get_service_plan",
+    "params": {
+      "planId": "2200"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-create-service-plan"></a>
+#### Example 110: ServiceBridge - Create Service Plan
+
+Create a new plan
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-create-service-plan",
+  "nodeParams": {
+    "action": "create_service_plan",
+    "params": {
+      "input": {
+        "Name": "Premium Plan"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-update-service-plan"></a>
+#### Example 111: ServiceBridge - Update Service Plan
+
+Update a plan
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-update-service-plan",
+  "nodeParams": {
+    "action": "update_service_plan",
+    "params": {
+      "planId": "2200",
+      "input": {
+        "SparseUpdate": true,
+        "Version": 1
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-delete-service-plan"></a>
+#### Example 112: ServiceBridge - Delete Service Plan
+
+Delete a plan
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-delete-service-plan",
+  "nodeParams": {
+    "action": "delete_service_plan",
+    "params": {
+      "planId": "2200"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-tasks"></a>
+#### Example 113: ServiceBridge - List Tasks
+
+Get a paginated list of tasks
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-tasks",
+  "nodeParams": {
+    "action": "list_tasks",
+    "params": {
+      "page": 1,
+      "pageSize": 50
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-task"></a>
+#### Example 114: ServiceBridge - Get Task
+
+Get a specific task
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-task",
+  "nodeParams": {
+    "action": "get_task",
+    "params": {
+      "taskId": "2300"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-create-task"></a>
+#### Example 115: ServiceBridge - Create Task
+
+Create a new task
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-create-task",
   "nodeParams": {
     "action": "create_task",
     "params": {
-      "Subject": "Follow up",
-      "WhoId": "003xx000004T123AAC",
-      "Status": "Not Started"
-    }
-  }
-}
-```
-
-**Example 26: Salesforce - Create Note**
-
-Create a Note associated to a parent record.
-
-```json
-{
-  "automationType": "salesforce",
-  "nodeId": "salesforce-create-note-001",
-  "nodeParams": {
-    "action": "create_note",
-    "params": {
-      "ParentId": "003xx000004T123AAC",
-      "Title": "Call Notes",
-      "Body": "Spoke with customer."
-    }
-  }
-}
-```
-
-**Example 27: Salesforce - Create sObject**
-
-Generic sObject create for flexibility.
-
-```json
-{
-  "automationType": "salesforce",
-  "nodeId": "salesforce-create-sobject-001",
-  "nodeParams": {
-    "action": "create_sobject",
-    "params": {
-      "sobject": "Case",
-      "fields": {
-        "Subject": "API Created Case",
-        "Status": "New"
+      "input": {
+        "Title": "Follow up call",
+        "DueDate": "2026-01-30"
       }
     }
   }
 }
 ```
 
-**Example 28: Salesforce - Update sObject**
+---
 
-Generic sObject update by API name and Id.
+<a id="servicebridge-update-task"></a>
+#### Example 116: ServiceBridge - Update Task
+
+Update a task
 
 ```json
 {
-  "automationType": "salesforce",
-  "nodeId": "salesforce-update-sobject-001",
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-update-task",
   "nodeParams": {
-    "action": "update_sobject",
+    "action": "update_task",
     "params": {
-      "sobject": "Case",
-      "id": "500xx000002X123AAC",
-      "fields": {
-        "Priority": "High"
+      "taskId": "2300",
+      "input": {
+        "SparseUpdate": true,
+        "Version": 1,
+        "Status": "Completed",
+        "UpdateStatus": true
       }
     }
   }
 }
 ```
 
-### Third-Party Documentation
+---
 
-- [https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_what_is_rest_api.htm](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_what_is_rest_api.htm)
-- [https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/)
+<a id="servicebridge-list-activity-notes"></a>
+#### Example 117: ServiceBridge - List Activity Notes
+
+Get notes for an entity
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-activity-notes",
+  "nodeParams": {
+    "action": "list_activity_notes",
+    "params": {
+      "entityType": "Customer",
+      "entityId": "123",
+      "page": 1,
+      "pageSize": 50
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-activity-note"></a>
+#### Example 118: ServiceBridge - Get Activity Note
+
+Get a specific note
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-activity-note",
+  "nodeParams": {
+    "action": "get_activity_note",
+    "params": {
+      "noteId": "2400"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-create-activity-note"></a>
+#### Example 119: ServiceBridge - Create Activity Note
+
+Create a new note
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-create-activity-note",
+  "nodeParams": {
+    "action": "create_activity_note",
+    "params": {
+      "input": {
+        "EntityType": "Customer",
+        "EntityId": 123,
+        "Note": "Customer called about installation schedule"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-update-activity-note"></a>
+#### Example 120: ServiceBridge - Update Activity Note
+
+Update a note
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-update-activity-note",
+  "nodeParams": {
+    "action": "update_activity_note",
+    "params": {
+      "noteId": "2400",
+      "input": {
+        "Note": "Updated note content"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-delete-activity-note"></a>
+#### Example 121: ServiceBridge - Delete Activity Note
+
+Delete a note
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-delete-activity-note",
+  "nodeParams": {
+    "action": "delete_activity_note",
+    "params": {
+      "noteId": "2400"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-custom-fields"></a>
+#### Example 122: ServiceBridge - List Custom Fields
+
+Get custom fields by entity type (required: Job, Customer, Part, Personnel, Task, JobPart, Equipment, Companies, Location)
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-custom-fields",
+  "nodeParams": {
+    "action": "list_custom_fields",
+    "params": {
+      "page": 1,
+      "pageSize": 50,
+      "type": "Customer"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-custom-field"></a>
+#### Example 123: ServiceBridge - Get Custom Field
+
+Get a specific custom field
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-custom-field",
+  "nodeParams": {
+    "action": "get_custom_field",
+    "params": {
+      "fieldId": "2500"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-create-custom-field"></a>
+#### Example 124: ServiceBridge - Create Custom Field
+
+Create a new custom field
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-create-custom-field",
+  "nodeParams": {
+    "action": "create_custom_field",
+    "params": {
+      "input": {
+        "Name": "Lead Source",
+        "FieldType": "Text"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-update-custom-field"></a>
+#### Example 125: ServiceBridge - Update Custom Field
+
+Update a custom field
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-update-custom-field",
+  "nodeParams": {
+    "action": "update_custom_field",
+    "params": {
+      "fieldId": "2500",
+      "input": {
+        "SparseUpdate": true,
+        "Version": 1
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-delete-custom-field"></a>
+#### Example 126: ServiceBridge - Delete Custom Field
+
+Delete a custom field
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-delete-custom-field",
+  "nodeParams": {
+    "action": "delete_custom_field",
+    "params": {
+      "fieldId": "2500"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-custom-field-groups"></a>
+#### Example 127: ServiceBridge - List Custom Field Groups
+
+Get custom field groups by entity type (required: Job, Customer, Part, Personnel, Task, JobPart, Equipment, Companies, Location)
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-custom-field-groups",
+  "nodeParams": {
+    "action": "list_custom_field_groups",
+    "params": {
+      "page": 1,
+      "pageSize": 50,
+      "type": "Customer"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-custom-field-group"></a>
+#### Example 128: ServiceBridge - Get Custom Field Group
+
+Get a specific group
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-custom-field-group",
+  "nodeParams": {
+    "action": "get_custom_field_group",
+    "params": {
+      "groupId": "2600"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-create-custom-field-group"></a>
+#### Example 129: ServiceBridge - Create Custom Field Group
+
+Create a new group
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-create-custom-field-group",
+  "nodeParams": {
+    "action": "create_custom_field_group",
+    "params": {
+      "input": {
+        "Name": "Lead Information"
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-update-custom-field-group"></a>
+#### Example 130: ServiceBridge - Update Custom Field Group
+
+Update a group
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-update-custom-field-group",
+  "nodeParams": {
+    "action": "update_custom_field_group",
+    "params": {
+      "groupId": "2600",
+      "input": {
+        "SparseUpdate": true,
+        "Version": 1
+      }
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-delete-custom-field-group"></a>
+#### Example 131: ServiceBridge - Delete Custom Field Group
+
+Delete a group
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-delete-custom-field-group",
+  "nodeParams": {
+    "action": "delete_custom_field_group",
+    "params": {
+      "groupId": "2600"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-assets"></a>
+#### Example 132: ServiceBridge - List Assets
+
+Get a paginated list of assets
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-assets",
+  "nodeParams": {
+    "action": "list_assets",
+    "params": {
+      "page": 1,
+      "pageSize": 50
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-accounting-accounts"></a>
+#### Example 133: ServiceBridge - List Accounting Accounts
+
+Get all accounting accounts
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-accounting-accounts",
+  "nodeParams": {
+    "action": "list_accounting_accounts",
+    "params": {
+      "page": 1,
+      "pageSize": 50
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-sales-representatives"></a>
+#### Example 134: ServiceBridge - List Sales Representatives
+
+Get all sales reps
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-sales-representatives",
+  "nodeParams": {
+    "action": "list_sales_representatives",
+    "params": {
+      "page": 1,
+      "pageSize": 50
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-taxes"></a>
+#### Example 135: ServiceBridge - List Taxes
+
+Get all tax configurations
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-taxes",
+  "nodeParams": {
+    "action": "list_taxes",
+    "params": {}
+  }
+}
+```
+
+---
+
+<a id="servicebridge-list-terms"></a>
+#### Example 136: ServiceBridge - List Terms
+
+Get all payment terms
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-list-terms",
+  "nodeParams": {
+    "action": "list_terms",
+    "params": {}
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-company-statistics"></a>
+#### Example 137: ServiceBridge - Get Company Statistics
+
+Get company-wide statistics
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-company-statistics",
+  "nodeParams": {
+    "action": "get_company_statistics",
+    "params": {}
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-invoice-statistics"></a>
+#### Example 138: ServiceBridge - Get Invoice Statistics
+
+Get invoice-related statistics
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-invoice-statistics",
+  "nodeParams": {
+    "action": "get_invoice_statistics",
+    "params": {}
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-job-statistics"></a>
+#### Example 139: ServiceBridge - Get Job Statistics
+
+Get job-related statistics
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-job-statistics",
+  "nodeParams": {
+    "action": "get_job_statistics",
+    "params": {}
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-payment-statistics"></a>
+#### Example 140: ServiceBridge - Get Payment Statistics
+
+Get payment-related statistics
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-payment-statistics",
+  "nodeParams": {
+    "action": "get_payment_statistics",
+    "params": {}
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-report"></a>
+#### Example 141: ServiceBridge - Get Report
+
+Generate a report
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-report",
+  "nodeParams": {
+    "action": "get_report",
+    "params": {
+      "reportType": "Summary"
+    }
+  }
+}
+```
+
+---
+
+<a id="servicebridge-get-active-users-history"></a>
+#### Example 142: ServiceBridge - Get Active Users History
+
+Get user activity history
+
+```json
+{
+  "automationType": "servicebridge",
+  "nodeId": "servicebridge-get-active-users-history",
+  "nodeParams": {
+    "action": "get_active_users_history",
+    "params": {
+      "startDate": "2026-01-01",
+      "endDate": "2026-01-31"
+    }
+  }
+}
+```
+
+## Third-Party Documentation
+
+- [https://api.servicebridge.com/](https://api.servicebridge.com/)

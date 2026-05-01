@@ -8,14 +8,32 @@
     "dark": "#2971FF"
   },
   "favicon": "/favicon.svg",
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "mailto:hi@plura.ai"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Dashboard",
+      "href": "https://app.plura.ai"
+    }
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/plura",
+      "github": "https://github.com/plura",
+      "linkedin": "https://www.linkedin.com/company/plura"
+    }
+  },
   "navigation": {
     "global": {
-      "tabs": [
-        {
-          "tab": "API Reference",
-          "href": "https://github.com/Plura-AI/plura-api-documentation.git"
-        }
-      ],
       "anchors": [
         {
           "anchor": "Community",
@@ -29,10 +47,9 @@
         }
       ]
     },
-    "anchors": [
+    "tabs": [
       {
-        "anchor": "Documentation",
-        "icon": "book-open",
+        "tab": "Documentation",
         "groups": [
           {
             "group": "Get Started",
@@ -207,31 +224,66 @@
             ]
           }
         ]
+      },
+      {
+        "tab": "API Reference",
+        "openapi": "api-reference/openapi.yaml",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "api-reference/introduction",
+              "api-reference/authentication",
+              "api-reference/api-basics",
+              "api-reference/errors"
+            ]
+          },
+          {
+            "group": "Workflows",
+            "pages": [
+              "api-reference/workflows/send-to-workflow"
+            ]
+          },
+          {
+            "group": "Calls",
+            "pages": [
+              "api-reference/calls/initiate-call",
+              "api-reference/calls/get-call-details"
+            ]
+          },
+          {
+            "group": "Leads",
+            "pages": [
+              "api-reference/leads/create-lead",
+              "api-reference/leads/get-lead-by-phone",
+              "api-reference/leads/get-lead-by-id",
+              "api-reference/leads/update-lead"
+            ]
+          },
+          {
+            "group": "Tags",
+            "pages": [
+              "api-reference/tags/add-tag",
+              "api-reference/tags/remove-tag"
+            ]
+          },
+          {
+            "group": "WebSocket API",
+            "pages": [
+              "api-reference/websocket/overview",
+              "api-reference/websocket/connection",
+              "api-reference/websocket/messages",
+              "api-reference/websocket/session-management"
+            ]
+          },
+          {
+            "group": "Resources",
+            "pages": [
+              "api-reference/ip-whitelist"
+            ]
+          }
+        ]
       }
     ]
-  },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
-  },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@plura.ai"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://app.plura.ai"
-    }
-  },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/plura",
-      "github": "https://github.com/plura",
-      "linkedin": "https://www.linkedin.com/company/plura"
-    }
   }
 }

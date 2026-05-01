@@ -1,33 +1,41 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: Introduction
+description: Complete REST API reference for building powerful integrations with Plura AI.
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+## Get Started in 3 Minutes
 
-## Welcome
+<Steps>
+  <Step title="Get your API key">
+    Go to **Settings → API Keys** in your Plura workspace.
+  </Step>
+  <Step title="Pick your use case">
+    See the common integration patterns below.
+  </Step>
+  <Step title="Copy and run">
+    Use the code examples — all are production-ready.
+  </Step>
+</Steps>
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+## Common Use Cases
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+<CardGroup cols={2}>
+  <Card title="Inbound Lead Capture" icon="inbox">
+    Plura receives lead → Call `Send to Workflow` → Lead enrolls → Workflow executes automatically
+  </Card>
+  <Card title="Instant Callback" icon="phone">
+    Lead submits form → Call `Initiate Call` → AI agent calls within seconds with context
+  </Card>
+  <Card title="Update Lead Details" icon="pen-to-square">
+    External system enriches lead → Call `Get Lead by Phone` → Update with new data → Call `Update Lead`
+  </Card>
+  <Card title="Offline Conversion Tracking" icon="tag">
+    Lead converts outside Plura → Tag as "Converted" via API → Plura stops outreach automatically
+  </Card>
+</CardGroup>
 
-## Authentication
+## API Version
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+Current version: **v1.7** — Last updated February 2026.
 
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
-```
+All endpoints use the `/v1` prefix at `https://api.plura.ai`.

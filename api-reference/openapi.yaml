@@ -1,0 +1,708 @@
+openapi: 3.0.3
+info:
+  title: Plura AI API
+  description: Complete REST API reference for building powerful integrations with Plura AI.
+  version: "1.7"
+  contact:
+    url: https://docs.plura.ai
+
+servers:
+  - url: https://api.plura.ai/v1
+    description: Production
+
+security:
+  - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: API key from Settings → API Keys in your workspace
+
+  schemas:
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+          example: failed
+        message:
+          type: string
+          example: Human-readable error description
+
+    LeadRecord:
+      type: object
+      required:
+        - phone
+      properties:
+        phone:
+          type: string
+          description: Phone number in E.164 format (digits only, with country code)
+          example: "17145551234"
+        first_name:
+          type: string
+          example: John
+        last_name:
+          type: string
+          example: Smith
+        email:
+          type: string
+          format: email
+          example: johnsmith@mail.com
+        company:
+          type: string
+          example: Acme Corp
+
+    Lead:
+      type: object
+      properties:
+        lead_id:
+          type: string
+          example: "307fc241-8398-4740-8122-cf6a59f3b86e"
+        phone:
+          type: string
+          example: "17145551234"
+        first_name:
+          type: string
+          example: John
+        last_name:
+          type: string
+          example: Smith
+        email:
+          type: string
+          example: johnsmith@mail.com
+        company:
+          type: string
+          example: Acme Corp
+        tags:
+          type: array
+          items:
+            type: string
+          example: ["High_Priority", "New_Lead"]
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-03-15T10:30:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2024-03-15T14:22:00Z"
+
+paths:
+  /lead/sendtoworkflow:
+    post:
+      summary: Send to Workflow
+      description: |
+        Enroll a lead into an automated journey. You can create a new lead and enroll them simultaneously, or enroll an existing lead by their UUID.
+
+        **Note:** Provide either `record` (for new leads) or `lead_id` (for existing leads) — never both.
+
+        **Finding your Journey ID:** Extract it from your workspace URL — `app.plura.ai/[workspace]/journey/[JOURNEY-ID]/flow/[flow-id]`. The Journey ID is the UUID after `/journey/`. Use the Journey ID, not the Flow ID.
+      operationId: sendToWorkflow
+      tags:
+        - Workflows
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - workflow_id
+              properties:
+                workflow_id:
+                  type: string
+                  description: Journey ID from your workspace URL (not the Flow ID)
+                  example: "98249779-79ae-462f-a0cf-7ce5129cc093"
+                record:
+                  $ref: '#/components/schemas/LeadRecord'
+                  description: Lead data for creating a new lead. Provide this OR lead_id, not both.
+                lead_id:
+                  type: string
+                  description: Existing lead UUID. Provide this OR record, not both.
+                  example: "307fc241-8398-4740-8122-cf6a59f3b86e"
+            examples:
+              new_lead:
+                summary: Create new lead and enroll
+                value:
+                  workflow_id: "98249779-79ae-462f-a0cf-7ce5129cc093"
+                  record:
+                    phone: "17145551234"
+                    first_name: John
+                    last_name: Smith
+                    email: johnsmith@mail.com
+                    company: Acme Corp
+              existing_lead:
+                summary: Enroll existing lead
+                value:
+                  workflow_id: "98249779-79ae-462f-a0cf-7ce5129cc093"
+                  lead_id: "307fc241-8398-4740-8122-cf6a59f3b86e"
+      responses:
+        "200":
+          description: Lead enrolled successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  lead_id:
+                    type: string
+                    example: "307fc241-8398-4740-8122-cf6a59f3b86e"
+                  workflow_assigned:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Lead successfully added to workflow
+        "400":
+          description: Bad request — check JSON format and required fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                status: failed
+                message: "Could not find or create lead, please try again!"
+        "401":
+          description: Unauthorized — verify your API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Journey not found — check your workflow_id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /agent:
+    post:
+      summary: Initiate Call
+      description: |
+        Trigger an immediate outbound call via your Plura AI Agent. Perfect for instant callbacks, appointment reminders, or follow-ups.
+
+        **Finding your Agent ID:** Go to the Agents section in your workspace and copy the UUID (case-sensitive).
+
+        **request_data:** Unlike custom fields, `request_data` accepts any JSON structure without workspace setup. Pass any context your agent needs — it goes directly to your workflow.
+      operationId: initiateCall
+      tags:
+        - Calls
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - agent
+                - phone
+              properties:
+                agent:
+                  type: string
+                  description: Agent UUID from your workspace
+                  example: "aa951bc8-2942-4a75-9162-ba9946c7808"
+                phone:
+                  type: string
+                  description: Recipient phone number in E.164 format
+                  example: "17145551234"
+                from:
+                  type: string
+                  description: Caller ID. If omitted, auto-selected from the agent's phone group.
+                  example: "15045798220"
+                request_data:
+                  type: object
+                  description: Flexible context data passed directly to your workflow. Accepts any JSON structure.
+                  additionalProperties: true
+                  example:
+                    first_name: John
+                    last_name: Smith
+                    appointment_date: "2024-03-15"
+                    service_type: consultation
+            example:
+              agent: "aa951bc8-2942-4a75-9162-ba9946c7808"
+              phone: "17145551234"
+              from: "15045798220"
+              request_data:
+                first_name: John
+                last_name: Smith
+                appointment_date: "2024-03-15"
+      responses:
+        "200":
+          description: Call initiated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  call_id:
+                    type: string
+                    example: "0b62751b-9023-4f5d-a52c-2ea233240ed"
+                  to:
+                    type: string
+                    example: "17145551234"
+                  from:
+                    type: string
+                    example: "15045798220"
+                  agent:
+                    type: string
+                    example: "aa951bc8-2942-4a75-9162-ba9946c7808"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Agent not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /calls/get:
+    get:
+      summary: Get Call Details
+      description: |
+        Retrieve detailed information about a call using its `call_id` returned from the Initiate Call endpoint.
+
+        **Transferred calls** return multiple records — the original call and each transfer leg. Transfer legs have their `call_id` suffixed with `:1`, `:2`, etc.
+      operationId: getCallDetails
+      tags:
+        - Calls
+      parameters:
+        - name: call_id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Call UUID returned from the Initiate Call endpoint
+          example: "e739835a-e085-4698-8611-a0bcd218f236"
+      responses:
+        "200":
+          description: Call details retrieved. Returns an array — transferred calls include multiple records.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    call_id:
+                      type: string
+                      description: Unique call identifier. Transfer legs append `:1`, `:2`, etc.
+                    phone_to:
+                      type: string
+                      description: Destination phone number
+                    phone_from:
+                      type: string
+                      description: Originating phone number
+                    call_start:
+                      type: string
+                      format: date-time
+                      description: Call start timestamp (UTC ISO-8601)
+                    call_end:
+                      type: string
+                      format: date-time
+                      description: Call end timestamp (UTC ISO-8601)
+                    disposition:
+                      type: string
+                      description: Call outcome
+                      example: Completed
+                    answered_by:
+                      type: string
+                      description: Who answered the call
+                      example: human
+                    agent:
+                      type: string
+                      description: Agent UUID that handled the call
+                    direction:
+                      type: string
+                      description: Call direction
+                      example: out
+                    transfer:
+                      type: boolean
+                      description: Whether the call was transferred
+                    is_transfer:
+                      type: boolean
+                      description: Indicates this record is a transfer leg
+              examples:
+                transferred:
+                  summary: Transferred call
+                  value:
+                    - call_id: "e739835a-e085-4698-8611-a0bcd218f236"
+                      phone_to: "17145551234"
+                      phone_from: "18554170050"
+                      call_start: "2026-01-06T13:51:38Z"
+                      call_end: "2026-01-06T13:52:18Z"
+                      disposition: Completed
+                      answered_by: human
+                      agent: "00a50886-1b8e-4678-a393-129098cc8bc2"
+                      direction: out
+                      transfer: true
+                    - call_id: "e739835a-e085-4698-8611-a0bcd218f236:1"
+                      phone_to: "15555555555"
+                      phone_from: "17145551234"
+                      call_start: "2026-01-06T13:52:15.000Z"
+                      call_end: "2026-01-06T13:52:18.000Z"
+                      disposition: CONGESTION
+                      agent: "00a50886-1b8e-4678-a393-129098cc8bc2"
+                      direction: out
+                      is_transfer: true
+                non_transferred:
+                  summary: Non-transferred call
+                  value:
+                    - call_id: "e739835a-e085-4698-8611-a0bcd218f236"
+                      phone_to: "17145551234"
+                      phone_from: "18554170050"
+                      call_start: "2026-01-06T13:51:38Z"
+                      call_end: "2026-01-06T13:52:18Z"
+                      disposition: Completed
+                      answered_by: human
+                      agent: "00a50886-1b8e-4678-a393-129098cc8bc2"
+                      direction: out
+                      transfer: false
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /lead/create:
+    post:
+      summary: Create Lead
+      description: |
+        Create a new lead record in your Plura workspace.
+
+        If a lead with the same phone number already exists, the API returns a 409 with the existing lead's details. Use the **Update Lead** endpoint to modify existing leads.
+
+        **Phone number handling:** If the phone number does not include a country code, the API automatically prepends `1` (US). Send digits only — no `+`, spaces, or dashes.
+      operationId: createLead
+      tags:
+        - Leads
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - record
+              properties:
+                record:
+                  type: object
+                  required:
+                    - phone
+                  properties:
+                    phone:
+                      type: string
+                      description: Digits only — no `+`, spaces, or dashes. Country code auto-prepended if omitted.
+                      example: "5558675309"
+                    first_name:
+                      type: string
+                      example: John
+                    last_name:
+                      type: string
+                      example: Doe
+                    email:
+                      type: string
+                      format: email
+                    company:
+                      type: string
+            example:
+              record:
+                phone: "5558675309"
+                first_name: John
+                last_name: Doe
+      responses:
+        "200":
+          description: Lead created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Lead has been created.
+                  lead:
+                    type: object
+                    properties:
+                      phone:
+                        type: string
+                      first_name:
+                        type: string
+                      last_name:
+                        type: string
+                      timezone:
+                        type: string
+                        example: America/New_York
+                      lead_id:
+                        type: string
+        "409":
+          description: Lead already exists — use Update Lead to modify
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: failed
+                  message:
+                    type: string
+                    example: "Lead exists please use the update method to change any values."
+                  lead:
+                    type: object
+                    properties:
+                      lead_id:
+                        type: string
+                      phone:
+                        type: string
+                      first_name:
+                        type: string
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /lead/get:
+    get:
+      summary: Get Lead
+      description: |
+        Retrieve complete lead information. Provide either `phone` or `lead_id` — not both.
+
+        - Use `phone` to look up a lead by phone number (useful for deduplication checks)
+        - Use `lead_id` when you already have the UUID from a previous API call
+      operationId: getLead
+      tags:
+        - Leads
+      parameters:
+        - name: phone
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Phone number in E.164 format. Provide this OR lead_id.
+          example: "17145551234"
+        - name: lead_id
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Lead UUID. Provide this OR phone.
+          example: "307fc241-8398-4740-8122-cf6a59f3b86e"
+      responses:
+        "200":
+          description: Lead found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        "404":
+          description: Lead not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                status: failed
+                message: Lead not found
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /lead/update:
+    patch:
+      summary: Update Lead
+      description: |
+        Update one or more fields on an existing lead. Only send the fields you want to change — everything else stays the same.
+      operationId: updateLead
+      tags:
+        - Leads
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - lead_id
+              properties:
+                lead_id:
+                  type: string
+                  description: UUID of the lead to update
+                  example: "307fc241-8398-4740-8122-cf6a59f3b86e"
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                phone:
+                  type: string
+                  description: New phone number in E.164 format
+                company:
+                  type: string
+            example:
+              lead_id: "307fc241-8398-4740-8122-cf6a59f3b86e"
+              email: johnsmith@mail.com
+              company: Smith Enterprises
+      responses:
+        "200":
+          description: Lead updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  lead_id:
+                    type: string
+                    example: "307fc241-8398-4740-8122-cf6a59f3b86e"
+                  message:
+                    type: string
+                    example: Lead updated successfully
+        "404":
+          description: Lead not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /lead/tag:
+    patch:
+      summary: Add Tag to Lead
+      description: |
+        Add a tag to a lead for organization, segmentation, and workflow triggers. Tags are useful for tracking lead status, campaign source, or custom categories.
+
+        Use underscores for multi-word tags (e.g., `High_Priority`, not `High Priority`).
+      operationId: addTag
+      tags:
+        - Tags
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - lead_id
+                - tag
+              properties:
+                lead_id:
+                  type: string
+                  description: UUID of the lead to tag
+                  example: "307fc241-8398-4740-8122-cf6a59f3b86e"
+                tag:
+                  type: string
+                  description: Tag name. Use underscores for multi-word tags.
+                  example: High_Priority
+            example:
+              lead_id: "307fc241-8398-4740-8122-cf6a59f3b86e"
+              tag: High_Priority
+      responses:
+        "200":
+          description: Tag added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  lead_id:
+                    type: string
+                  tag:
+                    type: string
+                  message:
+                    type: string
+                    example: Tag added successfully
+        "404":
+          description: Lead not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      summary: Remove Tag from Lead
+      description: |
+        Remove a tag from a lead. Uses URL query parameters (not a JSON body).
+      operationId: removeTag
+      tags:
+        - Tags
+      parameters:
+        - name: lead_id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: UUID of the lead
+          example: "307fc241-8398-4740-8122-cf6a59f3b86e"
+        - name: tag
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Tag to remove
+          example: High_Priority
+      responses:
+        "200":
+          description: Tag removed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  lead_id:
+                    type: string
+                  tag:
+                    type: string
+                  message:
+                    type: string
+                    example: Tag removed successfully
+        "404":
+          description: Lead or tag not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'

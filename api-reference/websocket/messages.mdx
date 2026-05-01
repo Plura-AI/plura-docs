@@ -1,0 +1,81 @@
+---
+title: Sending Messages
+description: How to send messages, handle responses, and maintain the WebSocket connection.
+---
+
+## Sending a User Message
+
+```json
+{
+  "message": "Your message text here",
+  "type": "message"
+}
+```
+
+**Receive confirmation:**
+
+```json
+{
+  "type": "recv",
+  "id": "{message-id}",
+  "profilepic": "{user-profile-pic}",
+  "name": "Anonymous",
+  "content": "Your message text here"
+}
+```
+
+## Receiving AI Responses
+
+```json
+{
+  "type": "message",
+  "id": "{message-id}",
+  "profilepic": "{assistant-image-url}",
+  "name": "Assistant",
+  "content": "AI response text here"
+}
+```
+
+## Typing Indicators
+
+Signal when the user is typing (visible in the Plura AI inbox dashboard):
+
+```json
+{ "message": true, "type": "typing" }
+```
+
+```json
+{ "message": false, "type": "typing" }
+```
+
+## Heartbeat
+
+<Warning>
+  **Required.** Send a heartbeat every **15 seconds** to maintain the connection and show the user as online.
+</Warning>
+
+```json
+{
+  "message": {
+    "stamp": "2025-11-06T21:59:02",
+    "tz": "+04:00"
+  },
+  "type": "heartbeat"
+}
+```
+
+| Field | Format | Example |
+|-------|--------|---------|
+| `stamp` | `YYYY-MM-DDTHH:mm:ss` | `2025-11-06T21:59:02` |
+| `tz` | Timezone offset | `+04:00`, `-05:00` |
+
+## Message Types Reference
+
+| Type | Direction | Description |
+|------|-----------|-------------|
+| `message` | Send / Receive | User message (send) or AI response (receive) |
+| `recv` | Receive | Confirmation that your message was received |
+| `session` | Receive | Session ID on initial connect |
+| `chatowner` | Receive | Chat owner info on initial connect |
+| `typing` | Send | Typing indicator |
+| `heartbeat` | Send | Keep-alive signal (every 15s) |

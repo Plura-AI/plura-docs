@@ -1,0 +1,123 @@
+---
+title: WebSocket Connection
+description: Connect to the Plura AI WebSocket, with or without a session.
+---
+
+## Option A: Direct Connection (Anonymous)
+
+Connect immediately without a session — no lead data, no prior setup:
+
+```
+wss://wss.plura.ai/webchat/flow/{flow_id}/session/null/r/true
+```
+
+## Option B: Session Initialization (With Lead Data)
+
+### Step 1 — Initialize the Session
+
+```bash
+POST https://hooks.plura.ai/webchat/session
+Content-Type: application/json
+
+{
+  "record": {
+    "phone": "+15551234567",
+    "first_name": "John",
+    "last_name": "Smith"
+  },
+  "flow_id": "87f66d6d-dba9-4a44-9274-02c6927a083a"
+}
+```
+
+**Request parameters:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `record.phone` | string | Yes | Phone number of the lead/contact |
+| `record.first_name` | string | No | First name |
+| `record.last_name` | string | No | Last name |
+| `record.*` | any | No | Additional custom fields |
+| `flow_id` | string | Yes | UUID of the flow to initiate |
+
+**Response:**
+
+```json
+{
+  "flow_id": "b7cf6862-0a1c-4bc3-9703-1ab767e5ea28",
+  "session": "webchat-session.2a36d9fd-3114-4cb4-a0ef-751f3e8e7cc3",
+  "flow_port": 8088,
+  "wss_test_url": "wss.plura.ai"
+}
+```
+
+| Field | Description |
+|-------|-------------|
+| `flow_id` | UUID of the initiated flow instance |
+| `session` | Session identifier — use this in your WebSocket URL |
+| `flow_port` | Port number for the WebSocket connection |
+| `wss_test_url` | WebSocket server hostname |
+
+### Step 2 — Connect to WebSocket
+
+```
+wss://wss.plura.ai/webchat/flow/{flow_id}/session/{session}/r/true
+```
+
+## Connection URL Parameters
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| `flowId` | Yes | Your AI workflow UUID |
+| `sessionId` | Yes | `null` for new conversations, or a stored session ID to resume |
+| `reconnect` | Yes | `true` or `false` |
+
+## Connection Examples
+
+```
+# Anonymous (new conversation)
+wss://wss.plura.ai/webchat/flow/{flow_id}/session/null/r/true
+
+# With session from initialization
+wss://wss.plura.ai/webchat/flow/{flow_id}/session/webchat-session.{uuid}/r/true
+
+# Returning user (resume conversation)
+wss://wss.plura.ai/webchat/flow/{flow_id}/session/webchat-session.{uuid}/r/true
+```
+
+## Initial Messages on Connect
+
+After connecting, you receive three messages in sequence:
+
+**1. Session**
+```json
+{
+  "type": "session",
+  "id": "{message-id}",
+  "session_id": "webchat-session.{uuid}"
+}
+```
+
+**2. Chat Owner**
+```json
+{
+  "type": "chatowner",
+  "id": "{owner-id}",
+  "profilepic": "{image-url}",
+  "name": "Flow Tester"
+}
+```
+
+**3. Initial AI Message**
+```json
+{
+  "type": "message",
+  "id": "{message-id}",
+  "profilepic": "{image-url}",
+  "name": "Assistant",
+  "content": "Hi! How can I help you today?"
+}
+```
+
+<Tip>
+  Save the `session_id` from the first message to enable conversation continuity when users return.
+</Tip>

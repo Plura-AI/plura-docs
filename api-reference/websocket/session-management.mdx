@@ -1,0 +1,157 @@
+---
+title: Session Management & Code Examples
+description: Managing sessions for conversation continuity, with full JavaScript and Python examples.
+---
+
+## Session Lifecycle
+
+### Starting a New Conversation
+- Set `sessionId` to `null` in the connection URL
+- Save the `session_id` from the first received message for future reconnections
+
+### Resuming a Previous Conversation
+- Use the stored `session_id` in the connection URL
+- The AI maintains full context from previous messages
+
+## JavaScript (Browser)
+
+```javascript
+let ws;
+let heartbeatInterval;
+let sessionId = localStorage.getItem('plura_session_id') || 'null';
+
+async function initializeSession(flowId, leadData) {
+  const response = await fetch('https://hooks.plura.ai/webchat/session', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ record: leadData, flow_id: flowId })
+  });
+  return response.json();
+}
+
+function connectWebSocket(flowId, sessionId = 'null') {
+  ws = new WebSocket(
+    `wss://wss.plura.ai/webchat/flow/${flowId}/session/${sessionId}/r/true`
+  );
+
+  ws.onopen = () => {
+    heartbeatInterval = setInterval(sendHeartbeat, 15000);
+  };
+
+  ws.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+
+    switch (data.type) {
+      case 'session':
+        sessionId = data.session_id;
+        localStorage.setItem('plura_session_id', sessionId);
+        break;
+      case 'message':
+        displayMessage(data.content, 'ai');
+        break;
+    }
+  };
+
+  ws.onclose = () => clearInterval(heartbeatInterval);
+}
+
+function sendMessage(text) {
+  ws.send(JSON.stringify({ message: text, type: 'message' }));
+}
+
+function sendHeartbeat() {
+  const now = new Date();
+  const offset = -now.getTimezoneOffset();
+  const h = Math.floor(Math.abs(offset) / 60);
+  const m = Math.abs(offset) % 60;
+  const tz = `${offset >= 0 ? '+' : '-'}${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+
+  ws.send(JSON.stringify({
+    message: { stamp: now.toISOString().slice(0, 19), tz },
+    type: 'heartbeat'
+  }));
+}
+
+// Full flow: initialize session then connect
+async function startChat(flowId, leadData) {
+  const session = await initializeSession(flowId, leadData);
+  connectWebSocket(session.flow_id, session.session);
+}
+
+startChat('your-flow-id', {
+  phone: '+15551234567',
+  first_name: 'John',
+  last_name: 'Smith'
+});
+```
+
+## Python
+
+```python
+import websockets
+import asyncio
+import json
+import requests
+from datetime import datetime, timezone
+
+class PluraWebChat:
+    def __init__(self, flow_id):
+        self.flow_id = flow_id
+        self.session_id = 'null'
+        self.ws = None
+        self.heartbeat_task = None
+
+    def initialize_session(self, lead_data):
+        response = requests.post(
+            'https://hooks.plura.ai/webchat/session',
+            json={'record': lead_data, 'flow_id': self.flow_id},
+            headers={'Content-Type': 'application/json'}
+        )
+        session_data = response.json()
+        self.session_id = session_data['session']
+        self.flow_id = session_data['flow_id']
+        return session_data
+
+    async def connect(self):
+        url = f"wss://wss.plura.ai/webchat/flow/{self.flow_id}/session/{self.session_id}/r/true"
+        self.ws = await websockets.connect(url)
+        self.heartbeat_task = asyncio.create_task(self._heartbeat_loop())
+        await self._receive_messages()
+
+    async def _receive_messages(self):
+        async for message in self.ws:
+            data = json.loads(message)
+            if data['type'] == 'session':
+                self.session_id = data['session_id']
+            elif data['type'] == 'message':
+                print(f"AI: {data['content']}")
+
+    async def send_message(self, text):
+        await self.ws.send(json.dumps({'message': text, 'type': 'message'}))
+
+    async def _heartbeat_loop(self):
+        while True:
+            await asyncio.sleep(15)
+            now = datetime.now(timezone.utc)
+            await self.ws.send(json.dumps({
+                'message': {'stamp': now.strftime('%Y-%m-%dT%H:%M:%S'), 'tz': '+00:00'},
+                'type': 'heartbeat'
+            }))
+
+    async def close(self):
+        if self.heartbeat_task:
+            self.heartbeat_task.cancel()
+        if self.ws:
+            await self.ws.close()
+```
+
+## Critical Requirements
+
+<Warning>
+  **Heartbeat is required.** Send every 15 seconds or the connection will drop and the user will appear offline in the dashboard.
+</Warning>
+
+1. **Heartbeat** — every 15 seconds, no exceptions
+2. **Session storage** — persist `session_id` client-side for conversation continuity
+3. **Session init is optional** — only needed when passing lead data; use `session=null` for anonymous chat
+4. **Message order** — messages are delivered in order and each user message gets a `recv` confirmation

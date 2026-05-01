@@ -1,0 +1,29 @@
+---
+title: Authentication
+description: All Plura API requests require Bearer token authentication.
+---
+
+## Bearer Token
+
+Include your API key in the `Authorization` header on every request:
+
+```bash
+Authorization: Bearer YOUR_API_KEY
+Content-Type: application/json
+```
+
+**Where to get your key:** Settings → API Keys in your Plura workspace.
+
+## Security Checklist
+
+<Check>Store keys in environment variables — never hardcode them</Check>
+<Check>Use separate keys for dev, staging, and production</Check>
+<Check>Rotate immediately if a key is compromised</Check>
+<Check>Never commit keys to version control</Check>
+
+## Example
+
+```bash
+curl -X GET "https://api.plura.ai/v1/lead/get?phone=17145551234" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```

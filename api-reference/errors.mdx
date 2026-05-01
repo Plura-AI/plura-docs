@@ -1,0 +1,50 @@
+---
+title: Error Handling
+description: HTTP status codes, error response format, and common troubleshooting.
+---
+
+## Response Format
+
+All errors return this structure:
+
+```json
+{
+  "status": "failed",
+  "message": "Human-readable error description"
+}
+```
+
+## HTTP Status Codes
+
+| Code | Meaning | Action |
+|------|---------|--------|
+| **200** | Success | Request completed |
+| **400** | Bad Request | Check your JSON format and required fields |
+| **401** | Unauthorized | Verify your API key is correct |
+| **404** | Not Found | Check Journey ID, Agent ID, or Lead ID |
+| **409** | Conflict | Resource already exists or state conflict |
+| **429** | Rate Limited | Slow down — implement exponential backoff |
+| **500** | Server Error | Retry with backoff (temporary issue) |
+
+## Common Issues
+
+| Problem | Cause | Solution |
+|---------|-------|----------|
+| "Workflow not found" | Using Flow ID instead of Journey ID | Extract Journey ID from URL: `/journey/[ID]/` |
+| "Could not find or create lead" | Phone missing or invalid | Use E.164 format: `17145551234` |
+| "Unauthorized" | Bad API key | Regenerate in Settings → API Keys |
+| Custom fields won't save | Fields don't exist in workspace | Create in Settings → Custom Fields first |
+| Call won't initiate | Bad phone format | Strip all non-digits, add country code |
+| "Invalid agent" | Wrong Agent ID | Copy exact UUID from workspace |
+
+## Rate Limiting
+
+<Warning>
+  Exceeding the rate limit returns a **429** response. Implement exponential backoff to handle it gracefully.
+</Warning>
+
+Best practices:
+- Start with **5 requests/minute** max
+- Implement **exponential backoff**: 2s → 4s → 8s
+- Add **random jitter** to prevent thundering herd
+- Contact support for enterprise rate limits

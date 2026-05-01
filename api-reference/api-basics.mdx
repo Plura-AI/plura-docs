@@ -1,0 +1,42 @@
+---
+title: API Basics
+description: Base URL, phone number format, and date/time conventions.
+---
+
+## Base URL
+
+```
+https://api.plura.ai/v1
+```
+
+All endpoints use the `/v1` prefix.
+
+## Phone Number Format
+
+**Always use E.164 format** — digits only, with country code, no formatting characters.
+
+| | Example |
+|---|---|
+| Correct | `17145551234` |
+| Wrong | `(714) 555-1234` |
+| Wrong | `+1-714-555-1234` |
+| Wrong | `714-555-1234` |
+
+<Tip>
+  Strip all non-digits and prepend the country code (e.g., `1` for US). The Create Lead endpoint will auto-prepend `1` if you omit the country code, but all other endpoints require the full E.164 format.
+</Tip>
+
+## Date/Time Format
+
+Use UTC ISO-8601: `2024-03-15T10:30:00Z`
+
+## Journey ID vs Flow ID
+
+When working with workflows, always use the **Journey ID** — not the Flow ID.
+
+Find it in your workspace URL:
+```
+app.plura.ai/[workspace]/journey/[JOURNEY-ID]/flow/[flow-id]
+```
+
+The Journey ID is the UUID after `/journey/`. It stays constant even when you update flows, so your integrations won't break when workflows change.

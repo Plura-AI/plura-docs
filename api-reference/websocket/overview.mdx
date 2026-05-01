@@ -1,0 +1,34 @@
+---
+title: WebSocket Overview
+description: Real-time bidirectional communication for building custom chat interfaces with Plura AI.
+---
+
+The Plura AI WebSocket API enables real-time communication between your application and Plura's AI agent workflows. Use it to build custom chat interfaces, web widgets, or mobile app integrations.
+
+## Two Integration Options
+
+<CardGroup cols={2}>
+  <Card title="Direct WebSocket" icon="bolt">
+    Connect immediately with `session=null` for anonymous chat. No lead data required.
+  </Card>
+  <Card title="Session + WebSocket" icon="user">
+    Initialize a session with lead data first, then connect with session credentials for personalized AI conversations.
+  </Card>
+</CardGroup>
+
+## Which Should I Use?
+
+| Scenario | Option |
+|----------|--------|
+| Anonymous visitors | Direct WebSocket |
+| Public chat widget | Direct WebSocket |
+| No lead info available | Direct WebSocket |
+| Have phone/name/custom fields | Session Initialization + WebSocket |
+| Want personalized AI response | Session Initialization + WebSocket |
+
+## Endpoints
+
+| | URL |
+|---|---|
+| **Session Init** | `POST https://hooks.plura.ai/webchat/session` |
+| **WebSocket** | `wss://wss.plura.ai/webchat/flow/{flowId}/session/{sessionId}/r/{reconnect}` |

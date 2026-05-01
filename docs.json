@@ -9,6 +9,26 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
+    "global": {
+      "tabs": [
+        {
+          "tab": "API Reference",
+          "href": "https://github.com/Plura-AI/plura-api-documentation.git"
+        }
+      ],
+      "anchors": [
+        {
+          "anchor": "Community",
+          "icon": "discord",
+          "href": "https://discord.gg/PcxWWwX9jN"
+        },
+        {
+          "anchor": "Blog",
+          "icon": "newspaper",
+          "href": "https://plura.ai/blog"
+        }
+      ]
+    },
     "anchors": [
       {
         "anchor": "Documentation",
@@ -188,27 +208,7 @@
           }
         ]
       }
-    ],
-    "global": {
-      "tabs": [
-        {
-          "tab": "API Reference",
-          "href": "https://start.plura.ai/plura-ai-api-documentation"
-        }
-      ],
-      "anchors": [
-        {
-          "anchor": "Community",
-          "href": "https://discord.gg/PcxWWwX9jN",
-          "icon": "discord"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://plura.ai/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
     "light": "/logo/light.svg",

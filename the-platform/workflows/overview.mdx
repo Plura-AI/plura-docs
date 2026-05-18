@@ -19,7 +19,7 @@ A **channel type** defines which communication channel the AI uses during the wo
 - <Icon icon="message-circle" color="#3B82F6" />  **Webchat**: Web chat widget conversations.
 - <Icon icon="message-square" color="#10B981" />  **SMS**: Text message conversations.
 - <Icon icon="message-square-dashed" color="#EAB308" />  **RCS**: Rich Communication Services.
-- <Icon icon="network" color="#06B6D4" />  **Omnichannel**: A special channel type that lets the workflow use any channel internally rather than being locked to one.
+- <Icon icon="earth" color="#06B6D4" />  **Omnichannel**: A special channel type that lets the workflow use any channel internally rather than being locked to one.
 - <Icon icon="workflow" color="#F87171" />  **Cadence**: Used when no specific communication channel is present. Acts as a master workflow that initiates and controls other workflows.
 
 {/* TODO: Image. Channel type selector */}
@@ -76,11 +76,11 @@ A Workflow consists of the following key elements:
 
     Some of the primary node types include:
 
-    - <Icon icon="message" color="#60a5fa" />  **AI Conversation Node**: The core node where you provide specific instructions to the AI for handling a segment of the conversation.
-    - <Icon icon="book-blank" color="#c084fc" />  **Knowledge Base Node**: Enables the AI to retrieve relevant information from a predefined knowledge source.
+    - <Icon icon="message-bot" color="#60a5fa" />  **AI Conversation Node**: The core node where you provide specific instructions to the AI for handling a segment of the conversation.
+    - <Icon icon="book-open" color="#c084fc" />  **Knowledge Base Node**: Enables the AI to retrieve relevant information from a predefined knowledge source.
     - <Icon icon="phone-slash" color="#f87171" />  **End Call Node**: Terminates the conversation when a specific outcome is reached.
-    - <Icon icon="phone-volume" color="#4ade80" />  **Transfer Call Node**: Redirects the conversation to a human agent or another department.
-    - <Icon icon="cloud" color="#22d3ee" />  **API Call Setup Node**: Allows integration with external systems by making API requests to fetch or send data.
+    - <Icon icon="headphones" color="#4ade80" />  **Transfer Call Node**: Redirects the conversation to a human agent or another department.
+    - <Icon icon="globe" color="#22d3ee" />  **API Call Setup Node**: Allows integration with external systems by making API requests to fetch or send data.
 
     See [Nodes](/the-platform/workflows/nodes/overview) for the full catalog of node types.
   </Step>
@@ -95,7 +95,7 @@ A Workflow consists of the following key elements:
 
     Plura supports multiple connector types, each suited to a different routing pattern:
 
-    - <Icon icon="code-branch" color="#c084fc" />  **Decision Trigger**: Routes the conversation based on what the user said or how they responded. Used on AI Conversation nodes.
+    - <Icon icon="git-branch" color="#c084fc" />  **Decision Trigger**: Routes the conversation based on what the user said or how they responded. Used on AI Conversation nodes.
     - <Icon icon="filter" color="#fbbf24" />  **Condition Branch**: Routes based on data conditions using AND/OR logic. Used on Condition nodes.
     - <Icon icon="arrow-right" color="#4ade80" />  **Next**: A simple linear progression to the next node. Used on Function nodes that always flow through after completing.
 
@@ -120,3 +120,7 @@ A Workflow consists of the following key elements:
 - **Modularity**: Allows different parts of the conversation to be broken into manageable segments.
 - **Flexibility**: Enables dynamic routing based on real-time inputs and conditions.
 - **Scalability**: Facilitates building complex conversational systems without overwhelming the AI with excessive instructions at once.
+
+**Lucide test row:**
+
+<Icon icon="phone" /><Icon icon="earth" /><Icon icon="globe" /><Icon icon="book-open" /><Icon icon="webhook" /><Icon icon="mail" /><Icon icon="inbox" /><Icon icon="headphones" /><Icon icon="messages-square" /><Icon icon="message-square" /><Icon icon="message-circle" /><Icon icon="bot" /><Icon icon="workflow" /><Icon icon="phone-off" /><Icon icon="phone-forwarded" /><Icon icon="forward" /><Icon icon="circle-x" /><Icon icon="git-branch" /><Icon icon="filter" /><Icon icon="arrow-right" />

@@ -5,54 +5,60 @@ description: "Workflows in Plura AI"
 
 ## What Are Workflows?
 
-A **Workflow** in Plura AI is a structured conversational system designed to create a natural conversation while ensuring the AI stays on track. It achieves this by breaking interactions into goal-oriented components, each represented by a **node** with a distinct purpose.
+A **Workflow** in Plura AI is a structured conversational system that breaks interactions into goal-oriented components, each represented by a **node** with a distinct purpose. Nodes are linked through **connectors**, which control the conversation flow based on predefined conditions.
 
-Nodes are linked through **decision triggers**, which control the conversation flow based on predefined conditions. This structured approach helps the AI maintain consistency, ensuring a logical sequence while preserving a natural and fluid dialogue experience.
+This structured approach helps the AI maintain consistency, ensuring a logical sequence while preserving a natural and fluid dialogue experience.
 
 ![images/workflow.jpeg](/images/workflow.jpeg)
 
+## Channel Types
+
+A **channel type** defines which communication channel the AI uses during the workflow. Every workflow is assigned a single channel type at creation.
+
+- <Icon icon="phone" color="#F97316" />  **Voice**: Outbound and inbound calls.
+- <Icon icon="message-circle" color="#3B82F6" />  **Webchat**: Web chat widget conversations.
+- <Icon icon="message-square" color="#10B981" />  **SMS**: Text message conversations.
+- <Icon icon="message-square-dashed" color="#EAB308" />  **RCS**: Rich Communication Services.
+- <Icon icon="network" color="#06B6D4" />  **Omnichannel**: A special channel type that lets the workflow use any channel internally rather than being locked to one.
+- <Icon icon="workflow" color="#F87171" />  **Cadence**: Used when no specific communication channel is present. Acts as a master workflow that initiates and controls other workflows.
+
+{/* TODO: Image. Channel type selector */}
+
+See [Channel Types](/the-platform/workflows/channel-types) for a full breakdown of each.
+
 ## Navigating the Workflow
 
-Understanding the workflow interface is essential for building and managing AI-driven conversations effectively. Below is an overview of key navigation components:
+Understanding the workflow interface is essential for building and managing AI-driven conversations effectively. Below is an overview of the key navigation components:
 
-- **Nodes Section:** You can browse the available node types and create them either by clicking on the node you want to add or by dragging and dropping it into the workflow.
-
+- **Node Library:** The sidebar where all node types live, organized into categories (Interactions, Functions, Logic, Timing, Other). Add a node to the canvas by clicking it or dragging it in. The **Universal Prompt** is also accessible from the Library.
   <img
     width="400"
     src="/images/node-section.png"
+    style={{ width:"55%" }}
   />
-- **Universal Prompt:** A prompt that is always available to the AI, regardless of which node it is on. It helps guide the call and sets the overall tone of the conversation.
-
-  <img
-    width="200"
-    src="/images/universal-prompt.png"
-  />
-- **Workflow Control Bar:** The Workflow Control Bar contains essential tools for managing different versions, monitoring performance, and testing workflows.
-
+- **Workflow Control Bar:** Contains essential tools for managing versions, monitoring performance, and testing the workflow.
   <img
     width="600"
     src="/images/top-bar.png"
   />
-  - **Version History:** View and select different versions of your workflow to track changes and roll back if necessary.
-  - **Create Version:** Allows you to create a new version of the workflow, maintaining previous iterations.
-  - **Show Analytics:** Provides insights into the performance of each node, helping you optimize conversation workflow.
-  - **Test:** Opens the test bench, enabling you to chat or call the workflow and observe its real-time behavior.
-  - **Save & Publish:** The save button saves the workflow changes, while the publish button deploys the workflow into either development or production.
-- **Navigation Bar:** Contains essential tools for managing your workspace, including undo and redo buttons for easy revisions.
-
+  - **Versions:** View and select different versions of your workflow to track changes and roll back if necessary.
+  - **Show Analytics:** Provides insights into the performance of each node, helping you optimize the workflow.
+  - **New Version:** Creates a new version of the workflow, maintaining previous iterations.
+  - **Issues:** Surfaces validation problems in the workflow before publishing.
+  - **Test:** Opens the Test Bench, enabling you to chat or call the workflow and observe its real-time behavior.
+  - **Save & Publish:** The save button saves the workflow changes; the publish button deploys the workflow to either development or production.
+- **Navigation Bar:** A floating toolbar that provides canvas-level controls for editing and viewing the workflow.
   <img
     width="400"
     src="/images/navigation-bar.png"
+    style={{ width:"57%" }}
   />
-- **Node Management:** Each node contains three main buttons to help manage and configure its functionality.
-
-  <img
-    width="400"
-    src="/images/node-management.png"
-  />
-  - **Node Wizard:** A feature that simplifies node creation by automatically generating prompts, conditions, and other necessary configurations based on minimal instructions.
-  - **Edit Button:** Opens the node settings where you can configure its behavior manually.
-  - **Delete Button:** Removes the node from the workflow.
+  - **Undo / Redo:** Step backward or forward through recent changes.
+  - **Duplicate:** Copy selected nodes on the canvas.
+  - **Lock:** Locks the canvas to prevent accidental edits.
+  - **Zoom Controls:** Zoom in, zoom out, or jump to a specific zoom level.
+  - **Fullscreen:** Expands the workflow editor to fill the screen.
+  - **Minimap:** Toggles a small-scale overview of the entire workflow for easier navigation.
 
 ## Components of a Workflow
 
@@ -65,6 +71,7 @@ A Workflow consists of the following key elements:
     <img
       width="500"
       src="/images/nodes.png"
+      style={{ width:"73%" }}
     />
 
     Some of the primary node types include:
@@ -73,32 +80,43 @@ A Workflow consists of the following key elements:
     - <Icon icon="book-blank" color="#c084fc" />  **Knowledge Base Node**: Enables the AI to retrieve relevant information from a predefined knowledge source.
     - <Icon icon="phone-slash" color="#f87171" />  **End Call Node**: Terminates the conversation when a specific outcome is reached.
     - <Icon icon="phone-volume" color="#4ade80" />  **Transfer Call Node**: Redirects the conversation to a human agent or another department.
-    - <Icon icon="arrow-up-right-from-square" color="#22d3ee" />  **API Call Node**: Allows integration with external systems by making API requests to fetch or send data.
+    - <Icon icon="cloud" color="#22d3ee" />  **API Call Setup Node**: Allows integration with external systems by making API requests to fetch or send data.
+
+    See [Nodes](/the-platform/workflows/nodes/overview) for the full catalog of node types.
   </Step>
-  <Step title="Decision Triggers">
-    Decision Triggers connect nodes and dictate the flow of a conversation. Each trigger has conditions that must be satisfied before progressing to the next node. The AI cannot move forward unless the specific condition set within the trigger is met.
+  <Step title="Connectors">
+    Connectors link nodes together and control the flow of a conversation. Each connector has conditions that must be satisfied before progressing to the next node.
 
     <img
       width="500"
       src="/images/decision-trigger.png"
+      style={{ width:"69%" }}
     />
 
-    Decision Triggers create dynamic conversations by allowing different outcomes based on user responses. A single node can have multiple Decision Triggers, each activating under specific circumstances, ensuring that the conversation adapts fluidly to the user’s input.
+    Plura supports multiple connector types, each suited to a different routing pattern:
+
+    - <Icon icon="code-branch" color="#c084fc" />  **Decision Trigger**: Routes the conversation based on what the user said or how they responded. Used on AI Conversation nodes.
+    - <Icon icon="filter" color="#fbbf24" />  **Condition Branch**: Routes based on data conditions using AND/OR logic. Used on Condition nodes.
+    - <Icon icon="arrow-right" color="#4ade80" />  **Next**: A simple linear progression to the next node. Used on Function nodes that always flow through after completing.
+
+    See [Connectors](/the-platform/workflows/connectors) for the full breakdown of each type.
   </Step>
   <Step title="Universal Prompt">
     The **Universal Prompt** is a predefined prompt that remains active throughout the entire workflow, regardless of which node the AI is currently on.
 
-    ![images/universal-prompt.png](/images/universal-prompt.png)
+    <img
+      src="/images/universal-prompt.png"
+      alt="images/universal-prompt.png"
+      style={{ width:"36%" }}
+    />
 
-    It plays a crucial role in guiding the call, maintaining context, and ensuring a consistent tone throughout the interaction.
+    It plays a crucial role in guiding the call, maintaining context, and ensuring a consistent tone throughout the interaction. The Universal Prompt is accessible from the Node Library.
   </Step>
 </Steps>
 
 ## Why Use Workflows?
 
-- **Consistency**: Ensures that AI follows a structured and logical conversation flow.
+- **Consistency**: Ensures the AI follows a structured and logical conversation flow.
 - **Modularity**: Allows different parts of the conversation to be broken into manageable segments.
 - **Flexibility**: Enables dynamic routing based on real-time inputs and conditions.
 - **Scalability**: Facilitates building complex conversational systems without overwhelming the AI with excessive instructions at once.
-
-By organizing AI conversations into Workflows, Plura AI enhances interaction quality, making AI-driven conversations more effective and user-friendly.

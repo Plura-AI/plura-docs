@@ -1,0 +1,26 @@
+# Required check for main (Mindvana engineering standard, baseline): the Mintlify link check on every pull request
+# and every push to main. Docs site only (no app code, no dependencies), so there is no build, test or audit step.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Broken links (fails on any broken internal link)
+        run: npx -y mint@4.2.940 broken-links

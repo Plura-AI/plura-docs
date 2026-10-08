@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Plura AI API
   description: Complete REST API reference for building powerful integrations with Plura AI.
-  version: "1.7"
+  version: "1.8"
   contact:
     url: https://docs.plura.ai
 
@@ -40,6 +40,28 @@ components:
           type: string
           description: Phone number in E.164 format (digits only, with country code)
           example: "17145551234"
+        first_name:
+          type: string
+          example: John
+        last_name:
+          type: string
+          example: Smith
+        email:
+          type: string
+          format: email
+          example: johnsmith@mail.com
+        company:
+          type: string
+          example: Acme Corp
+
+    LeadRecordUpdate:
+      type: object
+      description: Lead fields for PATCH. Same fields as LeadRecord, but `phone` is only required when `lead_id` isn't provided.
+      properties:
+        phone:
+          type: string
+          description: Phone number in E.164 format (digits only, with country code). Required unless `lead_id` is provided.
+          example: '17145551234'
         first_name:
           type: string
           example: John
@@ -92,16 +114,25 @@ components:
 paths:
   /lead/sendtoworkflow:
     post:
-      summary: Send to Workflow
-      description: |
-        Enroll a lead into an automated journey. You can create a new lead and enroll them simultaneously, or enroll an existing lead by their UUID.
-
-        **Note:** Provide either `record` (for new leads) or `lead_id` (for existing leads) — never both.
-
-        **Finding your Journey ID:** Extract it from your workspace URL — `app.plura.ai/[workspace]/journey/[JOURNEY-ID]/flow/[flow-id]`. The Journey ID is the UUID after `/journey/`. Use the Journey ID, not the Flow ID.
-      operationId: sendToWorkflow
       tags:
         - Workflows
+      summary: Send to Workflow
+      description: |
+        Enroll a lead into an automated journey. If the lead isn't on file yet, it's created from `record` and enrolled. If it's already on file, it's enrolled **as-is**.
+
+        **POST never modifies an existing lead.** When a lead matching `lead_id` or `record.phone` already exists, every other field in `record` is ignored and the journey runs with the data already on file. To update the lead before enrolling it, use [Update & Send to Workflow](/api-reference/workflows/update-and-send-to-workflow) (`PATCH`).
+
+        **Note:** Provide either `record` or `lead_id`, never both. When you send `record`, the lead is matched by `phone`.
+
+        **Finding your Journey ID:** Extract it from your workspace URL: `app.plura.ai/[workspace]/journey/[JOURNEY-ID]/flow/[flow-id]`. The Journey ID is the UUID after `/journey/`. Use the Journey ID, not the Flow ID.
+
+        **POST vs. PATCH**
+
+        | | Lead not on file | Lead already on file |
+        |---|---|---|
+        | `POST` | Created from `record`, then enrolled | Enrolled with the data on file. `record` is ignored. |
+        | `PATCH` | Created from `record`, then enrolled | Fields you send are updated, then enrolled |
+      operationId: sendToWorkflow
       requestBody:
         required: true
         content:
@@ -114,21 +145,25 @@ paths:
                 workflow_id:
                   type: string
                   description: Journey ID from your workspace URL (not the Flow ID)
-                  example: "98249779-79ae-462f-a0cf-7ce5129cc093"
+                  example: 98249779-79ae-462f-a0cf-7ce5129cc093
                 record:
                   $ref: '#/components/schemas/LeadRecord'
-                  description: Lead data for creating a new lead. Provide this OR lead_id, not both.
+                  description: >-
+                    Lead data. The lead is matched by `phone`. If no match is
+                    found, a new lead is created from these fields. If a match
+                    is found, these fields are ignored and the existing lead is
+                    enrolled unchanged. Provide this OR lead_id, not both.
                 lead_id:
                   type: string
                   description: Existing lead UUID. Provide this OR record, not both.
-                  example: "307fc241-8398-4740-8122-cf6a59f3b86e"
+                  example: 307fc241-8398-4740-8122-cf6a59f3b86e
             examples:
               new_lead:
                 summary: Create new lead and enroll
                 value:
-                  workflow_id: "98249779-79ae-462f-a0cf-7ce5129cc093"
+                  workflow_id: 98249779-79ae-462f-a0cf-7ce5129cc093
                   record:
-                    phone: "17145551234"
+                    phone: '17145551234'
                     first_name: John
                     last_name: Smith
                     email: johnsmith@mail.com
@@ -136,10 +171,10 @@ paths:
               existing_lead:
                 summary: Enroll existing lead
                 value:
-                  workflow_id: "98249779-79ae-462f-a0cf-7ce5129cc093"
-                  lead_id: "307fc241-8398-4740-8122-cf6a59f3b86e"
+                  workflow_id: 98249779-79ae-462f-a0cf-7ce5129cc093
+                  lead_id: 307fc241-8398-4740-8122-cf6a59f3b86e
       responses:
-        "200":
+        '200':
           description: Lead enrolled successfully
           content:
             application/json:
@@ -151,30 +186,146 @@ paths:
                     example: success
                   lead_id:
                     type: string
-                    example: "307fc241-8398-4740-8122-cf6a59f3b86e"
+                    example: 307fc241-8398-4740-8122-cf6a59f3b86e
                   workflow_assigned:
                     type: boolean
                     example: true
                   message:
                     type: string
                     example: Lead successfully added to workflow
-        "400":
-          description: Bad request — check JSON format and required fields
+        '400':
+          description: Bad request. Check JSON format and required fields.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
               example:
                 status: failed
-                message: "Could not find or create lead, please try again!"
-        "401":
-          description: Unauthorized — verify your API key
+                message: Could not find or create lead, please try again!
+        '401':
+          description: Unauthorized. Verify your API key.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "404":
-          description: Journey not found — check your workflow_id
+        '404':
+          description: Journey not found. Check your workflow_id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    patch:
+      tags:
+        - Workflows
+      summary: Update & Send to Workflow
+      description: |
+        Create or update a lead, then enroll it in a journey. Works exactly like [Send to Workflow](/api-reference/workflows/send-to-workflow) (`POST`), with one difference: if the lead is already on file, the fields you send in `record` are saved to the lead **before** it's enrolled, so the journey runs with your new data.
+
+        - **Partial updates:** Only the fields you include are changed. Everything else on the lead stays the same. Send only `company` and only the company is updated.
+        - **New leads:** If no matching lead exists, one is created from `record` and enrolled, same as `POST`.
+        - **Finding the lead:** Send `record.phone`, `lead_id`, or both. You need at least one. Without either, no lead can be found and nothing is sent. Always send `phone` in E.164 digits-only format (e.g. `17145551234`) so it matches the lead on file.
+
+        **Every PATCH enrolls the lead.** There is no update-only mode. Don't use this endpoint for bulk data cleanup unless you want every lead you touch sent into the journey.
+
+        **Finding your Journey ID:** Extract it from your workspace URL: `app.plura.ai/[workspace]/journey/[JOURNEY-ID]/flow/[flow-id]`. The Journey ID is the UUID after `/journey/`. Use the Journey ID, not the Flow ID.
+
+        **POST vs. PATCH**
+
+        | | Lead not on file | Lead already on file |
+        |---|---|---|
+        | `POST` | Created from `record`, then enrolled | Enrolled with the data on file. `record` is ignored. |
+        | `PATCH` | Created from `record`, then enrolled | Fields you send are updated, then enrolled |
+
+        Use `POST` when the data already on file should win, such as re-enrolling a lead without touching its record. Use `PATCH` when the data you're sending should win, such as a lead source sending corrected or enriched details.
+      operationId: updateAndSendToWorkflow
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - workflow_id
+                - record
+              properties:
+                workflow_id:
+                  type: string
+                  description: Journey ID from your workspace URL (not the Flow ID)
+                  example: 98249779-79ae-462f-a0cf-7ce5129cc093
+                record:
+                  $ref: '#/components/schemas/LeadRecordUpdate'
+                  description: >-
+                    Lead fields to create or update. On an existing lead, only
+                    the fields you include are changed and everything else stays
+                    the same. `phone` is required unless you provide `lead_id`.
+                lead_id:
+                  type: string
+                  description: >-
+                    Existing lead UUID. Optional, but required if `record`
+                    doesn't include `phone`.
+                  example: 307fc241-8398-4740-8122-cf6a59f3b86e
+            examples:
+              update_by_phone:
+                summary: Create or update by phone, then enroll
+                value:
+                  workflow_id: 98249779-79ae-462f-a0cf-7ce5129cc093
+                  record:
+                    phone: '17145551234'
+                    first_name: John
+                    last_name: Smith
+                    company: Acme Holdings LLC
+              partial_update:
+                summary: Update a single field, then enroll
+                value:
+                  workflow_id: 98249779-79ae-462f-a0cf-7ce5129cc093
+                  record:
+                    phone: '17145551234'
+                    company: Acme Holdings LLC
+              update_by_lead_id:
+                summary: Update by lead ID (no phone), then enroll
+                value:
+                  workflow_id: 98249779-79ae-462f-a0cf-7ce5129cc093
+                  lead_id: 307fc241-8398-4740-8122-cf6a59f3b86e
+                  record:
+                    email: john.smith@acmeholdings.com
+      responses:
+        '200':
+          description: Lead created or updated, and enrolled successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  lead_id:
+                    type: string
+                    example: 307fc241-8398-4740-8122-cf6a59f3b86e
+                  workflow_assigned:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Lead successfully added to workflow
+        '400':
+          description: Bad request. Check JSON format and required fields.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                status: failed
+                message: Could not find or create lead, please try again!
+        '401':
+          description: Unauthorized. Verify your API key.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Journey not found. Check your workflow_id.
           content:
             application/json:
               schema:

@@ -241,7 +241,8 @@
           {
             "group": "Workflows",
             "pages": [
-              "api-reference/workflows/send-to-workflow"
+              "api-reference/workflows/send-to-workflow",
+              "api-reference/workflows/update-and-send-to-workflow"
             ]
           },
           {

@@ -9,7 +9,7 @@ Read and write Airtable records from your Plura workflows. Look up a caller's re
 
 ## Authentication
 
-- Connect your Airtable account to your Plura workspace before you use these actions. Plura can only reach the bases and tables that connection has access to.
+- Connect your Airtable account to your Plura workspace before you use these actions.
 
 ## Available Actions
 
@@ -18,7 +18,7 @@ Read and write Airtable records from your Plura workflows. Look up a caller's re
 | List Bases | Lists the Airtable bases your connection can reach | Nothing |
 | List Tables | Lists the tables in a base | The base |
 | List Records | Returns records from a table | The base and table |
-| Find Record | Finds records that match an Airtable formula (`filterByFormula`) | The base, table, and formula |
+| Find Record | Finds records that match an Airtable formula | The base, table, and formula |
 | Create Record | Adds a new record to a table | The base, table, and field values |
 | Update Record | Changes fields on an existing record | The base, table, record ID, and the fields to change |
 | Delete Record | Deletes a record | The base, table, and record ID |
@@ -31,10 +31,8 @@ Read and write Airtable records from your Plura workflows. Look up a caller's re
 
 To find a record by phone number, use **Find Record** with a formula like `{Phone} = '+15551234567'`. Use your table's own field name in the curly braces.
 
-If you call the Automation API directly, every Airtable action uses the standard request and response shown in the [Integrations Overview](/the-platform/integrations/overview), with `automationType` set to `airtable`.
-
 ## Third-Party Documentation
 
 - [Airtable Web API](https://airtable.com/developers/web/api/introduction)
 - [List records and filterByFormula](https://airtable.com/developers/web/api/list-records)
-- [Airtable formula reference](https://support.airtable.com/docs/formula-field-reference)
+- [Airtable formula reference](https://support.airtable.com/articles/7330071120-airtable-formula-field-functions-reference)

@@ -227,7 +227,6 @@
       },
       {
         "tab": "API Reference",
-        "openapi": "api-reference/openapi.yaml",
         "groups": [
           {
             "group": "Getting Started",
@@ -286,5 +285,11 @@
         ]
       }
     ]
-  }
+  },
+  "redirects": [
+    { "source": "/api-reference/leads/get-lead", "destination": "/api-reference/leads/get-lead-by-phone" },
+    { "source": "/api-reference/tags/add-tag-to-lead", "destination": "/api-reference/tags/add-tag" },
+    { "source": "/api-reference/tags/remove-tag-from-lead", "destination": "/api-reference/tags/remove-tag" },
+    { "source": "/api-reference/workflows/update-&-send-to-workflow", "destination": "/api-reference/workflows/update-and-send-to-workflow" }
+  ]
 }
